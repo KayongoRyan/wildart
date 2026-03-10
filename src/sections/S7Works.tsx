@@ -1,14 +1,9 @@
 ﻿"use client";
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
-const tabs = [
-  { id: "all",        label: "All Works"  },
-  { id: "graphite",   label: "Graphite"   },
-  { id: "charcoal",   label: "Charcoal"   },
-  { id: "ink",        label: "Ink"        },
-  { id: "mixed",      label: "Mixed Media" },
-];
+const tabIds = ["all", "graphite", "charcoal", "ink", "mixed"];
 
 const works = [
   { id: "1", title: "Amahoro",      kw: "Amahoro",      artist: "Christine Mukamana", medium: "graphite",  price: 480, animal: "Mountain Gorilla", emoji: "ðŸ¦", available: true  },
@@ -25,6 +20,7 @@ export default function S7Works() {
   const [active, setActive] = useState("all");
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-6%" });
+  const { t }  = useLanguage();
 
   const filtered = active === "all" ? works : works.filter((w) => w.medium === active);
 
@@ -52,7 +48,7 @@ export default function S7Works() {
                 marginBottom: 12,
               }}
             >
-              Collection of Original Works
+              {t.works.label}
             </p>
             <h2
               style={{
@@ -63,7 +59,7 @@ export default function S7Works() {
                 color: "var(--ink)",
               }}
             >
-              The Works
+              {t.works.headline}
             </h2>
           </motion.div>
 
@@ -74,24 +70,24 @@ export default function S7Works() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="flex gap-0 flex-wrap"
           >
-            {tabs.map((t) => (
+            {tabIds.map((id, i) => (
               <button
-                key={t.id}
-                onClick={() => setActive(t.id)}
+                key={id}
+                onClick={() => setActive(id)}
                 style={{
                   fontFamily: "var(--font-sans)",
                   fontSize: 11,
                   letterSpacing: "0.14em",
                   textTransform: "uppercase",
                   padding: "14px 20px",
-                  borderBottom: `2px solid ${active === t.id ? "var(--ochre)" : "transparent"}`,
-                  color: active === t.id ? "var(--ochre)" : "var(--warm-grey)",
+                  borderBottom: `2px solid ${active === id ? "var(--ochre)" : "transparent"}`,
+                  color: active === id ? "var(--ochre)" : "var(--warm-grey)",
                   transition: "all 0.25s",
                   background: "none",
                   cursor: "pointer",
                 }}
               >
-                {t.label}
+                {t.works.filters[i]}
               </button>
             ))}
           </motion.div>
@@ -157,7 +153,7 @@ export default function S7Works() {
                           padding: "6px 12px",
                         }}
                       >
-                        Sold
+                        {t.common.sold}
                       </span>
                     ) : (
                       <span
@@ -171,7 +167,7 @@ export default function S7Works() {
                           padding: "8px 14px",
                         }}
                       >
-                        Enquire
+                        {t.common.addToCart}
                       </span>
                     )}
                   </div>
@@ -193,7 +189,7 @@ export default function S7Works() {
                           padding: "6px 14px",
                         }}
                       >
-                        Sold
+                        {t.common.sold}
                       </span>
                     </div>
                   )}
@@ -261,8 +257,7 @@ export default function S7Works() {
             }}
             className="hover:!text-[var(--ochre)] hover:!border-[var(--ochre)]"
           >
-            View all {works.length} works â†’
-          </a>
+            {t.works.viewAll} ({works.length}) \u2192</a>
         </motion.div>
       </div>
     </section>

@@ -1,6 +1,7 @@
 "use client";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 const artists = [
   {
@@ -38,6 +39,7 @@ const artists = [
 export default function S6Artists() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-10%" });
+  const { t } = useLanguage();
 
   return (
     <section
@@ -67,7 +69,7 @@ export default function S6Artists() {
             marginBottom: 16,
           }}
         >
-          The Artists
+          {t.artists.label}
         </motion.p>
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -82,7 +84,7 @@ export default function S6Artists() {
             maxWidth: 700,
           }}
         >
-          Three artists. One forest. Infinite subjects.
+          {t.artists.headline}
         </motion.h2>
       </div>
 
@@ -144,7 +146,7 @@ export default function S6Artists() {
                 marginBottom: 12,
               }}
             >
-              {a.since}
+              {t.artists.since} {a.since}
             </p>
 
             {/* Name */}

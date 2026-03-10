@@ -1,13 +1,15 @@
-﻿"use client";
+"use client";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function S1Hero() {
+  const { t } = useLanguage();
   return (
     <section
-      className="relative min-h-screen flex flex-col justify-end overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
       style={{ backgroundColor: "var(--forest)" }}
     >
-      {/* Background texture / dark overlay */}
+      {/* Dark overlay */}
       <div
         className="absolute inset-0"
         style={{
@@ -20,52 +22,34 @@ export default function S1Hero() {
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden="true"
       >
-        <span style={{ fontSize: "clamp(300px,55vw,800px)", opacity: 0.04, filter: "grayscale(1)" }}>ðŸ¦</span>
+        <span style={{ fontSize: "clamp(300px,55vw,800px)", opacity: 0.04, filter: "grayscale(1)" }}>🦍</span>
       </div>
 
       {/* Radial glow */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 55% 45%, rgba(200,144,58,0.06) 0%, transparent 65%)" }}
+        style={{ background: "radial-gradient(ellipse 60% 50% at 50% 50%, rgba(200,144,58,0.07) 0%, transparent 65%)" }}
       />
 
-      {/* Content â€” bottom aligned like springs.estate */}
-      <div className="relative z-10 max-w-[1480px] mx-auto px-8 lg:px-16 pb-20 lg:pb-28 w-full">
-        <div className="max-w-[760px]">
-
-          {/* Eyebrow label */}
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 11,
-              fontWeight: 400,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--ochre)",
-              marginBottom: 24,
-            }}
-          >
-            Studio of African Wildlife Art
-          </motion.p>
+      {/* Content — centred */}
+      <div className="relative z-10 flex flex-col items-center text-center w-full px-8 lg:px-16">
+        <div className="max-w-[820px]">
 
           {/* Main headline */}
           <motion.h1
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             style={{
               fontFamily: "var(--font-display)",
-              fontSize: "clamp(52px,8vw,108px)",
+              fontSize: "clamp(28px,4vw,56px)",
               fontWeight: 300,
-              lineHeight: 0.95,
+              lineHeight: 1.1,
               color: "#fff",
               marginBottom: 28,
             }}
           >
-            Born from<br />the forest.
+            {t.hero.headline}
           </motion.h1>
 
           {/* Subtitle */}
@@ -76,15 +60,15 @@ export default function S1Hero() {
             style={{
               fontFamily: "var(--font-display)",
               fontStyle: "italic",
-              fontSize: "clamp(16px,1.6vw,22px)",
+              fontSize: "clamp(15px,1.5vw,21px)",
               fontWeight: 300,
               color: "rgba(255,255,255,0.55)",
               lineHeight: 1.65,
-              maxWidth: 480,
-              marginBottom: 44,
+              maxWidth: 520,
+              margin: "0 auto 44px",
             }}
           >
-            Original graphite and charcoal wildlife art by three Rwandan artists living minutes from Volcanoes National Park.
+            {t.hero.subtitle}
           </motion.p>
 
           {/* CTAs */}
@@ -92,7 +76,7 @@ export default function S1Hero() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 1 }}
-            className="flex flex-wrap items-center gap-5"
+            className="flex flex-wrap items-center justify-center gap-5"
           >
             <a
               href="#collection"
@@ -100,17 +84,17 @@ export default function S1Hero() {
                 fontFamily: "var(--font-sans)",
                 fontSize: 11,
                 fontWeight: 500,
-                letterSpacing: "0.16em",
+                letterSpacing: "0.18em",
                 textTransform: "uppercase",
                 backgroundColor: "var(--ochre)",
                 color: "#fff",
-                padding: "14px 32px",
+                padding: "16px 52px",
                 display: "inline-block",
                 transition: "background-color 0.3s",
               }}
               className="hover:!bg-[var(--ochre-light)]"
             >
-              Explore the Collection
+              {t.hero.cta}
             </a>
             <a
               href="#works"
@@ -127,7 +111,7 @@ export default function S1Hero() {
               }}
               className="hover:!text-white hover:!border-white"
             >
-              View all works
+              {t.hero.viewAll}
             </a>
           </motion.div>
         </div>
@@ -162,4 +146,3 @@ export default function S1Hero() {
     </section>
   );
 }
-
