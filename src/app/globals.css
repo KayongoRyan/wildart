@@ -1,26 +1,50 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --cream:      #F5F0E8;
+    --cream-warm: #EDE4D4;
+    --ink:        #0E100F;
+    --ink-soft:   #1A1D1A;
+    --forest:     #1C2A1E;
+    --ochre:      #C8903A;
+    --ochre-light:#D4A055;
+    --sand:       #D4C4A8;
+    --warm-grey:  #8C8880;
+    --sage:       #5C7A5E;
+
+    /* Display serif — Georgia is widely installed and renders beautifully */
+    --font-display: Georgia, "Times New Roman", "Palatino Linotype", Palatino, serif;
+    /* Sans — system-ui gives native quality on every OS */
+    --font-sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--ochre);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--cream); }
+  ::-webkit-scrollbar-thumb { background: var(--sand); }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 }
