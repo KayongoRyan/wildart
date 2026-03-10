@@ -136,7 +136,7 @@ export default function CartPage() {
               </div>
             </div>
 
-            <Link href="/commission" style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "18px 24px", textDecoration: "none", textAlign: "center", marginBottom: 12, transition: "background 0.3s" }}
+            <Link href="/checkout" style={{ display: "block", fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "18px 24px", textDecoration: "none", textAlign: "center", marginBottom: 12, transition: "background 0.3s" }}
               className="hover:!bg-[var(--forest)]">
               Proceed to Checkout
             </Link>
