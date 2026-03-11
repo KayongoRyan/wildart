@@ -1,20 +1,11 @@
-﻿"use client";
+"use client";
 import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { works } from "@/lib/works";
 
 const tabIds = ["all", "graphite", "charcoal", "ink", "mixed"];
-
-const works = [
-  { id: "1", title: "Amahoro",      kw: "Amahoro",      artist: "Christine Mukamana", medium: "graphite",  price: 480, animal: "Mountain Gorilla", emoji: "ðŸ¦", available: true  },
-  { id: "2", title: "Isoko",        kw: "Isoko",        artist: "Josue Habimana",     medium: "ink",       price: 560, animal: "Elephant",         emoji: "ðŸ˜", available: true  },
-  { id: "3", title: "Ubwoba",       kw: "Ubwoba",       artist: "Rigobert Nzeyimana", medium: "charcoal",  price: 620, animal: "Lion",             emoji: "ðŸ¦", available: true  },
-  { id: "4", title: "Igikara",      kw: "Igikara",      artist: "Rigobert Nzeyimana", medium: "mixed",     price: 440, animal: "Eagle",            emoji: "ðŸ¦…", available: true  },
-  { id: "5", title: "Inyana",       kw: "Inyana",       artist: "Christine Mukamana", medium: "charcoal",  price: 320, animal: "Gorilla Juvenile",  emoji: "ðŸ¦", available: true  },
-  { id: "6", title: "Urukundo",     kw: "Urukundo",     artist: "Christine Mukamana", medium: "graphite",  price: 390, animal: "Mountain Gorilla", emoji: "ðŸ¦", available: false },
-  { id: "7", title: "Agaciro",      kw: "Agaciro",      artist: "Josue Habimana",     medium: "ink",       price: 510, animal: "Elephant",         emoji: "ðŸ˜", available: true  },
-  { id: "8", title: "Intwari",      kw: "Intwari",      artist: "Rigobert Nzeyimana", medium: "charcoal",  price: 580, animal: "Leopard",          emoji: "ðŸ†", available: true  },
-];
 
 export default function S7Works() {
   const [active, setActive] = useState("all");
@@ -22,7 +13,7 @@ export default function S7Works() {
   const inView = useInView(ref, { once: true, margin: "-6%" });
   const { t }  = useLanguage();
 
-  const filtered = active === "all" ? works : works.filter((w) => w.medium === active);
+  const filtered = active === "all" ? works : works.filter((w) => w.medium.toLowerCase() === active);
 
   return (
     <section id="works" ref={ref} style={{ backgroundColor: "var(--cream-warm)" }}>
@@ -111,126 +102,131 @@ export default function S7Works() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: i * 0.04 }}
-                className="group cursor-pointer"
               >
-                {/* Image card */}
-                <div
-                  className="relative overflow-hidden mb-4"
-                  style={{
-                    aspectRatio: "3/4",
-                    backgroundColor: "#1C2A1E",
-                  }}
+                <Link
+                  href={`/shop/${work.id}`}
+                  style={{ textDecoration: "none", display: "block" }}
+                  className="group cursor-pointer"
                 >
-                  {/* Placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span
-                      style={{
-                        fontSize: "clamp(80px,10vw,120px)",
-                        opacity: !work.available ? 0.04 : 0.08,
-                        filter: "grayscale(1)",
-                        transition: "opacity 0.4s",
-                      }}
-                      className="group-hover:!opacity-[0.14]"
-                    >
-                      {work.emoji}
-                    </span>
-                  </div>
-
-                  {/* Hover overlay */}
+                  {/* Image card */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-5"
-                    style={{ background: "linear-gradient(to top, rgba(14,16,15,0.8) 0%, transparent 60%)" }}
+                    className="relative overflow-hidden mb-4"
+                    style={{
+                      aspectRatio: "3/4",
+                      backgroundColor: "#1C2A1E",
+                    }}
                   >
-                    {!work.available ? (
+                    {/* Placeholder */}
+                    <div className="absolute inset-0 flex items-center justify-center">
                       <span
                         style={{
-                          fontFamily: "var(--font-sans)",
-                          fontSize: 10,
-                          letterSpacing: "0.16em",
-                          textTransform: "uppercase",
-                          color: "rgba(255,255,255,0.4)",
-                          border: "1px solid rgba(255,255,255,0.2)",
-                          padding: "6px 12px",
+                          fontSize: "clamp(80px,10vw,120px)",
+                          opacity: !work.available ? 0.04 : 0.08,
+                          filter: "grayscale(1)",
+                          transition: "opacity 0.4s",
                         }}
+                        className="group-hover:!opacity-[0.14]"
                       >
-                        {t.common.sold}
+                        {work.emoji}
                       </span>
-                    ) : (
-                      <span
-                        style={{
-                          fontFamily: "var(--font-sans)",
-                          fontSize: 10,
-                          letterSpacing: "0.16em",
-                          textTransform: "uppercase",
-                          backgroundColor: "var(--ochre)",
-                          color: "#fff",
-                          padding: "8px 14px",
-                        }}
+                    </div>
+
+                    {/* Hover overlay */}
+                    <div
+                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-end p-5"
+                      style={{ background: "linear-gradient(to top, rgba(14,16,15,0.8) 0%, transparent 60%)" }}
+                    >
+                      {!work.available ? (
+                        <span
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: 10,
+                            letterSpacing: "0.16em",
+                            textTransform: "uppercase",
+                            color: "rgba(255,255,255,0.4)",
+                            border: "1px solid rgba(255,255,255,0.2)",
+                            padding: "6px 12px",
+                          }}
+                        >
+                          {t.common.sold}
+                        </span>
+                      ) : (
+                        <span
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: 10,
+                            letterSpacing: "0.16em",
+                            textTransform: "uppercase",
+                            backgroundColor: "var(--ochre)",
+                            color: "#fff",
+                            padding: "8px 14px",
+                          }}
+                        >
+                          View Details
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Sold overlay */}
+                    {!work.available && (
+                      <div
+                        className="absolute inset-0 flex items-center justify-center"
+                        style={{ backgroundColor: "rgba(14,16,15,0.4)" }}
                       >
-                        {t.common.addToCart}
-                      </span>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-sans)",
+                            fontSize: 9,
+                            letterSpacing: "0.2em",
+                            textTransform: "uppercase",
+                            color: "rgba(255,255,255,0.35)",
+                            border: "1px solid rgba(255,255,255,0.15)",
+                            padding: "6px 14px",
+                          }}
+                        >
+                          {t.common.sold}
+                        </span>
+                      </div>
                     )}
                   </div>
 
-                  {/* Sold overlay */}
-                  {!work.available && (
-                    <div
-                      className="absolute inset-0 flex items-center justify-center"
-                      style={{ backgroundColor: "rgba(14,16,15,0.4)" }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: "var(--font-sans)",
-                          fontSize: 9,
-                          letterSpacing: "0.2em",
-                          textTransform: "uppercase",
-                          color: "rgba(255,255,255,0.35)",
-                          border: "1px solid rgba(255,255,255,0.15)",
-                          padding: "6px 14px",
-                        }}
-                      >
-                        {t.common.sold}
-                      </span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Info */}
-                <p
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontStyle: "italic",
-                    fontSize: 20,
-                    fontWeight: 300,
-                    color: "var(--ink)",
-                    lineHeight: 1.2,
-                    marginBottom: 4,
-                  }}
-                >
-                  {work.kw}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-sans)",
-                    fontSize: 10,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: "var(--warm-grey)",
-                    marginBottom: 6,
-                  }}
-                >
-                  {work.artist}
-                </p>
-                <p
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 18,
-                    fontWeight: 400,
-                    color: work.available ? "var(--ochre)" : "rgba(14,16,15,0.3)",
-                  }}
-                >
-                  {work.available ? `$${work.price.toLocaleString()}` : "â€”"}
-                </p>
+                  {/* Info */}
+                  <p
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontStyle: "italic",
+                      fontSize: 20,
+                      fontWeight: 300,
+                      color: "var(--ink)",
+                      lineHeight: 1.2,
+                      marginBottom: 4,
+                    }}
+                  >
+                    {work.kw}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 10,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      color: "var(--warm-grey)",
+                      marginBottom: 6,
+                    }}
+                  >
+                    {work.artist}
+                  </p>
+                  <p
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: 18,
+                      fontWeight: 400,
+                      color: work.available ? "var(--ochre)" : "rgba(14,16,15,0.3)",
+                    }}
+                  >
+                    {work.available ? `$${work.price.toLocaleString()}` : "—"}
+                  </p>
+                </Link>
               </motion.div>
             ))}
           </motion.div>
@@ -243,8 +239,8 @@ export default function S7Works() {
           transition={{ duration: 0.7, delay: 0.5 }}
           className="text-center mt-16"
         >
-          <a
-            href="#"
+          <Link
+            href="/shop"
             style={{
               fontFamily: "var(--font-sans)",
               fontSize: 11,
@@ -254,13 +250,14 @@ export default function S7Works() {
               borderBottom: "1px solid var(--ink)",
               paddingBottom: 3,
               transition: "color 0.3s, border-color 0.3s",
+              textDecoration: "none",
             }}
             className="hover:!text-[var(--ochre)] hover:!border-[var(--ochre)]"
           >
-            {t.works.viewAll} ({works.length}) \u2192</a>
+            {t.works.viewAll} ({works.length}) →
+          </Link>
         </motion.div>
       </div>
     </section>
   );
 }
-

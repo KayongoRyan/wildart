@@ -1,36 +1,50 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { useCartStore } from "@/store/cartStore";
+import CartToast from "@/components/CartToast";
 
-const featured = { title: "Gorilla Family", artist: "Christine Mukamana", medium: "Mixed Media", price: 3200, size: "120×150cm", emoji: "🦍", desc: "A matriarch with two juveniles at rest in the bamboo zone — Christine's most ambitious work of 2024. Rendered over six weeks on 300gsm acid-free cotton paper using graphite, charcoal, and raw pigment washes." };
+const featured = {
+  id: "featured-1",
+  title: "Gorilla Family",
+  artist: "Christine Mukamana",
+  medium: "Mixed Media",
+  price: 3200,
+  size: "120×150cm",
+  emoji: "🦍",
+  desc: "A matriarch with two juveniles at rest in the bamboo zone — Christine's most ambitious work of 2024. Rendered over six weeks on 300gsm acid-free cotton paper using graphite, charcoal, and raw pigment washes.",
+};
 
 const newArrivals = [
-  { id: 1,  title: "Bull Elephant at Akagera", medium: "Ink",         price: 1950, size: "80×100cm", available: true,  emoji: "🐘", artist: "Josue Habimana" },
-  { id: 2,  title: "Leopard on Acacia",        medium: "Charcoal",    price: 1400, size: "60×80cm",  available: true,  emoji: "🐆", artist: "Rigobert Nzeyimana" },
-  { id: 3,  title: "Silverback Portrait II",   medium: "Graphite",    price: 1200, size: "50×70cm",  available: true,  emoji: "🦍", artist: "Christine Mukamana" },
-  { id: 4,  title: "Hippo Pair",               medium: "Ink",         price: 1750, size: "80×100cm", available: false, emoji: "🦛", artist: "Josue Habimana" },
+  { id: "s1", title: "Bull Elephant at Akagera", medium: "Ink",      price: 1950, size: "80×100cm", available: true,  emoji: "🐘", artist: "Josue Habimana" },
+  { id: "s2", title: "Leopard on Acacia",        medium: "Charcoal", price: 1400, size: "60×80cm",  available: true,  emoji: "🐆", artist: "Rigobert Nzeyimana" },
+  { id: "s3", title: "Silverback Portrait II",   medium: "Graphite", price: 1200, size: "50×70cm",  available: true,  emoji: "🦍", artist: "Christine Mukamana" },
+  { id: "s4", title: "Hippo Pair",               medium: "Ink",      price: 1750, size: "80×100cm", available: false, emoji: "🦛", artist: "Josue Habimana" },
 ];
 
 const collections = [
-  { name: "Virunga Series",  count: 8,  desc: "Works inspired by the mountain gorillas and forest life of Volcanoes National Park.", emoji: "🦍", bg: "#1C2A1E" },
-  { name: "Akagera Plains",  count: 6,  desc: "Elephants, buffalo, and hippos from Rwanda's savanna park in the east.", emoji: "🐘", bg: "#2A1E10" },
-  { name: "Sky Studies",     count: 4,  desc: "Raptors and waterfowl — crowned cranes, martial eagles, and fish eagles.", emoji: "🦅", bg: "#1A1810" },
+  { name: "Virunga Series", count: 8, desc: "Works inspired by the mountain gorillas and forest life of Volcanoes National Park.", emoji: "🦍", bg: "#1C2A1E" },
+  { name: "Akagera Plains", count: 6, desc: "Elephants, buffalo, and hippos from Rwanda's savanna park in the east.",             emoji: "🐘", bg: "#2A1E10" },
+  { name: "Sky Studies",    count: 4, desc: "Raptors and waterfowl — crowned cranes, martial eagles, and fish eagles.",           emoji: "🦅", bg: "#1A1810" },
 ];
 
 const prints = [
-  { title: "Silverback at Dawn", price: 120, size: "50×70cm", edition: "Ed. 25", emoji: "🦍" },
-  { title: "The Matriarch",      price: 140, size: "60×80cm", edition: "Ed. 20", emoji: "🐘" },
-  { title: "Eagle's Eye",        price: 95,  size: "40×56cm", edition: "Ed. 30", emoji: "🦅" },
-  { title: "Leopard Study",      price: 130, size: "50×70cm", edition: "Ed. 25", emoji: "🐆" },
+  { id: "p1", title: "Silverback at Dawn", price: 120, size: "50×70cm", edition: "Ed. 25", emoji: "🦍" },
+  { id: "p2", title: "The Matriarch",      price: 140, size: "60×80cm", edition: "Ed. 20", emoji: "🐘" },
+  { id: "p3", title: "Eagle's Eye",        price: 95,  size: "40×56cm", edition: "Ed. 30", emoji: "🦅" },
+  { id: "p4", title: "Leopard Study",      price: 130, size: "50×70cm", edition: "Ed. 25", emoji: "🐆" },
 ];
 
-function Card({ art, delay = 0 }: { art: typeof newArrivals[0]; delay?: number }) {
-  const ref = useRef(null);
+function Card({ art, onAdd }: { art: typeof newArrivals[0]; onAdd: (art: typeof newArrivals[0]) => void }) {
+  const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
+
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.6, delay }}
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
       className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
       <div style={{ aspectRatio: "4/5", background: "#E0D8C8", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
         <span className="transition-transform duration-700 group-hover:scale-110 inline-block" style={{ fontSize: 100, opacity: 0.22 }}>{art.emoji}</span>
@@ -42,9 +56,11 @@ function Card({ art, delay = 0 }: { art: typeof newArrivals[0]; delay?: number }
         {art.available && (
           <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
             style={{ background: "linear-gradient(to top, rgba(14,16,15,0.75) 0%, transparent 50%)" }}>
-            <Link href="/cart" style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 20px", textDecoration: "none", width: "100%", textAlign: "center", display: "block" }}>
+            <button
+              onClick={() => onAdd(art)}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 20px", border: "none", cursor: "pointer", width: "100%", textAlign: "center", display: "block" }}>
               Add to Cart
-            </Link>
+            </button>
           </div>
         )}
       </div>
@@ -61,7 +77,31 @@ function Card({ art, delay = 0 }: { art: typeof newArrivals[0]; delay?: number }
 }
 
 export default function ShopPage() {
-  const [tab, setTab] = useState<"originals" | "prints">("originals");
+  const [tab, setTab]             = useState<"originals" | "prints">("originals");
+  const [toastTitle, setToastTitle] = useState("");
+  const [toastVisible, setToastVisible] = useState(false);
+  const addItem                   = useCartStore((s) => s.addItem);
+
+  useEffect(() => {
+    if (!toastVisible) return;
+    const t = setTimeout(() => setToastVisible(false), 3500);
+    return () => clearTimeout(t);
+  }, [toastVisible]);
+
+  function handleAdd(item: { id: string; title: string; artist?: string; medium: string; size: string; price: number }) {
+    addItem({
+      id: item.id,
+      title: item.title,
+      artist: item.artist ?? "WildArt",
+      medium: item.medium,
+      size: item.size,
+      price: item.price,
+      qty: 1,
+    });
+    setToastTitle(item.title);
+    setToastVisible(false);
+    setTimeout(() => setToastVisible(true), 10);
+  }
 
   return (
     <main style={{ paddingTop: 64, background: "var(--cream)" }}>
@@ -92,8 +132,12 @@ export default function ShopPage() {
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.85, marginBottom: 32 }}>{featured.desc}</p>
             <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
               <p style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 300, color: "var(--cream)" }}>${featured.price.toLocaleString()}</p>
-              <Link href="/cart" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 32px", textDecoration: "none" }}
-                className="hover:!bg-[var(--ochre-light)]">Add to Cart</Link>
+              <button
+                onClick={() => handleAdd({ id: featured.id, title: featured.title, artist: featured.artist, medium: featured.medium, size: featured.size, price: featured.price })}
+                style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 32px", border: "none", cursor: "pointer" }}
+                className="hover:!bg-[var(--ochre-light)]">
+                Add to Cart
+              </button>
             </div>
           </div>
         </div>
@@ -104,9 +148,11 @@ export default function ShopPage() {
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 32 }}>Collections</p>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
           {collections.map((c, i) => (
-            <motion.div key={c.name} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+            <motion.div key={c.name}
+              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="group cursor-pointer" style={{ background: c.bg, padding: "48px 36px", position: "relative", overflow: "hidden" }}>
+              className="group cursor-pointer"
+              style={{ background: c.bg, padding: "48px 36px", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", right: 20, bottom: 10, fontSize: 80, opacity: 0.12, transition: "opacity 0.4s, transform 0.4s" }} className="group-hover:opacity-25 group-hover:scale-110">{c.emoji}</div>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 12 }}>{c.count} works</p>
               <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--cream)", marginBottom: 12 }}>{c.name}</h3>
@@ -119,7 +165,7 @@ export default function ShopPage() {
       {/* Originals / Prints tab */}
       <section style={{ padding: "0 clamp(24px,6vw,80px) 100px", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ display: "flex", gap: 0, marginBottom: 48, borderBottom: "1px solid rgba(14,16,15,0.12)" }}>
-          {(["originals", "prints"] as const).map(t => (
+          {(["originals", "prints"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
               style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", padding: "14px 28px", background: "none", border: "none", cursor: "pointer", borderBottom: `2px solid ${tab === t ? "var(--ink)" : "transparent"}`, color: tab === t ? "var(--ink)" : "var(--warm-grey)", transition: "all 0.2s" }}>
               {t === "originals" ? "Original Works" : "Limited Prints"}
@@ -129,7 +175,9 @@ export default function ShopPage() {
 
         {tab === "originals" ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 2 }}>
-            {newArrivals.map((a, i) => <Card key={a.id} art={a} delay={i * 0.08} />)}
+            {newArrivals.map((a) => (
+              <Card key={a.id} art={a} onAdd={(art) => handleAdd(art)} />
+            ))}
           </div>
         ) : (
           <div>
@@ -138,21 +186,26 @@ export default function ShopPage() {
             </p>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 2 }}>
               {prints.map((p, i) => (
-                  <motion.div key={p.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}
-                    className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
-                    <div style={{ aspectRatio: "4/5", background: "#DDD5C2", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                      <span style={{ fontSize: 80, opacity: 0.18 }} className="group-hover:scale-110 transition-transform duration-700 inline-block">{p.emoji}</span>
+                <motion.div key={p.title}
+                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                  className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
+                  <div style={{ aspectRatio: "4/5", background: "#DDD5C2", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <span style={{ fontSize: 80, opacity: 0.18 }} className="group-hover:scale-110 transition-transform duration-700 inline-block">{p.emoji}</span>
+                  </div>
+                  <div style={{ padding: "16px 18px 20px" }}>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 6 }}>{p.edition} · {p.size}</p>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 300, color: "var(--ink)", marginBottom: 10 }}>{p.title}</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)" }}>${p.price}</p>
+                      <button
+                        onClick={() => handleAdd({ id: p.id, title: p.title, medium: "Print", size: p.size, price: p.price })}
+                        style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "7px 14px", border: "none", cursor: "pointer" }}>
+                        Add
+                      </button>
                     </div>
-                    <div style={{ padding: "16px 18px 20px" }}>
-                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 6 }}>{p.edition} · {p.size}</p>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 300, color: "var(--ink)", marginBottom: 10 }}>{p.title}</h3>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)" }}>${p.price}</p>
-                    <Link href="/cart" style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "7px 14px", textDecoration: "none" }}>Add</Link>
-                    </div>
-                    </div>
-                  </motion.div>
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -168,6 +221,7 @@ export default function ShopPage() {
       </section>
 
       <Footer />
+      <CartToast visible={toastVisible} title={toastTitle} />
     </main>
   );
 }

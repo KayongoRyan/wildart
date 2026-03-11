@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useScroll } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage, Lang } from "@/context/LanguageContext";
+import { useCartStore } from "@/store/cartStore";
 
 const LANGUAGES: { code: Lang; label: string; native: string }[] = [
   { code: "en", label: "English", native: "EN" },
@@ -19,6 +20,7 @@ export default function Nav() {
   const pathname                      = usePathname();
   const { lang, setLang, t }          = useLanguage();
   const langRef                       = useRef<HTMLDivElement>(null);
+  const cartCount                     = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
 
   const isHome = pathname === "/";
   const solid  = !isHome || scrolled;
@@ -117,14 +119,35 @@ export default function Nav() {
             })}
 
             {/* Cart */}
-            <Link href="/cart" aria-label="Cart"
+            <Link href="/cart" aria-label={`Cart (${cartCount})`}
               className="hover:opacity-70 transition-opacity"
-              style={{ color: iconColor, transition: "color 0.4s" }}>
+              style={{ color: iconColor, transition: "color 0.4s", position: "relative", display: "inline-flex" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <path d="M16 10a4 4 0 01-8 0"/>
               </svg>
+              <AnimatePresence>
+                {cartCount > 0 && (
+                  <motion.span
+                    key={cartCount}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    style={{
+                      position: "absolute", top: -6, right: -7,
+                      background: "var(--ochre)", color: "#fff",
+                      borderRadius: "50%", width: 16, height: 16,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {cartCount > 9 ? "9+" : cartCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </Link>
 
             {/* Language dropdown */}
@@ -195,12 +218,34 @@ export default function Nav() {
 
           {/* Mobile: cart + hamburger */}
           <div className="lg:hidden flex items-center justify-end gap-5">
-            <Link href="/cart" aria-label="Cart" style={{ color: iconColor, transition: "color 0.4s" }}>
+            <Link href="/cart" aria-label={`Cart (${cartCount})`}
+              style={{ color: iconColor, transition: "color 0.4s", position: "relative", display: "inline-flex" }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
                 <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
                 <line x1="3" y1="6" x2="21" y2="6"/>
                 <path d="M16 10a4 4 0 01-8 0"/>
               </svg>
+              <AnimatePresence>
+                {cartCount > 0 && (
+                  <motion.span
+                    key={cartCount}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                    style={{
+                      position: "absolute", top: -6, right: -7,
+                      background: "var(--ochre)", color: "#fff",
+                      borderRadius: "50%", width: 16, height: 16,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {cartCount > 9 ? "9+" : cartCount}
+                  </motion.span>
+                )}
+              </AnimatePresence>
             </Link>
             <button onClick={() => setOpen(true)}
               className="flex flex-col gap-[5px] cursor-pointer" aria-label="Open menu">

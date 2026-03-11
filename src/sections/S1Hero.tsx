@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 
 export default function S1Hero() {
@@ -78,8 +79,8 @@ export default function S1Hero() {
             transition={{ duration: 0.8, delay: 1 }}
             className="flex flex-wrap items-center justify-center gap-5"
           >
-            <a
-              href="#collection"
+            <Link
+              href="/book"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: 11,
@@ -91,28 +92,12 @@ export default function S1Hero() {
                 padding: "16px 52px",
                 display: "inline-block",
                 transition: "background-color 0.3s",
+                textDecoration: "none",
               }}
               className="hover:!bg-[var(--ochre-light)]"
             >
               {t.hero.cta}
-            </a>
-            <a
-              href="#works"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                fontWeight: 400,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.55)",
-                borderBottom: "1px solid rgba(255,255,255,0.25)",
-                paddingBottom: 2,
-                transition: "color 0.3s, border-color 0.3s",
-              }}
-              className="hover:!text-white hover:!border-white"
-            >
-              {t.hero.viewAll}
-            </a>
+            </Link>
           </motion.div>
         </div>
       </div>
