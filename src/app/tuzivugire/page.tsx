@@ -123,10 +123,11 @@ export default function TuzivugirePage() {
               Your contribution funds field materials, park visit transport, and annual scholarships for students who cannot afford supplies. Every $50 funds one student&rsquo;s materials for a month. Every $600 sponsors a full-year scholarship.
             </p>
             <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-              <a href="mailto:studio@sawa.rw?subject=Tuzivugire%20Donation"
-                style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}>
+              <Link href="/donation"
+                style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}
+                className="hover:opacity-90 transition-opacity">
                 Donate
-              </a>
+              </Link>
               <Link href="/commission" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", borderBottom: "1px solid var(--ink)", paddingBottom: 2, textDecoration: "none" }}>
                 Commission a piece (10% donated)
               </Link>

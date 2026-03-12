@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     await connectDB();
 
-    const { orderId, customerName, customerEmail, customerPhone, amount, currency } =
+    const { orderId, customerName, customerEmail, customerPhone, amount, currency, redirectPath } =
       await req.json();
 
     if (!orderId || !customerEmail || !amount) {
@@ -23,12 +23,15 @@ export async function POST(req: NextRequest) {
     // Generate a unique transaction reference
     const txRef = `SAWA-${orderId}-${Date.now()}`;
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+    const redirectUrl = redirectPath
+      ? `${baseUrl}${redirectPath.startsWith("/") ? redirectPath : `/${redirectPath}`}`
+      : `${baseUrl}/order-confirmation`;
 
     const payload = {
       tx_ref: txRef,
       amount: String(amount),
       currency: currency ?? "USD",
-      redirect_url: `${baseUrl}/order-confirmation`,
+      redirect_url: redirectUrl,
       customer: {
         email: customerEmail,
         phonenumber: customerPhone,

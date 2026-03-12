@@ -122,7 +122,7 @@ export default function Nav() {
               );
             })}
             <Link
-              href="/tuzivugire#support"
+              href="/donation"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: 11,
@@ -336,7 +336,7 @@ export default function Nav() {
                 </Link>
               ))}
               <Link
-                href="/tuzivugire#support"
+                href="/donation"
                 onClick={() => setOpen(false)}
                 style={{
                   fontFamily: "var(--font-sans)",
