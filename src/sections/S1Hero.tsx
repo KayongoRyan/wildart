@@ -6,7 +6,14 @@ export default function S1Hero() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative py-32 sm:py-40 md:py-48 lg:py-56 xl:py-64" style={{ animation: "bg-color-transition-hero 8s ease-in-out infinite" }}>
+    <section
+      className="relative flex flex-col items-center justify-center"
+      style={{
+        minHeight: "calc(100vh - 72px)",
+        backgroundColor: "rgba(92, 122, 94, 0.67)",
+        animation: "bg-color-transition-hero 8s ease-in-out infinite",
+      }}
+    >
       <div className="max-w-[900px] mx-auto px-6 sm:px-8 md:px-12 lg:px-16 text-center">
         <motion.h1
           initial={{ opacity: 0, y: 20 }}

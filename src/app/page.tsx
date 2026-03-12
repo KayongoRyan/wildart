@@ -8,7 +8,7 @@ import Footer       from "@/components/Footer";
 
 export default function HomePage() {
   return (
-    <>
+    <main style={{ paddingTop: 72 }}>
       <S1Hero />
       <S2ShopMedium />
       <S3NewIn />
@@ -16,6 +16,6 @@ export default function HomePage() {
       <S5Exhibition />
       <S6Visit />
       <Footer />
-    </>
+    </main>
   );
 }
