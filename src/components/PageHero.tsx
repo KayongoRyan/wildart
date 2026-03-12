@@ -1,5 +1,5 @@
 "use client";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 interface PageHeroProps {
   label: string;
@@ -9,13 +9,23 @@ interface PageHeroProps {
   children?: React.ReactNode;
 }
 
+const heroGradientStart = "linear-gradient(180deg, rgba(92, 122, 94, 0.58) 0%, rgba(92, 122, 94, 0.48) 100%)";
+const heroGradientEnd = "linear-gradient(180deg, rgba(245, 240, 232, 0.98) 0%, rgba(237, 228, 212, 0.95) 100%)";
+
 export default function PageHero({ label, headline, subtitle, emoji = "🦍", children }: PageHeroProps) {
+  const { scrollY } = useScroll();
+  const background = useTransform(
+    scrollY,
+    [0, 350],
+    [heroGradientStart, heroGradientEnd]
+  );
+
   return (
-    <section
+    <motion.section
       className="relative flex flex-col items-center justify-center text-center overflow-hidden"
       style={{
         minHeight: "min(85vh, 720px)",
-        background: "linear-gradient(180deg, rgba(92, 122, 94, 0.18) 0%, rgba(92, 122, 94, 0.08) 100%)",
+        background,
         padding: "clamp(80px, 12vw, 160px) clamp(24px, 6vw, 80px)",
       }}
     >
@@ -26,7 +36,7 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(10px,1.2vw,12px)", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}
+          style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(10px,1.2vw,12px)", letterSpacing: "0.22em", textTransform: "uppercase", color: "#7D6E5A", marginBottom: 20 }}
         >
           {label}
         </motion.p>
@@ -40,7 +50,7 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
             fontSize: "clamp(28px, 4.5vw, 56px)",
             fontWeight: 300,
             lineHeight: 1.15,
-            color: "var(--ink)",
+            color: "#2A2D28",
             marginBottom: subtitle || children ? 28 : 0,
           }}
         >
@@ -56,7 +66,7 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
               fontStyle: "italic",
               fontSize: "clamp(14px, 1.4vw, 18px)",
               fontWeight: 300,
-              color: "rgba(14,16,15,0.6)",
+              color: "rgba(45, 48, 42, 0.78)",
               lineHeight: 1.75,
               maxWidth: 520,
               margin: "0 auto",
@@ -67,6 +77,6 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
         )}
         {children}
       </div>
-    </section>
+    </motion.section>
   );
 }

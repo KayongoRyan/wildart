@@ -16,7 +16,7 @@ export const translations = {
       commission: "Commission",
     },
     hero: {
-      headline:   "Discover Best Africa's Wildlife along with contemporary art",
+      headline:   "Welcome to Africa's best wildlife with a contemporary art",
       exhibitions:"Our Exhibitions",
       cta:        "Book",
       viewAll:    "View all works",
@@ -186,7 +186,7 @@ export const translations = {
       commission: "Commander",
     },
     hero: {
-      headline:   "Découvrez la meilleure faune africaine avec l'art contemporain",
+      headline:   "Bienvenue à la meilleure faune africaine avec un art contemporain",
       exhibitions:"Nos expositions",
       cta:        "Réserver",
       viewAll:    "Voir toutes les œuvres",
@@ -356,7 +356,7 @@ export const translations = {
       commission: "Encargar",
     },
     hero: {
-      headline:   "Descubre la mejor fauna africana junto con arte contemporáneo",
+      headline:   "Bienvenido a la mejor fauna africana con un arte contemporáneo",
       exhibitions:"Nuestras exposiciones",
       cta:        "Reservar",
       viewAll:    "Ver todas las obras",
