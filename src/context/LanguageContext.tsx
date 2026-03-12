@@ -14,6 +14,7 @@ export const translations = {
       wild:       "The Wild",
       tuzivugire: "Tuzivugire",
       commission: "Commission",
+      donation:   "Donation",
     },
     hero: {
       headline:   "Welcome to Africa's best wildlife with a contemporary art",
@@ -184,6 +185,7 @@ export const translations = {
       wild:       "La Faune",
       tuzivugire: "Tuzivugire",
       commission: "Commander",
+      donation:   "Don",
     },
     hero: {
       headline:   "Bienvenue à la meilleure faune africaine avec un art contemporain",
@@ -354,6 +356,7 @@ export const translations = {
       wild:       "Lo Salvaje",
       tuzivugire: "Tuzivugire",
       commission: "Encargar",
+      donation:   "Donación",
     },
     hero: {
       headline:   "Bienvenido a la mejor fauna africana con un arte contemporáneo",

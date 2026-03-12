@@ -122,6 +122,24 @@ export default function Nav() {
               );
             })}
             <Link
+              href="/tuzivugire#support"
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 11,
+                fontWeight: 400,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: "var(--ochre)",
+                padding: "10px 20px",
+                textDecoration: "none",
+                transition: "background-color 0.2s",
+              }}
+              className="hover:!bg-[var(--ochre-light)]"
+            >
+              {t.nav.donation}
+            </Link>
+            <Link
               href="/cart"
               aria-label={`Cart (${cartCount})`}
               style={{ color: "var(--ink)", position: "relative", display: "inline-flex" }}
@@ -317,6 +335,25 @@ export default function Nav() {
                   {label}
                 </Link>
               ))}
+              <Link
+                href="/tuzivugire#support"
+                onClick={() => setOpen(false)}
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 18,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  background: "var(--ochre)",
+                  padding: "14px 24px",
+                  textDecoration: "none",
+                  display: "inline-block",
+                  marginTop: 8,
+                }}
+                className="hover:!opacity-90"
+              >
+                {t.nav.donation}
+              </Link>
               <div className="flex gap-4 pt-4">
                 {LANGUAGES.map((l) => (
                   <button
