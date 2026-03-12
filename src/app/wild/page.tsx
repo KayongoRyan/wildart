@@ -1,9 +1,10 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
-import Link from "next/link";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
+import { useCartStore } from "@/store/cartStore";
+import CartToast from "@/components/CartToast";
 
 const artworks = [
   { id: 1,  title: "Silverback at Dawn",       animal: "Mountain Gorilla", artist: "Christine Mukamana",  medium: "Graphite",    price: 1200, size: "60×80cm",   available: true,  featured: true,  emoji: "🦍" },
@@ -23,7 +24,7 @@ const artworks = [
 const filters = ["All", "Mountain Gorilla", "African Elephant", "Lion", "Leopard", "Eagle", "Other"];
 const mediums = ["All Media", "Graphite", "Charcoal", "Ink", "Mixed Media"];
 
-function ArtworkCard({ art, delay = 0 }: { art: typeof artworks[0]; delay?: number }) {
+function ArtworkCard({ art, delay = 0, onAdd }: { art: typeof artworks[0]; delay?: number; onAdd: (art: typeof artworks[0]) => void }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
   return (
@@ -49,9 +50,13 @@ function ArtworkCard({ art, delay = 0 }: { art: typeof artworks[0]; delay?: numb
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5"
           style={{ background: "linear-gradient(to top, rgba(14,16,15,0.8) 0%, transparent 50%)" }}>
           {art.available && (
-            <Link href="/cart" style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 22px", textDecoration: "none", width: "100%", textAlign: "center", display: "block" }}>
+            <button
+              onClick={(e) => { e.stopPropagation(); onAdd(art); }}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 22px", border: "none", cursor: "pointer", width: "100%", textAlign: "center", display: "block" }}
+              className="hover:opacity-90 transition-opacity"
+            >
               Add to Cart
-            </Link>
+            </button>
           )}
         </div>
       </div>
@@ -72,6 +77,30 @@ function ArtworkCard({ art, delay = 0 }: { art: typeof artworks[0]; delay?: numb
 export default function WildPage() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [activeMedium, setActiveMedium] = useState("All Media");
+  const [toastVisible, setToastVisible] = useState(false);
+  const [toastTitle, setToastTitle] = useState("");
+  const addItem = useCartStore((s) => s.addItem);
+
+  useEffect(() => {
+    if (!toastVisible) return;
+    const t = setTimeout(() => setToastVisible(false), 3500);
+    return () => clearTimeout(t);
+  }, [toastVisible]);
+
+  function handleAddToCart(art: typeof artworks[0]) {
+    addItem({
+      id: `wild-${art.id}`,
+      title: art.title,
+      artist: art.artist,
+      medium: art.medium,
+      size: art.size,
+      price: art.price,
+      qty: 1,
+    });
+    setToastTitle(art.title);
+    setToastVisible(false);
+    setTimeout(() => setToastVisible(true), 10);
+  }
 
   const filtered = artworks.filter(a => {
     const animalMatch = activeFilter === "All" || a.animal === activeFilter ||
@@ -90,33 +119,37 @@ export default function WildPage() {
       />
 
       {/* Filters */}
-      <div style={{ padding: "0 clamp(24px,6vw,80px) 40px", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
+      <div style={{ padding: "clamp(48px, 8vw, 80px) clamp(24px,6vw,80px) 48px", maxWidth: 1200, margin: "0 auto" }}>
+        {/* Animal filter row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
           {filters.map(f => (
             <button key={f} onClick={() => setActiveFilter(f)}
               style={{
-                fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase",
-                padding: "8px 18px", border: `1px solid ${activeFilter === f ? "var(--ink)" : "rgba(14,16,15,0.15)"}`,
-                background: activeFilter === f ? "var(--ink)" : "transparent",
+                fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase",
+                padding: "10px 20px",
+                border: activeFilter === f ? "none" : "1px solid rgba(107, 103, 96, 0.25)",
+                background: activeFilter === f ? "var(--ink)" : "var(--cream)",
                 color: activeFilter === f ? "#fff" : "var(--warm-grey)", cursor: "pointer", transition: "all 0.2s",
               }}>
-              {f}
+              {f.toUpperCase()}
             </button>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        {/* Media filter row */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
           {mediums.map(m => (
             <button key={m} onClick={() => setActiveMedium(m)}
               style={{
-                fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase",
-                padding: "6px 16px", border: `1px solid ${activeMedium === m ? "var(--ochre)" : "rgba(14,16,15,0.12)"}`,
-                background: activeMedium === m ? "var(--ochre)" : "transparent",
+                fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase",
+                padding: "10px 20px",
+                border: activeMedium === m ? "none" : "1px solid rgba(107, 103, 96, 0.25)",
+                background: activeMedium === m ? "var(--ochre)" : "var(--cream)",
                 color: activeMedium === m ? "#fff" : "var(--warm-grey)", cursor: "pointer", transition: "all 0.2s",
               }}>
-              {m}
+              {m.toUpperCase()}
             </button>
           ))}
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginLeft: "auto" }}>{filtered.length} works</p>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginLeft: "auto", letterSpacing: "0.06em" }}>{filtered.length} works</p>
         </div>
       </div>
 
@@ -128,12 +161,13 @@ export default function WildPage() {
           </div>
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 2 }}>
-            {filtered.map((art, i) => <ArtworkCard key={art.id} art={art} delay={i * 0.04} />)}
+            {filtered.map((art, i) => <ArtworkCard key={art.id} art={art} delay={i * 0.04} onAdd={handleAddToCart} />)}
           </div>
         )}
       </div>
 
       <Footer />
+      <CartToast visible={toastVisible} title={toastTitle} />
     </main>
   );
 }
