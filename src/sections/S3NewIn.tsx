@@ -12,7 +12,7 @@ export default function S3NewIn() {
   const works = getNewInWorks(4);
 
   return (
-    <section ref={ref} className="py-16 lg:py-24" style={{ backgroundColor: "var(--cream-warm)" }}>
+    <section ref={ref} className="flex flex-col justify-center py-16 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream-warm)" }}>
       <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
         <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>
           {t.works.newIn}

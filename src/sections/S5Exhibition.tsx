@@ -19,7 +19,9 @@ export default function S5Exhibition() {
     <section
       id="programme"
       ref={ref}
+      className="flex flex-col justify-center"
       style={{
+        minHeight: "calc(100vh - 72px)",
         backgroundColor: "var(--ink)",
         padding: "clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)",
       }}

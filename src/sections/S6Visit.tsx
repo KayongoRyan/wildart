@@ -8,7 +8,7 @@ export default function S6Visit() {
   const [subscribed, setSubscribed] = useState(false);
 
   return (
-    <section className="py-16 lg:py-24" style={{ backgroundColor: "var(--cream)" }}>
+    <section className="flex flex-col justify-center py-16 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream)" }}>
       <div className="max-w-[1200px] mx-auto px-8 lg:px-16 grid md:grid-cols-2 gap-16">
         <div>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px,4vw,48px)", fontWeight: 300, color: "var(--ink)", marginBottom: 24 }}>Visit us</h2>
