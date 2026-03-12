@@ -2,6 +2,7 @@
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 
 const steps = [
   { num: "01", title: "Consultation", body: "Tell us about the animal, size, and feeling you want. We respond within 48 hours with a brief and an estimated timeline." },
@@ -52,26 +53,13 @@ export default function CommissionPage() {
   };
 
   return (
-    <main style={{ paddingTop: 64 }}>
-
-      {/* Hero */}
-      <section style={{ background: "var(--ink)", padding: "100px clamp(24px,6vw,80px) 80px", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", right: "5%", top: "50%", transform: "translateY(-50%)", fontSize: "clamp(160px,30vw,400px)", opacity: 0.05 }}>✍️</div>
-        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}>
-            Commission a Piece
-          </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 1 }}
-            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(40px,6vw,84px)", fontWeight: 300, lineHeight: 1.0, color: "#fff", marginBottom: 28, maxWidth: 700 }}>
-            A work made for you. An animal documented for the world.
-          </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(255,255,255,0.45)", maxWidth: 520, lineHeight: 1.85 }}>
-            Each commissioned work is a collaboration between you and one of our three resident artists. You choose the subject, scale, and medium. They bring the forest.
-          </motion.p>
-        </div>
-      </section>
+    <main style={{ paddingTop: 72 }}>
+      <PageHero
+        label="Commission a Piece"
+        headline="A work made for you. An animal documented for the world."
+        subtitle="Each commissioned work is a collaboration between you and one of our three resident artists. You choose the subject, scale, and medium. They bring the forest."
+        emoji="✍️"
+      />
 
       {/* How it works */}
       <section style={{ background: "var(--cream)", padding: "100px clamp(24px,6vw,80px)" }}>

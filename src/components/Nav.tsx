@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage, Lang } from "@/context/LanguageContext";
@@ -13,119 +13,124 @@ const LANGUAGES: { code: Lang; label: string; native: string }[] = [
 ];
 
 export default function Nav() {
-  const { scrollY }                   = useScroll();
-  const [scrolled, setScrolled]       = useState(false);
-  const [open, setOpen]               = useState(false);
-  const [langOpen, setLangOpen]       = useState(false);
-  const pathname                      = usePathname();
-  const { lang, setLang, t }          = useLanguage();
-  const langRef                       = useRef<HTMLDivElement>(null);
-  const cartCount                     = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
+  const [open, setOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
+  const pathname = usePathname();
+  const { lang, setLang, t } = useLanguage();
+  const langRef = useRef<HTMLDivElement>(null);
+  const cartCount = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
 
-  const isHome = pathname === "/";
-  const solid  = !isHome || scrolled;
-
-  useEffect(() => {
-    if (isHome) return scrollY.on("change", (v) => setScrolled(v > 60));
-  }, [scrollY, isHome]);
-
-  // Close lang dropdown on outside click
   useEffect(() => {
     function handler(e: MouseEvent) {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) {
-        setLangOpen(false);
-      }
+      if (langRef.current && !langRef.current.contains(e.target as Node)) setLangOpen(false);
     }
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const textColor       = solid ? "rgba(14,16,15,0.70)" : "rgba(255,255,255,0.65)";
-  const logoColor       = solid ? "var(--ink)"          : "#fff";
-  const iconColor       = solid ? "var(--ink)"          : "#fff";
-  const activeLinkColor = "var(--ochre)";
-
   const navLinks = [
-    { label: t.nav.studio,     href: "/studio"     },
-    { label: t.nav.wild,       href: "/wild"        },
-    { label: t.nav.tuzivugire, href: "/tuzivugire"  },
-    { label: t.nav.commission, href: "/commission"  },
-    { label: t.nav.shop,       href: "/shop"        },
+    { label: t.nav.studio, href: "/studio" },
+    { label: t.nav.wild, href: "/wild" },
+    { label: t.nav.tuzivugire, href: "/tuzivugire" },
+    { label: t.nav.commission, href: "/commission" },
+    { label: t.nav.shop, href: "/shop" },
   ];
-  const leftLinks  = navLinks.slice(0, 3);
-  const rightLinks = navLinks.slice(3);
 
-  const currentLang = LANGUAGES.find(l => l.code === lang)!;
+  const currentLang = LANGUAGES.find((l) => l.code === lang)!;
 
   return (
     <>
       <header
-        className="fixed top-0 left-0 right-0 z-[9000] transition-all duration-500"
+        className="fixed top-0 left-0 right-0 z-[9000]"
         style={{
-          height: 64,
-          backgroundColor: solid ? "rgba(245,240,232,0.97)" : "transparent",
-          backdropFilter:   solid ? "blur(20px)"             : "none",
-          borderBottom:     solid ? "1px solid rgba(14,16,15,0.07)" : "1px solid transparent",
+          height: 72,
+          backgroundColor: "var(--cream)",
+          borderBottom: "1px solid rgba(14,16,15,0.06)",
+          boxShadow: "0 1px 0 rgba(255,255,255,0.5)",
         }}
       >
-        <div className="h-full max-w-[1480px] mx-auto px-8 grid grid-cols-3 items-center">
-
-          {/* Left links */}
-          <nav className="hidden lg:flex items-center gap-7">
-            {leftLinks.map(({ label, href }) => {
+        <div className="h-full max-w-[1400px] mx-auto px-6 lg:px-12 flex items-center">
+          {/* Left nav */}
+          <nav className="hidden lg:flex items-center gap-8 flex-1">
+            {navLinks.slice(0, 3).map(({ label, href }) => {
               const active = pathname === href;
               return (
-                <Link key={href} href={href} style={{
-                  fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? 500 : 400,
-                  letterSpacing: "0.14em", textTransform: "uppercase",
-                  color: active ? activeLinkColor : textColor,
-                  textDecoration: "none", transition: "color 0.3s",
-                  borderBottom: active ? "1px solid var(--ochre)" : "1px solid transparent",
-                  paddingBottom: 2,
-                }} className="hover:!text-[var(--ochre)]">
+                <Link
+                  key={href}
+                  href={href}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 11,
+                    fontWeight: active ? 600 : 400,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: active ? "var(--ochre)" : "var(--ink)",
+                    textDecoration: "none",
+                    opacity: active ? 1 : 0.7,
+                    transition: "color 0.2s, opacity 0.2s",
+                  }}
+                  className="hover:!text-[var(--ochre)] hover:!opacity-100"
+                >
                   {label}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Centre logo */}
-          <div className="flex justify-center">
-            <Link href="/" style={{
-              fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 400,
-              letterSpacing: "0.3em", color: logoColor, textTransform: "uppercase",
-              transition: "color 0.4s", textDecoration: "none",
-            }}>
+          {/* Logo — center */}
+          <div className="flex-1 flex justify-center">
+            <Link
+              href="/"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 22,
+                fontWeight: 400,
+                letterSpacing: "0.28em",
+                color: "var(--ink)",
+                textTransform: "uppercase",
+                textDecoration: "none",
+              }}
+              className="hover:opacity-70 transition-opacity"
+            >
               SAWA
             </Link>
           </div>
 
-          {/* Right links + cart + language */}
-          <div className="hidden lg:flex items-center justify-end gap-7">
-            {rightLinks.map(({ label, href }) => {
+          {/* Right: Nav + Cart + Language */}
+          <div className="hidden lg:flex items-center gap-8 flex-1 justify-end">
+            {navLinks.slice(3).map(({ label, href }) => {
               const active = pathname === href;
               return (
-                <Link key={href} href={href} style={{
-                  fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: active ? 500 : 400,
-                  letterSpacing: "0.14em", textTransform: "uppercase",
-                  color: active ? activeLinkColor : textColor,
-                  textDecoration: "none", transition: "color 0.3s",
-                  borderBottom: active ? "1px solid var(--ochre)" : "1px solid transparent",
-                  paddingBottom: 2,
-                }} className="hover:!text-[var(--ochre)]">
+                <Link
+                  key={href}
+                  href={href}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 11,
+                    fontWeight: active ? 600 : 400,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: active ? "var(--ochre)" : "var(--ink)",
+                    textDecoration: "none",
+                    opacity: active ? 1 : 0.7,
+                    transition: "color 0.2s, opacity 0.2s",
+                  }}
+                  className="hover:!text-[var(--ochre)] hover:!opacity-100"
+                >
                   {label}
                 </Link>
               );
             })}
-
-            {/* Cart */}
-            <Link href="/cart" aria-label={`Cart (${cartCount})`}
+            <Link
+              href="/cart"
+              aria-label={`Cart (${cartCount})`}
+              style={{ color: "var(--ink)", position: "relative", display: "inline-flex" }}
               className="hover:opacity-70 transition-opacity"
-              style={{ color: iconColor, transition: "color 0.4s", position: "relative", display: "inline-flex" }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 01-8 0"/>
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
               </svg>
               <AnimatePresence>
                 {cartCount > 0 && (
@@ -136,12 +141,20 @@ export default function Nav() {
                     exit={{ scale: 0 }}
                     transition={{ type: "spring", stiffness: 400, damping: 20 }}
                     style={{
-                      position: "absolute", top: -6, right: -7,
-                      background: "var(--ochre)", color: "#fff",
-                      borderRadius: "50%", width: 16, height: 16,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600,
-                      lineHeight: 1,
+                      position: "absolute",
+                      top: -8,
+                      right: -8,
+                      background: "var(--ochre)",
+                      color: "#fff",
+                      borderRadius: "50%",
+                      width: 18,
+                      height: 18,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 10,
+                      fontWeight: 600,
                     }}
                   >
                     {cartCount > 9 ? "9+" : cartCount}
@@ -150,64 +163,76 @@ export default function Nav() {
               </AnimatePresence>
             </Link>
 
-            {/* Language dropdown */}
             <div ref={langRef} style={{ position: "relative" }}>
               <button
-                onClick={() => setLangOpen(v => !v)}
+                onClick={() => setLangOpen((v) => !v)}
                 style={{
-                  fontFamily: "var(--font-sans)", fontSize: 11, fontWeight: 400,
-                  letterSpacing: "0.14em", textTransform: "uppercase",
-                  color: langOpen ? "var(--ochre)" : textColor,
-                  background: "none", border: "none", cursor: "pointer",
-                  transition: "color 0.3s", padding: 0,
-                  display: "flex", alignItems: "center", gap: 5,
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 11,
+                  fontWeight: 400,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: langOpen ? "var(--ochre)" : "var(--ink)",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  opacity: 0.8,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 6,
                 }}
-                className="hover:!text-[var(--ochre)]"
+                className="hover:!text-[var(--ochre)] hover:!opacity-100"
                 aria-label="Switch language"
               >
                 {currentLang.native}
-                <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
-                  style={{ transform: langOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 0.25s" }}>
-                  <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none" style={{ transform: langOpen ? "rotate(180deg)" : "none", transition: "transform 0.2s" }}>
+                  <path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
                 </svg>
               </button>
-
               <AnimatePresence>
                 {langOpen && (
                   <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.97 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                    transition={{ duration: 0.18 }}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 4 }}
+                    transition={{ duration: 0.15 }}
                     style={{
-                      position: "absolute", top: "calc(100% + 12px)", right: 0,
-                      background: "rgba(245,240,232,0.98)", backdropFilter: "blur(16px)",
-                      border: "1px solid rgba(14,16,15,0.08)", minWidth: 140,
-                      boxShadow: "0 8px 32px rgba(14,16,15,0.12)",
+                      position: "absolute",
+                      top: "calc(100% + 8px)",
+                      right: 0,
+                      background: "var(--cream)",
+                      border: "1px solid rgba(14,16,15,0.08)",
+                      minWidth: 140,
+                      boxShadow: "0 8px 24px rgba(14,16,15,0.1)",
                     }}
                   >
                     {LANGUAGES.map((l) => (
                       <button
                         key={l.code}
-                        onClick={() => { setLang(l.code); setLangOpen(false); }}
+                        onClick={() => {
+                          setLang(l.code);
+                          setLangOpen(false);
+                        }}
                         style={{
-                          display: "flex", alignItems: "center", justifyContent: "space-between",
-                          width: "100%", padding: "12px 16px", background: "none", border: "none",
-                          cursor: "pointer", fontFamily: "var(--font-sans)", fontSize: 11,
-                          letterSpacing: "0.12em", textTransform: "uppercase",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          padding: "12px 16px",
+                          background: "none",
+                          border: "none",
+                          cursor: "pointer",
+                          fontFamily: "var(--font-sans)",
+                          fontSize: 11,
+                          letterSpacing: "0.12em",
+                          textTransform: "uppercase",
                           color: lang === l.code ? "var(--ochre)" : "var(--ink)",
-                          borderBottom: "1px solid rgba(14,16,15,0.05)",
                           transition: "background 0.15s",
                         }}
                         className="hover:!bg-[var(--cream-warm)]"
                       >
                         <span>{l.native}</span>
-                        <span style={{ fontSize: 11, color: lang === l.code ? "var(--ochre)" : "rgba(14,16,15,0.4)", fontStyle: "normal", textTransform: "none", letterSpacing: 0 }}>{l.label}</span>
-                        {lang === l.code && (
-                          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" style={{ marginLeft: 6, flexShrink: 0 }}>
-                            <path d="M2 6l3 3 5-5" stroke="var(--ochre)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                          </svg>
-                        )}
+                        <span style={{ fontSize: 11, color: "rgba(14,16,15,0.4)", fontStyle: "normal", textTransform: "none", letterSpacing: 0 }}>{l.label}</span>
                       </button>
                     ))}
                   </motion.div>
@@ -216,102 +241,106 @@ export default function Nav() {
             </div>
           </div>
 
-          {/* Mobile: cart + hamburger */}
-          <div className="lg:hidden flex items-center justify-end gap-5">
-            <Link href="/cart" aria-label={`Cart (${cartCount})`}
-              style={{ color: iconColor, transition: "color 0.4s", position: "relative", display: "inline-flex" }}>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3">
-                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-                <line x1="3" y1="6" x2="21" y2="6"/>
-                <path d="M16 10a4 4 0 01-8 0"/>
+          {/* Mobile */}
+          <div className="lg:hidden flex items-center gap-6">
+            <Link href="/cart" aria-label={`Cart (${cartCount})`} style={{ color: "var(--ink)", position: "relative" }}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
               </svg>
-              <AnimatePresence>
-                {cartCount > 0 && (
-                  <motion.span
-                    key={cartCount}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                    transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    style={{
-                      position: "absolute", top: -6, right: -7,
-                      background: "var(--ochre)", color: "#fff",
-                      borderRadius: "50%", width: 16, height: 16,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontFamily: "var(--font-sans)", fontSize: 9, fontWeight: 600,
-                      lineHeight: 1,
-                    }}
-                  >
-                    {cartCount > 9 ? "9+" : cartCount}
-                  </motion.span>
-                )}
-              </AnimatePresence>
+              {cartCount > 0 && (
+                <span
+                  style={{
+                    position: "absolute",
+                    top: -6,
+                    right: -6,
+                    background: "var(--ochre)",
+                    color: "#fff",
+                    borderRadius: "50%",
+                    width: 16,
+                    height: 16,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 9,
+                    fontWeight: 600,
+                  }}
+                >
+                  {cartCount > 9 ? "9+" : cartCount}
+                </span>
+              )}
             </Link>
-            <button onClick={() => setOpen(true)}
-              className="flex flex-col gap-[5px] cursor-pointer" aria-label="Open menu">
-              {[0, 1, 2].map((i) => (
-                <span key={i} className="block w-6 h-px transition-colors"
-                  style={{ backgroundColor: iconColor }} />
-              ))}
+            <button onClick={() => setOpen(true)} className="flex flex-col gap-1.5" aria-label="Menu">
+              <span className="block w-6 h-px" style={{ backgroundColor: "var(--ink)" }} />
+              <span className="block w-6 h-px" style={{ backgroundColor: "var(--ink)" }} />
+              <span className="block w-6 h-px" style={{ backgroundColor: "var(--ink)" }} />
             </button>
           </div>
         </div>
       </header>
 
-      {/* Mobile full-screen overlay */}
+      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
             className="fixed inset-0 z-[9999] flex flex-col"
-            style={{ backgroundColor: "var(--ink)" }}
+            style={{ backgroundColor: "var(--cream)" }}
           >
-            <button onClick={() => setOpen(false)}
-              className="absolute top-6 right-8 text-white/40 hover:text-white transition-colors"
-              aria-label="Close">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
-                <path strokeLinecap="round" d="M18 6L6 18M6 6l12 12" />
-              </svg>
-            </button>
-
-            <ul className="flex flex-col items-center justify-center flex-1 gap-8">
-              {navLinks.map(({ label, href }, i) => (
-                <motion.li key={href}
-                  initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.05 + i * 0.06 }}>
-                  <Link href={href} onClick={() => setOpen(false)} style={{
-                    fontFamily: "var(--font-display)", fontSize: "clamp(28px,5vw,42px)",
-                    fontWeight: 300, color: pathname === href ? "var(--ochre)" : "rgba(245,240,232,0.75)",
+            <div className="flex justify-between items-center p-6" style={{ borderBottom: "1px solid rgba(14,16,15,0.08)" }}>
+              <span style={{ fontFamily: "var(--font-display)", fontSize: 18, letterSpacing: "0.2em", color: "var(--ink)" }}>SAWA</span>
+              <button onClick={() => setOpen(false)} aria-label="Close">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="1.5">
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <nav className="flex-1 flex flex-col justify-center px-8 gap-6">
+              {navLinks.map(({ label, href }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 18,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: pathname === href ? "var(--ochre)" : "var(--ink)",
                     textDecoration: "none",
-                  }} className="hover:text-[var(--ochre)] transition-colors">
-                    {label}
-                  </Link>
-                </motion.li>
+                  }}
+                  className="hover:!text-[var(--ochre)]"
+                >
+                  {label}
+                </Link>
               ))}
-
-              {/* Mobile language selector */}
-              <motion.li
-                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.05 + navLinks.length * 0.06 }}
-                style={{ display: "flex", gap: 16, marginTop: 8 }}>
+              <div className="flex gap-4 pt-4">
                 {LANGUAGES.map((l) => (
-                  <button key={l.code}
-                    onClick={() => { setLang(l.code); setOpen(false); }}
+                  <button
+                    key={l.code}
+                    onClick={() => {
+                      setLang(l.code);
+                      setOpen(false);
+                    }}
                     style={{
-                      fontFamily: "var(--font-sans)", fontSize: 13, letterSpacing: "0.18em",
-                      textTransform: "uppercase", background: "none", border: "none", cursor: "pointer",
-                      color: lang === l.code ? "var(--ochre)" : "rgba(245,240,232,0.35)",
-                      borderBottom: lang === l.code ? "1px solid var(--ochre)" : "1px solid transparent",
-                      paddingBottom: 2, transition: "color 0.2s",
-                    }}>
+                      fontFamily: "var(--font-sans)",
+                      fontSize: 12,
+                      letterSpacing: "0.14em",
+                      textTransform: "uppercase",
+                      background: "none",
+                      border: "none",
+                      cursor: "pointer",
+                      color: lang === l.code ? "var(--ochre)" : "var(--warm-grey)",
+                    }}
+                  >
                     {l.native}
                   </button>
                 ))}
-              </motion.li>
-            </ul>
+              </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

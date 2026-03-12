@@ -1,10 +1,13 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 import { useCartStore } from "@/store/cartStore";
 import CartToast from "@/components/CartToast";
+import { works, type Work } from "@/lib/works";
 
 const featured = {
   id: "featured-1",
@@ -36,6 +39,45 @@ const prints = [
   { id: "p3", title: "Eagle's Eye",        price: 95,  size: "40×56cm", edition: "Ed. 30", emoji: "🦅" },
   { id: "p4", title: "Leopard Study",      price: 130, size: "50×70cm", edition: "Ed. 25", emoji: "🐆" },
 ];
+
+function WorkCard({ work }: { work: Work }) {
+  const ref    = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-5%" });
+
+  return (
+    <motion.div ref={ref}
+      initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
+      <Link href={`/shop/${work.id}`} style={{ textDecoration: "none", display: "block" }}>
+        <div style={{ aspectRatio: "4/5", background: "#1C2A1E", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+          <span className="transition-transform duration-700 group-hover:scale-110 inline-block" style={{ fontSize: 100, opacity: 0.12 }}>{work.emoji}</span>
+          {!work.available && (
+            <div style={{ position: "absolute", inset: 0, background: "rgba(14,16,15,0.5)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.25)", padding: "7px 18px" }}>Sold</p>
+            </div>
+          )}
+          {work.available && (
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
+              style={{ background: "linear-gradient(to top, rgba(14,16,15,0.75) 0%, transparent 50%)" }}>
+              <span style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 20px", width: "100%", textAlign: "center", display: "block" }}>
+                View Details
+              </span>
+            </div>
+          )}
+        </div>
+        <div style={{ padding: "18px 20px 22px" }}>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 6 }}>{work.medium} · {work.size}</p>
+          <h3 style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 300, color: "var(--ink)", marginBottom: 4 }}>{work.kw}</h3>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginBottom: 10 }}>{work.artist}</p>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: work.available ? "var(--ink)" : "var(--warm-grey)" }}>
+            {work.available ? `$${work.price.toLocaleString()}` : "Sold"}
+          </p>
+        </div>
+      </Link>
+    </motion.div>
+  );
+}
 
 function Card({ art, onAdd }: { art: typeof newArrivals[0]; onAdd: (art: typeof newArrivals[0]) => void }) {
   const ref    = useRef(null);
@@ -77,10 +119,24 @@ function Card({ art, onAdd }: { art: typeof newArrivals[0]; onAdd: (art: typeof 
 }
 
 export default function ShopPage() {
-  const [tab, setTab]             = useState<"originals" | "prints">("originals");
+  const searchParams             = useSearchParams();
+  const mediumParam              = searchParams.get("medium");
+  const artistParam              = searchParams.get("artist");
+  const [tab, setTab]            = useState<"originals" | "prints">("originals");
   const [toastTitle, setToastTitle] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
-  const addItem                   = useCartStore((s) => s.addItem);
+  const addItem                  = useCartStore((s) => s.addItem);
+
+  const filteredWorks = works.filter((w) => {
+    if (mediumParam) {
+      const m = mediumParam.toLowerCase();
+      if (m === "mixed") {
+        if (!w.medium.toLowerCase().includes("mixed")) return false;
+      } else if (w.medium.toLowerCase() !== m) return false;
+    }
+    if (artistParam && !w.artist.toLowerCase().includes(artistParam.toLowerCase())) return false;
+    return true;
+  });
 
   useEffect(() => {
     if (!toastVisible) return;
@@ -104,19 +160,12 @@ export default function ShopPage() {
   }
 
   return (
-    <main style={{ paddingTop: 64, background: "var(--cream)" }}>
-
-      {/* Header */}
-      <section style={{ background: "var(--ink)", padding: "80px clamp(24px,6vw,80px) 60px" }}>
-        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Shop</motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.9 }}
-            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(36px,5.5vw,76px)", fontWeight: 300, color: "var(--cream)", lineHeight: 1.0, maxWidth: 700 }}>
-            Collect African wildlife art. Support African wildlife.
-          </motion.h1>
-        </div>
-      </section>
+    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+      <PageHero
+        label="The Shop"
+        headline="Collect African wildlife art. Support African wildlife."
+        emoji="🦍"
+      />
 
       {/* Featured piece */}
       <section style={{ padding: "80px clamp(24px,6vw,80px)", maxWidth: 1100, margin: "0 auto" }}>
@@ -175,9 +224,9 @@ export default function ShopPage() {
 
         {tab === "originals" ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 2 }}>
-            {newArrivals.map((a) => (
-              <Card key={a.id} art={a} onAdd={(art) => handleAdd(art)} />
-            ))}
+            {filteredWorks.length > 0 ? filteredWorks.map((w) => <WorkCard key={w.id} work={w} />) : (
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--warm-grey)", gridColumn: "1 / -1" }}>No works match this filter.</p>
+            )}
           </div>
         ) : (
           <div>

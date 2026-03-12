@@ -1,13 +1,15 @@
 "use client";
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 
 const artists = [
   {
     name:      "Christine Mukamana",
-    role:      "Lead Artist",
-    since:     "Since 2020",
+    slug:      "Christine Mukamana",
+    role:      "Painter",
+    since:     "2020",
     specialty: ["Mountain Gorilla", "Golden Monkey"],
     medium:    "Graphite · Charcoal",
     quote:     "We don't draw from photographs. We draw from what we see at dawn.",
@@ -16,8 +18,9 @@ const artists = [
   },
   {
     name:      "Josue Habimana",
-    role:      "Wildlife Illustrator",
-    since:     "Since 2021",
+    slug:      "Josue Habimana",
+    role:      "Painter",
+    since:     "2021",
     specialty: ["African Elephant", "Buffalo", "Hippo"],
     medium:    "Ink · Watercolour",
     quote:     "I draw from memory and love — both are infinite.",
@@ -26,8 +29,9 @@ const artists = [
   },
   {
     name:      "Rigobert Nzeyimana",
-    role:      "Texture Specialist",
-    since:     "Since 2022",
+    slug:      "Rigobert Nzeyimana",
+    role:      "Painter, Sculptor",
+    since:     "2022",
     specialty: ["Lion", "Leopard", "Eagle"],
     medium:    "Charcoal · Mixed Media",
     quote:     "Every texture is a story the animal already knows.",
@@ -42,8 +46,7 @@ export default function S6Artists() {
   const { t } = useLanguage();
 
   return (
-    <section
-      ref={ref}
+    <section id="artists" ref={ref}
       style={{ background: "var(--ink)", paddingTop: 120, paddingBottom: 120 }}
     >
       {/* Header */}
@@ -101,8 +104,8 @@ export default function S6Artists() {
         }}
       >
         {artists.map((a, i) => (
+          <Link key={a.name} href={`/shop?artist=${encodeURIComponent(a.slug)}`} style={{ textDecoration: "none" }}>
           <motion.div
-            key={a.name}
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.1 * i }}
@@ -110,7 +113,7 @@ export default function S6Artists() {
             style={{
               background: a.bg,
               padding: "64px 48px",
-              cursor: "default",
+              cursor: "pointer",
               minHeight: 480,
               display: "flex",
               flexDirection: "column",
@@ -209,9 +212,50 @@ export default function S6Artists() {
             >
               &ldquo;{a.quote}&rdquo;
             </p>
+            <span
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 10,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.5)",
+                marginTop: 16,
+                display: "block",
+                transition: "color 0.3s",
+              }}
+              className="group-hover:!text-[var(--ochre)]"
+            >
+              View works →
+            </span>
           </motion.div>
+          </Link>
         ))}
       </div>
+
+      {/* View all */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.6, delay: 0.5 }}
+        className="text-center mt-16"
+      >
+        <Link
+          href="/shop"
+          style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 11,
+            letterSpacing: "0.16em",
+            textTransform: "uppercase",
+            color: "var(--cream)",
+            borderBottom: "1px solid rgba(255,255,255,0.4)",
+            paddingBottom: 3,
+            textDecoration: "none",
+          }}
+          className="hover:!text-[var(--ochre)] hover:!border-[var(--ochre)]"
+        >
+          View all →
+        </Link>
+      </motion.div>
     </section>
   );
 }

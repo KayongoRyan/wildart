@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 
 const experiences = [
   {
@@ -86,51 +87,13 @@ export default function BookPage() {
   const selectedExp = experiences.find((ex) => ex.id === selected);
 
   return (
-    <main style={{ paddingTop: 64, background: "var(--cream)" }}>
-
-      {/* Hero */}
-      <section
-        style={{
-          background: "var(--forest)",
-          padding: "100px clamp(24px,6vw,80px) 80px",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute", right: "4%", top: "50%",
-            transform: "translateY(-50%)",
-            fontSize: "clamp(180px,28vw,380px)",
-            opacity: 0.05,
-          }}
-        >
-          🦍
-        </div>
-
-        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative", zIndex: 2 }}>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}
-          >
-            Experiences · Musanze, Rwanda
-          </motion.p>
-
-          <motion.h1
-            initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 1 }}
-            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(38px,5.5vw,80px)", fontWeight: 300, lineHeight: 1.0, color: "#fff", marginBottom: 28, maxWidth: 680 }}
-          >
-            Come and see where the wild becomes art.
-          </motion.h1>
-
-          <motion.p
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(255,255,255,0.45)", maxWidth: 500, lineHeight: 1.9 }}
-          >
-            Three artists. One studio. Minutes from Volcanoes National Park. Book a studio visit, a field day, or a private collection viewing.
-          </motion.p>
-        </div>
-      </section>
+    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+      <PageHero
+        label="Experiences · Musanze, Rwanda"
+        headline="Come and see where the wild becomes art."
+        subtitle="Three artists. One studio. Minutes from Volcanoes National Park. Book a studio visit, a field day, or a private collection viewing."
+        emoji="🦍"
+      />
 
       {/* Experience picker */}
       <section style={{ padding: "100px clamp(24px,6vw,80px) 80px", maxWidth: 1100, margin: "0 auto" }}>

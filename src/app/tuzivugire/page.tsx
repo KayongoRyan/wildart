@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 import { useCountUp } from "@/hooks/useCountUp";
 
 const impacts = [
@@ -51,36 +52,18 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
 
 export default function TuzivugirePage() {
   return (
-    <main style={{ paddingTop: 64 }}>
-
-      {/* Hero */}
-      <section style={{ minHeight: "75vh", background: "var(--forest)", display: "flex", alignItems: "center", padding: "100px clamp(24px,6vw,80px)", position: "relative", overflow: "hidden" }}>
-        <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 60% 50% at 70% 50%, rgba(200,144,58,0.08) 0%, transparent 65%)" }} />
-        <div style={{ position: "absolute", right: "3%", bottom: 0, fontSize: "clamp(180px,35vw,480px)", opacity: 0.06 }}>✊</div>
-        <div style={{ position: "relative", zIndex: 2, maxWidth: 780 }}>
-          <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}>
-            Tuzivugire — Let Us Speak Out
-          </motion.p>
-          <motion.h1 initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 1 }}
-            style={{ fontFamily: "var(--font-display)", fontSize: "clamp(40px,6.5vw,88px)", fontWeight: 300, lineHeight: 1.0, color: "#fff", marginBottom: 32 }}>
-            A program for<br />young Rwandan<br />wildlife artists.
-          </motion.h1>
-          <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
-            style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(255,255,255,0.5)", lineHeight: 1.85, maxWidth: 520, marginBottom: 48 }}>
-            In Kinyarwanda, Tuzivugire means &ldquo;let us speak out.&rdquo; This programme gives young artists from the Musanze region the tools, mentorship, and platform to speak through their art — about the animals they live beside, and the landscapes they stand to lose.
-          </motion.p>
-          <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }}
-            style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
-            <a href="#support" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}>
-              Support the Programme
-            </a>
-            <a href="#how-it-works" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "rgba(255,255,255,0.5)", borderBottom: "1px solid rgba(255,255,255,0.2)", paddingBottom: 2, textDecoration: "none" }}>
-              How it works
-            </a>
-          </motion.div>
-        </div>
-      </section>
+    <main style={{ paddingTop: 72 }}>
+      <PageHero
+        label="Tuzivugire — Let Us Speak Out"
+        headline={<>A program for<br />young Rwandan<br />wildlife artists.</>}
+        subtitle={'In Kinyarwanda, Tuzivugire means "let us speak out." This programme gives young artists from the Musanze region the tools, mentorship, and platform to speak through their art — about the animals they live beside, and the landscapes they stand to lose.'}
+        emoji="✊"
+      >
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1 }} style={{ display: "flex", gap: 20, flexWrap: "wrap", justifyContent: "center", marginTop: 32 }}>
+          <a href="#support" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 36px", textDecoration: "none" }}>Support the Programme</a>
+          <a href="#how-it-works" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", borderBottom: "1px solid var(--ink)", paddingBottom: 2, textDecoration: "none" }}>How it works</a>
+        </motion.div>
+      </PageHero>
 
       {/* Stats */}
       <section style={{ background: "var(--ink)", padding: "80px clamp(24px,6vw,80px)" }}>

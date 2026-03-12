@@ -1,0 +1,41 @@
+"use client";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
+
+const artists = [
+  { name: "Christine Mukamana", slug: "Christine Mukamana", role: "Painter", emoji: "🦍" },
+  { name: "Josue Habimana", slug: "Josue Habimana", role: "Painter", emoji: "🐘" },
+  { name: "Rigobert Nzeyimana", slug: "Rigobert Nzeyimana", role: "Painter, Sculptor", emoji: "🦁" },
+];
+
+export default function S4Artists() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true });
+  const { t } = useLanguage();
+
+  return (
+    <section id="artists" ref={ref} className="py-16 lg:py-24" style={{ backgroundColor: "var(--cream)" }}>
+      <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
+        <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>
+          Featured artists
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {artists.map((a) => (
+            <Link key={a.name} href={`/shop?artist=${encodeURIComponent(a.slug)}`} className="block text-center group" style={{ textDecoration: "none" }}>
+              <div className="mb-4" style={{ fontSize: 48, opacity: 0.2 }}>{a.emoji}</div>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 400, color: "var(--ink)", marginBottom: 4 }}>{a.name}</p>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)" }}>{a.role}</p>
+            </Link>
+          ))}
+        </div>
+        <div className="text-center mt-10">
+          <Link href="/shop" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ink)", textDecoration: "none", borderBottom: "1px solid var(--ink)", paddingBottom: 3 }} className="hover:text-[var(--ochre)] hover:border-[var(--ochre)]">
+            View all
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}

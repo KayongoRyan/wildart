@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import PageHero from "@/components/PageHero";
 
 const artworks = [
   { id: 1,  title: "Silverback at Dawn",       animal: "Mountain Gorilla", artist: "Christine Mukamana",  medium: "Graphite",    price: 1200, size: "60×80cm",   available: true,  featured: true,  emoji: "🦍" },
@@ -80,23 +81,13 @@ export default function WildPage() {
   });
 
   return (
-    <main style={{ paddingTop: 64, background: "var(--cream)" }}>
-
-      {/* Header */}
-      <section style={{ padding: "80px clamp(24px,6vw,80px) 60px", maxWidth: 1200, margin: "0 auto" }}>
-        <motion.p initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-          style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>
-          The Wild
-        </motion.p>
-        <motion.h1 initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-          style={{ fontFamily: "var(--font-display)", fontSize: "clamp(36px,5vw,72px)", fontWeight: 300, color: "var(--ink)", marginBottom: 16, lineHeight: 1.0 }}>
-          Original works from<br />the field
-        </motion.h1>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
-          style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--warm-grey)", maxWidth: 480, lineHeight: 1.7 }}>
-          Every piece in this collection began as a field sketch — observed directly in Volcanoes, Akagera, or Nyungwe National Parks.
-        </motion.p>
-      </section>
+    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+      <PageHero
+        label="The Wild"
+        headline={<>Original works from<br />the field</>}
+        subtitle="Every piece in this collection began as a field sketch — observed directly in Volcanoes, Akagera, or Nyungwe National Parks."
+        emoji="🦍"
+      />
 
       {/* Filters */}
       <div style={{ padding: "0 clamp(24px,6vw,80px) 40px", maxWidth: 1200, margin: "0 auto" }}>

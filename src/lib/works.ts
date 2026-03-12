@@ -135,3 +135,19 @@ export const works: Work[] = [
       "Intwari — 'the brave one' — a leopard resting in the fork of an acacia tree at dusk, its gaze level and unhurried. Rigobert used vine charcoal for the initial blocking and compressed charcoal for the deep shadows in the coat.",
   },
 ];
+
+/** Featured works for hero (newest available, max 3) */
+export function getFeaturedWorks(): Work[] {
+  return works
+    .filter((w) => w.available)
+    .sort((a, b) => b.year - a.year || parseInt(b.id) - parseInt(a.id))
+    .slice(0, 3);
+}
+
+/** Newest works (for New In section) */
+export function getNewInWorks(limit = 4): Work[] {
+  return [...works]
+    .filter((w) => w.available)
+    .sort((a, b) => b.year - a.year || parseInt(b.id) - parseInt(a.id))
+    .slice(0, limit);
+}

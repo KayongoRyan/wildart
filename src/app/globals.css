@@ -4,14 +4,15 @@
   :root {
     --cream:      #F5F0E8;
     --cream-warm: #EDE4D4;
-    --ink:        #0E100F;
+    --ink:        #0A0C0A;
     --ink-soft:   #1A1D1A;
-    --forest:     #1C2A1E;
+    --forest:     #0E100F;
     --ochre:      #C8903A;
     --ochre-light:#D4A055;
     --sand:       #D4C4A8;
-    --warm-grey:  #8C8880;
+    --warm-grey:  #6B6760;
     --sage:       #5C7A5E;
+    --white:      #FFFFFF;
 
     /* Display serif — Georgia is widely installed and renders beautifully */
     --font-display: Georgia, "Times New Roman", "Palatino Linotype", Palatino, serif;

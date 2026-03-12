@@ -1,27 +1,21 @@
 import S1Hero       from "@/sections/S1Hero";
-import S2Intro      from "@/sections/S2Intro";
-import S3Collection from "@/sections/S3Collection";
-import S4Wild       from "@/sections/S4Wild";
-import S5Place      from "@/sections/S5Place";
-import S6Artists    from "@/sections/S6Artists";
-import S7Works      from "@/sections/S7Works";
-import S8Process    from "@/sections/S8Process";
-import S9CTA        from "@/sections/S9CTA";
-import S10Footer    from "@/sections/S10Footer";
+import S2ShopMedium from "@/sections/S2ShopMedium";
+import S3NewIn      from "@/sections/S3NewIn";
+import S4Artists    from "@/sections/S4Artists";
+import S5Exhibition from "@/sections/S5Exhibition";
+import S6Visit      from "@/sections/S6Visit";
+import Footer       from "@/components/Footer";
 
 export default function HomePage() {
   return (
     <>
       <S1Hero />
-      <S2Intro />
-      <S3Collection />
-      <S4Wild />
-      <S5Place />
-      <S6Artists />
-      <S7Works />
-      <S8Process />
-      <S9CTA />
-      <S10Footer />
+      <S2ShopMedium />
+      <S3NewIn />
+      <S4Artists />
+      <S5Exhibition />
+      <S6Visit />
+      <Footer />
     </>
   );
 }

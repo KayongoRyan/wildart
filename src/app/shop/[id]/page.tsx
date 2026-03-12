@@ -136,7 +136,7 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(36px,5vw,64px)",
-                fontWeight: 300,
+                fontWeight: 400,
                 lineHeight: 1.0,
                 color: "var(--ink)",
                 marginBottom: 8,
@@ -200,14 +200,14 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
               ))}
             </div>
 
-            {/* Price & CTA */}
+            {/* Price & CTA — bold, Nothing-style */}
             <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
               <p
                 style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: 40,
-                  fontWeight: 300,
-                  color: work.available ? "var(--ink)" : "var(--warm-grey)",
+                  fontSize: "clamp(36px,4vw,48px)",
+                  fontWeight: 500,
+                  color: work.available ? "var(--ochre)" : "var(--warm-grey)",
                 }}
               >
                 {work.available ? `$${work.price.toLocaleString()}` : "—"}
