@@ -8,7 +8,7 @@ export default function S1Hero() {
 
   return (
     <section
-      className="relative flex flex-col items-center justify-center w-full h-full min-h-0 px-4 sm:px-6 md:px-8 lg:px-12"
+      className="relative flex flex-col items-center justify-center w-full min-h-[100svh] px-4 sm:px-6 md:px-8 lg:px-12"
       style={{
         backgroundColor: "rgba(92, 122, 94, 0.67)",
         animation: "bg-color-transition-hero 8s ease-in-out infinite",
