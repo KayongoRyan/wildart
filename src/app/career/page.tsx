@@ -43,11 +43,11 @@ const labelStyle: React.CSSProperties = {
   display: "block",
 };
 
-function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+function FadeIn({ children, delay = 0, style }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay }}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay }} style={{ height: "100%", ...style }}>
       {children}
     </motion.div>
   );
@@ -82,7 +82,12 @@ function InternshipForm({ onSuccess, onClose }: { onSuccess: () => void; onClose
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, type: "internship" }),
       });
-      const data = await res.json();
+      let data: { error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        if (!res.ok) throw new Error("Server error. Please try again or contact us.");
+      }
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
       onSuccess();
     } catch (err) {
@@ -193,7 +198,12 @@ function ArtistsForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: (
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, type: "artists" }),
       });
-      const data = await res.json();
+      let data: { error?: string } = {};
+      try {
+        data = await res.json();
+      } catch {
+        if (!res.ok) throw new Error("Server error. Please try again or contact us.");
+      }
       if (!res.ok) throw new Error(data.error ?? "Something went wrong.");
       onSuccess();
     } catch (err) {
@@ -205,10 +215,6 @@ function ArtistsForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: (
 
   return (
     <form onSubmit={submit} style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-      <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", marginBottom: -8 }}>
-        Tell us about yourself and your work. We review all applications within 2 weeks.
-      </p>
-
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
         <div>
           <label style={labelStyle}>Full name *</label>
@@ -331,7 +337,7 @@ export default function CareerPage() {
           </h2>
         </FadeIn>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24, alignItems: "stretch" }}>
           {categories.map((cat, i) => {
             const isActive = selected === cat.id;
             return (
@@ -340,13 +346,16 @@ export default function CareerPage() {
                   onClick={() => setSelected(isActive ? null : cat.id)}
                   style={{
                     width: "100%",
+                    height: "100%",
+                    minHeight: 320,
                     textAlign: "left",
                     background: isActive ? "var(--ink)" : "var(--cream-warm)",
                     padding: "40px 32px",
                     border: `2px solid ${isActive ? "var(--ochre)" : "transparent"}`,
                     cursor: "pointer",
                     transition: "all 0.3s",
-                    display: "block",
+                    display: "flex",
+                    flexDirection: "column",
                   }}
                   className={isActive ? "" : "hover:!border-[rgba(14,16,15,0.12)]"}
                 >
@@ -354,7 +363,7 @@ export default function CareerPage() {
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: isActive ? "#fff" : "var(--ink)", marginBottom: 12 }}>
                     {cat.title}
                   </h3>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: isActive ? "rgba(255,255,255,0.6)" : "rgba(14,16,15,0.6)", lineHeight: 1.75 }}>
+                  <p style={{ flex: 1, fontFamily: "var(--font-sans)", fontSize: 13, color: isActive ? "rgba(255,255,255,0.6)" : "rgba(14,16,15,0.6)", lineHeight: 1.75, marginBottom: 0 }}>
                     {cat.description}
                   </p>
                   <span

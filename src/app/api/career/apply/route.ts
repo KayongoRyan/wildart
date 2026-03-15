@@ -40,6 +40,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ success: true }, { status: 201 });
   } catch (err) {
     console.error("[career/apply]", err);
-    return NextResponse.json({ error: "Server error." }, { status: 500 });
+    const msg = err instanceof Error && err.message?.includes("MONGODB") ? "Database not configured. Please add MONGODB_URI to .env.local" : "Server error. Please try again.";
+    return NextResponse.json({ error: msg }, { status: 500 });
   }
 }

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { Suspense, useState, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
@@ -119,7 +119,7 @@ function Card({ art, onAdd, formatPrice }: { art: typeof newArrivals[0]; onAdd: 
   );
 }
 
-export default function ShopPage() {
+function ShopContent() {
   const searchParams             = useSearchParams();
   const mediumParam              = searchParams.get("medium");
   const artistParam              = searchParams.get("artist");
@@ -274,5 +274,17 @@ export default function ShopPage() {
       <Footer />
       <CartToast visible={toastVisible} title={toastTitle} />
     </main>
+  );
+}
+
+export default function ShopPage() {
+  return (
+    <Suspense fallback={
+      <main style={{ paddingTop: 72, background: "var(--cream)", minHeight: "60vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--warm-grey)" }}>Loading…</p>
+      </main>
+    }>
+      <ShopContent />
+    </Suspense>
   );
 }
