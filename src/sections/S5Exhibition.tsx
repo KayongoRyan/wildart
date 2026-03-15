@@ -2,8 +2,10 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import { useLanguage } from "@/context/LanguageContext";
 
 export default function S5Exhibition() {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
 
@@ -78,9 +80,27 @@ export default function S5Exhibition() {
             initial={{ opacity: 0 }}
             animate={inView ? { opacity: 1 } : {}}
             transition={{ duration: 0.5, delay: 0.35 }}
+            style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "center" }}
           >
             <Link
-              href="/studio"
+              href="/events"
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 11,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "#fff",
+                background: "var(--ochre)",
+                padding: "14px 32px",
+                textDecoration: "none",
+                display: "inline-block",
+              }}
+              className="transition-opacity duration-200 hover:!opacity-90"
+            >
+              {t.nav.events}
+            </Link>
+            <Link
+              href="/events"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: 11,
@@ -94,7 +114,7 @@ export default function S5Exhibition() {
               }}
               className="transition-colors duration-200 hover:!text-[var(--ochre)] hover:!border-[var(--ochre)]"
             >
-              View Exhibition
+              {t.events.viewExhibition}
             </Link>
           </motion.div>
         </div>

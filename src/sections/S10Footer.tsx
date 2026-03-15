@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
 
 const exploreHrefs = ["#collection", "#wild", "#artists", "#works", "#process"];
-const programmeHrefs = ["#programme", "/studio", "#works"];
+const programmeHrefs = ["#programme", "/studio", "/events"];
 const servicesHrefs = ["/commission", "/shop", "/conservation", "https://wa.me/250700000000"];
 
 export default function S10Footer() {

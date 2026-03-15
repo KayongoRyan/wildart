@@ -14,6 +14,7 @@ export const translations = {
       career:     "Career",
       conservation: "Conservation",
       commission: "Commission",
+      events:     "Events",
       donation:   "Donation",
     },
     hero: {
@@ -173,6 +174,17 @@ export const translations = {
       emptyCart:        "Your cart is empty.",
       emptyCartSub:     "Explore original wildlife works by our three resident artists.",
     },
+    events: {
+      label:       "Events",
+      upcoming:    "Upcoming Events",
+      past:        "Past Events",
+      pastLabel:   "Past",
+      exhibitionLabel: "Exhibition",
+      viewEvent:   "View Event",
+      viewExhibition: "View Exhibition",
+      photos:      "Photos",
+      video:       "Video",
+    },
   },
 
   fr: {
@@ -185,6 +197,7 @@ export const translations = {
       career:     "Carrière",
       conservation: "Conservation",
       commission: "Commander",
+      events:     "Événements",
       donation:   "Don",
     },
     hero: {
@@ -344,6 +357,17 @@ export const translations = {
       emptyCart:        "Votre panier est vide.",
       emptyCartSub:     "Explorez les œuvres originales de nos trois artistes résidents.",
     },
+    events: {
+      label:       "Événements",
+      upcoming:    "Événements à venir",
+      past:        "Événements passés",
+      pastLabel:   "Passé",
+      exhibitionLabel: "Exposition",
+      viewEvent:   "Voir l'événement",
+      viewExhibition: "Voir l'exposition",
+      photos:      "Photos",
+      video:       "Vidéo",
+    },
   },
 
   es: {
@@ -356,6 +380,7 @@ export const translations = {
       career:     "Carrera",
       conservation: "Conservation",
       commission: "Encargar",
+      events:     "Eventos",
       donation:   "Donación",
     },
     hero: {
@@ -514,6 +539,17 @@ export const translations = {
       apply:            "Aplicar",
       emptyCart:        "Tu carrito está vacío.",
       emptyCartSub:     "Explora las obras originales de nuestros tres artistas residentes.",
+    },
+    events: {
+      label:       "Eventos",
+      upcoming:    "Próximos eventos",
+      past:        "Eventos pasados",
+      pastLabel:   "Pasado",
+      exhibitionLabel: "Exposición",
+      viewEvent:   "Ver evento",
+      viewExhibition: "Ver exposición",
+      photos:      "Fotos",
+      video:       "Vídeo",
     },
   },
 };
