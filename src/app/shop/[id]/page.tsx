@@ -16,7 +16,9 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
   if (!work) notFound();
 
   const addItem = useCartStore((s) => s.addItem);
-  const { formatPrice } = useCurrency();
+  const { formatPrice, currency, rates } = useCurrency();
+  const displayAmount = Math.round(work.price * rates[currency]);
+  const currencyLabel = currency === "RWF" ? "RWF" : currency === "USD" ? "$" : currency === "EUR" ? "€" : "£";
   const [toastVisible, setToastVisible] = useState(false);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
   const related = works.filter((w) => w.id !== work.id && w.medium === work.medium).slice(0, 3);
 
   return (
-    <main style={{ paddingTop: 64, background: "var(--cream)" }}>
+    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
 
       {/* Breadcrumb */}
       <div style={{ padding: "24px clamp(24px,6vw,80px)", maxWidth: 1100, margin: "0 auto" }}>
@@ -57,20 +59,23 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
         </nav>
       </div>
 
-      {/* Main product section */}
-      <section style={{ padding: "0 clamp(24px,6vw,80px) 80px", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 64, alignItems: "start" }}>
+      {/* Main product section — framed two-column layout */}
+      <section style={{ padding: "0 clamp(24px,6vw,80px) 80px", maxWidth: 1200, margin: "0 auto" }}>
+        <div
+          style={{
+            border: "1px solid rgba(245,240,232,0.6)",
+            overflow: "hidden",
+          }}
+        >
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "min(85vh, 700px)" }}>
 
-          {/* Artwork image */}
-          <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div
+            {/* Left: Artwork on dark green */}
+            <motion.div
+              initial={{ opacity: 0, x: -24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                aspectRatio: "3/4",
-                background: "#1C2A1E",
+                background: "#273329",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -78,14 +83,22 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
                 overflow: "hidden",
               }}
             >
-              <span style={{ fontSize: "clamp(140px,18vw,240px)", opacity: 0.12 }}>{work.emoji}</span>
+              <span
+                style={{
+                  fontSize: "clamp(160px, 22vw, 280px)",
+                  opacity: 0.18,
+                  filter: "grayscale(1)",
+                }}
+              >
+                {work.emoji}
+              </span>
 
               {!work.available && (
                 <div
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "rgba(14,16,15,0.55)",
+                    background: "rgba(14,16,15,0.6)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -106,114 +119,92 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
                   </p>
                 </div>
               )}
-            </div>
+            </motion.div>
 
-            {/* Medium label below image */}
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--warm-grey)", marginTop: 16 }}>
-              {work.medium} on acid-free cotton paper · {work.size}
-            </p>
-          </motion.div>
-
-          {/* Product info */}
-          <motion.div
-            initial={{ opacity: 0, x: 24 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            style={{ paddingTop: 16 }}
-          >
-            <p
+            {/* Right: Details on dark grey */}
+            <motion.div
+              initial={{ opacity: 0, x: 24 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 10,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "var(--ochre)",
-                marginBottom: 16,
+                background: "#111111",
+                padding: "clamp(32px, 5vw, 56px)",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
             >
-              Original Work · {work.year}
-            </p>
-
-            <h1
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(36px,5vw,64px)",
-                fontWeight: 400,
-                lineHeight: 1.0,
-                color: "var(--ink)",
-                marginBottom: 8,
-              }}
-            >
-              {work.title}
-            </h1>
-
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
-                fontSize: 18,
-                fontWeight: 300,
-                color: "var(--warm-grey)",
-                marginBottom: 32,
-              }}
-            >
-              {work.animal} — {work.artist}
-            </p>
-
-            {/* Divider */}
-            <div style={{ height: 1, background: "rgba(14,16,15,0.1)", marginBottom: 32 }} />
-
-            {/* Description */}
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 14,
-                color: "rgba(14,16,15,0.65)",
-                lineHeight: 1.9,
-                marginBottom: 40,
-              }}
-            >
-              {work.description}
-            </p>
-
-            {/* Details grid */}
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: "16px 32px",
-                marginBottom: 40,
-                padding: "24px",
-                background: "var(--cream-warm)",
-              }}
-            >
-              {[
-                { label: "Medium", value: work.medium },
-                { label: "Size", value: work.size },
-                { label: "Artist", value: work.artist },
-                { label: "Year", value: String(work.year) },
-                { label: "Subject", value: work.animal },
-                { label: "Availability", value: work.available ? "Available" : "Sold" },
-              ].map(({ label, value }) => (
-                <div key={label}>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 4 }}>{label}</p>
-                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: work.available && label === "Availability" ? "var(--sage)" : "var(--ink)" }}>{value}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Price & CTA — bold, Nothing-style */}
-            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
               <p
                 style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(36px,4vw,48px)",
-                  fontWeight: 500,
-                  color: work.available ? "var(--ochre)" : "var(--warm-grey)",
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 10,
+                  letterSpacing: "0.2em",
+                  textTransform: "uppercase",
+                  color: "#CD9245",
+                  marginBottom: 20,
                 }}
               >
-                {work.available ? formatPrice(work.price) : "—"}
+                {work.medium.toUpperCase()} · {work.size.toUpperCase()}
               </p>
+
+              <h1
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(32px, 4.5vw, 56px)",
+                  fontWeight: 400,
+                  lineHeight: 1.1,
+                  color: "#fff",
+                  marginBottom: 12,
+                }}
+              >
+                {work.title}
+              </h1>
+
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 15,
+                  fontWeight: 400,
+                  color: "rgba(255,255,255,0.75)",
+                  marginBottom: 28,
+                }}
+              >
+                {work.artist}
+              </p>
+
+              <p
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 14,
+                  color: "rgba(255,255,255,0.7)",
+                  lineHeight: 1.85,
+                  marginBottom: 40,
+                }}
+              >
+                {work.description}
+              </p>
+
+              <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 24 }}>
+                <span
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 14,
+                    color: "rgba(255,255,255,0.9)",
+                  }}
+                >
+                  {currencyLabel}
+                </span>
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(36px, 4vw, 52px)",
+                    fontWeight: 600,
+                    color: work.available ? "#fff" : "rgba(255,255,255,0.4)",
+                  }}
+                >
+                  {work.available ? displayAmount.toLocaleString() : "—"}
+                </span>
+              </div>
 
               {work.available ? (
                 <button
@@ -221,16 +212,17 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: 11,
-                    letterSpacing: "0.18em",
+                    letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    background: "var(--ochre)",
+                    background: "#CD9245",
                     color: "#fff",
-                    padding: "16px 40px",
+                    padding: "18px 36px",
                     border: "none",
                     cursor: "pointer",
+                    alignSelf: "flex-start",
                     transition: "background-color 0.3s",
                   }}
-                  className="hover:!bg-[var(--ochre-light)]"
+                  className="hover:!bg-[#D4A055]"
                 >
                   Add to Cart
                 </button>
@@ -240,24 +232,24 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
                   style={{
                     fontFamily: "var(--font-sans)",
                     fontSize: 11,
-                    letterSpacing: "0.18em",
+                    letterSpacing: "0.2em",
                     textTransform: "uppercase",
-                    background: "var(--ink)",
+                    background: "#CD9245",
                     color: "#fff",
-                    padding: "16px 40px",
+                    padding: "18px 36px",
                     textDecoration: "none",
+                    alignSelf: "flex-start",
                   }}
                 >
                   Commission Similar Work
                 </Link>
               )}
-            </div>
 
-            {/* Shipping note */}
-            <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginTop: 20, lineHeight: 1.7 }}>
-              Ships from Kigali, Rwanda · Insured worldwide shipping · Certificate of authenticity included
-            </p>
-          </motion.div>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.45)", marginTop: 28, lineHeight: 1.7 }}>
+                Ships from Kigali, Rwanda · Insured worldwide shipping · Certificate of authenticity included
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 

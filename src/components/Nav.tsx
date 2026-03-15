@@ -49,6 +49,7 @@ export default function Nav() {
   ];
 
   const currentLang = LANGUAGES.find((l) => l.code === lang)!;
+  const cartLabel = cartCount > 9 ? "9+" : String(cartCount);
 
   return (
     <>
@@ -89,7 +90,7 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* Logo — center */}
+          {/* Logo center */}
           <div className="flex-1 flex justify-center">
             <Link
               href="/"
@@ -163,7 +164,7 @@ export default function Nav() {
                 <path d="M16 10a4 4 0 01-8 0" />
               </svg>
               <AnimatePresence>
-                {cartCount > 0 && (
+                {(cartCount > 0) && (
                   <motion.span
                     key={cartCount}
                     initial={{ scale: 0 }}
@@ -187,7 +188,7 @@ export default function Nav() {
                       fontWeight: 600,
                     }}
                   >
-                    {cartCount > 9 ? "9+" : cartCount}
+                    {cartLabel}
                   </motion.span>
                 )}
               </AnimatePresence>
@@ -356,7 +357,7 @@ export default function Nav() {
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 01-8 0" />
               </svg>
-              {cartCount > 0 && (
+              {(cartCount > 0) && (
                 <span
                   style={{
                     position: "absolute",
@@ -374,7 +375,7 @@ export default function Nav() {
                     fontWeight: 600,
                   }}
                 >
-                  {cartCount > 9 ? "9+" : cartCount}
+                  {cartLabel}
                 </span>
               )}
             </Link>
