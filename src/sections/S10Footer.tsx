@@ -5,7 +5,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const exploreHrefs = ["#collection", "#wild", "#artists", "#works", "#process"];
 const programmeHrefs = ["#programme", "/studio", "#works"];
-const servicesHrefs = ["/commission", "/shop", "/tuzivugire", "https://wa.me/250700000000"];
+const servicesHrefs = ["/commission", "/shop", "/conservation", "https://wa.me/250700000000"];
 
 export default function S10Footer() {
   const { t } = useLanguage();

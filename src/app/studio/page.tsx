@@ -35,7 +35,7 @@ const artists = [
     since: "2022",
     medium: "Charcoal · Mixed Media",
     specialty: ["Lion", "Leopard", "African Eagle"],
-    bio: "Rigobert came to SAWA through the Tuzivugire programme, arriving with a sketchbook full of big-cat studies and a fearless approach to scale. His large-format charcoal works — some exceeding 150×200cm — are studies in texture: the grain of a lion's mane rendered hair by hair, the rosettes of a leopard so precise they read as scientific illustration.",
+    bio: "Rigobert came to SAWA through the Conservation programme, arriving with a sketchbook full of big-cat studies and a fearless approach to scale. His large-format charcoal works — some exceeding 150×200cm — are studies in texture: the grain of a lion's mane rendered hair by hair, the rosettes of a leopard so precise they read as scientific illustration.",
     quote: "Every texture is a story the animal already knows.",
     emoji: "🦁",
     bg: "#1A1810",

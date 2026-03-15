@@ -132,7 +132,7 @@ export default function CheckoutPage() {
                 className="mt-1 accent-ochre"
               />
               <span className="text-sm" style={{ color: "var(--charcoal)" }}>
-                Add <strong>5%</strong> to support the <strong>Tuzivugire</strong> youth artists programme
+                Add <strong>5%</strong> to support the <strong>Conservation</strong> youth artists programme
                 {donation && <span className="ml-1 opacity-60">(+{formatPrice(donationAmt)})</span>}
               </span>
             </label>
@@ -173,7 +173,7 @@ export default function CheckoutPage() {
 
             <div className="flex flex-col gap-2 pt-4 text-sm border-t mt-2" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
               <Row label="Subtotal" value={formatPrice(sub)} />
-              {donation && <Row label="Tuzivugire (5%)" value={`+${formatPrice(donationAmt)}`} />}
+              {donation && <Row label="Conservation (5%)" value={`+${formatPrice(donationAmt)}`} />}
               <Row label="Shipping" value={shipping === 0 ? "Free" : formatPrice(shipping)} />
               <Row label="Total" value={formatPrice(total)} bold />
             </div>

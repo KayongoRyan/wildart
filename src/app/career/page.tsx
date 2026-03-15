@@ -349,15 +349,15 @@ export default function CareerPage() {
                     height: "100%",
                     minHeight: 320,
                     textAlign: "left",
-                    background: isActive ? "var(--ink)" : "var(--cream-warm)",
+                    background: isActive ? "var(--forest)" : "var(--cream-warm)",
                     padding: "40px 32px",
                     border: `2px solid ${isActive ? "var(--ochre)" : "transparent"}`,
                     cursor: "pointer",
-                    transition: "all 0.3s",
+                    transition: "background 0.3s, border-color 0.3s, color 0.3s",
                     display: "flex",
                     flexDirection: "column",
                   }}
-                  className={isActive ? "" : "hover:!border-[rgba(14,16,15,0.12)]"}
+                  className={isActive ? "" : "hover:!border-[rgba(14,16,15,0.12)] hover:!bg-[var(--cream)]"}
                 >
                   <span style={{ fontSize: 40, display: "block", marginBottom: 20 }}>{cat.emoji}</span>
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: isActive ? "#fff" : "var(--ink)", marginBottom: 12 }}>

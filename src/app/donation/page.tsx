@@ -94,7 +94,7 @@ export default function DonationPage() {
   return (
     <main style={{ paddingTop: 72, background: "var(--cream)" }}>
       <PageHero
-        label="Support Tuzivugire"
+        label="Support Conservation"
         headline={<>Help us train the<br />next generation.</>}
         subtitle="Your contribution funds field materials, park visit transport, and annual scholarships for young Rwandan wildlife artists. Every dollar makes a difference."
         emoji="✊"

@@ -125,7 +125,7 @@ function ConfirmationContent() {
               Your donation
             </p>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, borderBottom: "1px solid rgba(107, 103, 96, 0.1)" }}>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ink)" }}>Tuzivugire Programme</p>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ink)" }}>Conservation Programme</p>
               <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--ochre)" }}>
                 {formatPrice(order.total)}
               </p>
@@ -142,7 +142,7 @@ function ConfirmationContent() {
           {paid ? (
             <>
               <Link
-                href="/tuzivugire"
+                href="/conservation"
                 style={{
                   fontFamily: "var(--font-sans)",
                   fontSize: 11,
@@ -156,7 +156,7 @@ function ConfirmationContent() {
                 }}
                 className="hover:opacity-90 transition-opacity"
               >
-                Learn about Tuzivugire
+                Learn about Conservation
               </Link>
               <Link
                 href="/"

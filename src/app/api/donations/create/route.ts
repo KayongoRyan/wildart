@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
       customerPhone: customerPhone ?? "",
       items: [
         {
-          title: "Tuzivugire Programme Donation",
+          title: "Conservation Programme Donation",
           artist: "SAWA",
           medium: "",
           size: "",

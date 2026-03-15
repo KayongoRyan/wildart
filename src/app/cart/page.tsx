@@ -78,14 +78,14 @@ export default function CartPage() {
               </motion.div>
             ))}
 
-            {/* Tuzivugire donation opt-in */}
+            {/* Conservation donation opt-in */}
             <div style={{ marginTop: 32, background: "var(--forest)", padding: "28px 32px" }}>
               <label style={{ display: "flex", alignItems: "flex-start", gap: 16, cursor: "pointer" }}>
                 <input type="checkbox" checked={donation} onChange={e => setDonation(e.target.checked)}
                   style={{ width: 16, height: 16, marginTop: 2, accentColor: "var(--ochre)", flexShrink: 0 }} />
                 <div>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 500, color: "var(--cream)", marginBottom: 6 }}>
-                    Add 5% to Tuzivugire — {formatPrice(Math.round(subtotal * 0.05))}
+                    Add 5% to Conservation — {formatPrice(Math.round(subtotal * 0.05))}
                   </p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
                     Funds art materials and park-visit transport for young artists in our education programme. Optional but meaningful.
@@ -105,7 +105,7 @@ export default function CartPage() {
               {[
                 ["Subtotal", formatPrice(subtotal)],
                 ["Shipping", shipping === 0 ? "Free" : formatPrice(shipping)],
-                ...(donation ? [["Tuzivugire (5%)", formatPrice(donationAmt)]] : []),
+                ...(donation ? [["Conservation (5%)", formatPrice(donationAmt)]] : []),
               ].map(([label, val]) => (
                 <div key={label} style={{ display: "flex", justifyContent: "space-between" }}>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)" }}>{label}</p>

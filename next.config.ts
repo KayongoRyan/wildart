@@ -5,7 +5,11 @@ const projectRoot = path.resolve(__dirname);
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return [{ source: "/wild", destination: "/commission#the-wild", permanent: true }];
+    return [
+      { source: "/wild", destination: "/commission#the-wild", permanent: true },
+      { source: "/tuzivugire", destination: "/conservation", permanent: true },
+      { source: "/tuzivugire/:path*", destination: "/conservation/:path*", permanent: true },
+    ];
   },
   turbopack: {
     root: projectRoot,

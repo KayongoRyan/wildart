@@ -41,6 +41,12 @@ const prints = [
   { id: "p4", title: "Leopard Study",      price: 130, size: "50×70cm", edition: "Ed. 25", emoji: "🐆" },
 ];
 
+const photography = [
+  { id: "ph1", title: "Virunga Mist", artist: "SAWA Studio", price: 85, size: "40×60cm", emoji: "🦍" },
+  { id: "ph2", title: "Akagera Golden Hour", artist: "SAWA Studio", price: 95, size: "50×70cm", emoji: "🐘" },
+  { id: "ph3", title: "Crane at Dawn", artist: "SAWA Studio", price: 75, size: "40×56cm", emoji: "🦢" },
+];
+
 function WorkCard({ work, formatPrice }: { work: Work; formatPrice: (n: number) => string }) {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
@@ -123,7 +129,7 @@ function ShopContent() {
   const searchParams             = useSearchParams();
   const mediumParam              = searchParams.get("medium");
   const artistParam              = searchParams.get("artist");
-  const [tab, setTab]            = useState<"originals" | "prints">("originals");
+  const [tab, setTab]            = useState<"originals" | "prints" | "featured">("originals");
   const [toastTitle, setToastTitle] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
   const addItem                  = useCartStore((s) => s.addItem);
@@ -194,32 +200,13 @@ function ShopContent() {
         </div>
       </section>
 
-      {/* Collections */}
-      <section style={{ padding: "0 clamp(24px,6vw,80px) 80px", maxWidth: 1100, margin: "0 auto" }}>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 32 }}>Collections</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
-          {collections.map((c, i) => (
-            <motion.div key={c.name}
-              initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-              className="group cursor-pointer"
-              style={{ background: c.bg, padding: "48px 36px", position: "relative", overflow: "hidden" }}>
-              <div style={{ position: "absolute", right: 20, bottom: 10, fontSize: 80, opacity: 0.12, transition: "opacity 0.4s, transform 0.4s" }} className="group-hover:opacity-25 group-hover:scale-110">{c.emoji}</div>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 12 }}>{c.count} works</p>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--cream)", marginBottom: 12 }}>{c.name}</h3>
-              <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>{c.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Originals / Prints tab */}
+      {/* Originals / Prints / Featured Work tabs */}
       <section style={{ padding: "0 clamp(24px,6vw,80px) 100px", maxWidth: 1100, margin: "0 auto" }}>
         <div style={{ display: "flex", gap: 0, marginBottom: 48, borderBottom: "1px solid rgba(14,16,15,0.12)" }}>
-          {(["originals", "prints"] as const).map((t) => (
+          {(["originals", "prints", "featured"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
               style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", padding: "14px 28px", background: "none", border: "none", cursor: "pointer", borderBottom: `2px solid ${tab === t ? "var(--ink)" : "transparent"}`, color: tab === t ? "var(--ink)" : "var(--warm-grey)", transition: "all 0.2s" }}>
-              {t === "originals" ? "Original Works" : "Limited Prints"}
+              {t === "originals" ? "Original Works" : t === "prints" ? "Limited Prints" : "Featured Work"}
             </button>
           ))}
         </div>
@@ -230,7 +217,7 @@ function ShopContent() {
               <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--warm-grey)", gridColumn: "1 / -1" }}>No works match this filter.</p>
             )}
           </div>
-        ) : (
+        ) : tab === "prints" ? (
           <div>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--warm-grey)", lineHeight: 1.7, marginBottom: 40 }}>
               Limited edition giclée prints on 310gsm Hahnemühle Photo Rag. Each edition is hand-signed and numbered by the artist. Once sold out, editions are closed permanently.
@@ -258,6 +245,56 @@ function ShopContent() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 64 }}>
+            {/* Photography */}
+            <div>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>Photography</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 2 }}>
+                {photography.map((ph, i) => (
+                  <motion.div key={ph.id}
+                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                    className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
+                    <div style={{ aspectRatio: "4/5", background: "#1C2A1E", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                      <span style={{ fontSize: 80, opacity: 0.18 }} className="group-hover:scale-110 transition-transform duration-700 inline-block">{ph.emoji}</span>
+                    </div>
+                    <div style={{ padding: "16px 18px 20px" }}>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 6 }}>Photography · {ph.size}</p>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 300, color: "var(--ink)", marginBottom: 6 }}>{ph.title}</h3>
+                      <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginBottom: 12 }}>{ph.artist}</p>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                        <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)" }}>{formatPrice(ph.price)}</p>
+                        <button
+                          onClick={() => handleAdd({ id: ph.id, title: ph.title, artist: ph.artist, medium: "Photography", size: ph.size, price: ph.price })}
+                          style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "7px 14px", border: "none", cursor: "pointer" }}>
+                          Add
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            {/* Collection */}
+            <div>
+              <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>Collection</p>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 2 }}>
+                {collections.map((c, i) => (
+                  <motion.div key={c.name}
+                    initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                    className="group cursor-pointer"
+                    style={{ background: c.bg, padding: "48px 36px", position: "relative", overflow: "hidden" }}>
+                    <div style={{ position: "absolute", right: 20, bottom: 10, fontSize: 80, opacity: 0.12, transition: "opacity 0.4s, transform 0.4s" }} className="group-hover:opacity-25 group-hover:scale-110">{c.emoji}</div>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 12 }}>{c.count} works</p>
+                    <h3 style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--cream)", marginBottom: 12 }}>{c.name}</h3>
+                    <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.4)", lineHeight: 1.7 }}>{c.desc}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         )}

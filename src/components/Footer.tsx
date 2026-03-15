@@ -16,8 +16,8 @@ const shopLinks = [
 ];
 
 const programmeLinks = [
-  { label: "Tuzivugire", href: "/tuzivugire" },
-  { label: "Support Us", href: "/tuzivugire#support" },
+  { label: "Conservation", href: "/conservation" },
+  { label: "Support Us", href: "/conservation#support" },
   { label: "Contact", href: "/commission#contact" },
 ];
 
