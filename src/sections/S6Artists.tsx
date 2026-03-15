@@ -3,42 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-
-const artists = [
-  {
-    name:      "Christine Mukamana",
-    slug:      "Christine Mukamana",
-    role:      "Painter",
-    since:     "2020",
-    specialty: ["Mountain Gorilla", "Golden Monkey"],
-    medium:    "Graphite · Charcoal",
-    quote:     "We don't draw from photographs. We draw from what we see at dawn.",
-    emoji:     "🦍",
-    bg:        "#1C2A1E",
-  },
-  {
-    name:      "Josue Habimana",
-    slug:      "Josue Habimana",
-    role:      "Painter",
-    since:     "2021",
-    specialty: ["African Elephant", "Buffalo", "Hippo"],
-    medium:    "Ink · Watercolour",
-    quote:     "I draw from memory and love — both are infinite.",
-    emoji:     "🐘",
-    bg:        "#2A2010",
-  },
-  {
-    name:      "Rigobert Nzeyimana",
-    slug:      "Rigobert Nzeyimana",
-    role:      "Painter, Sculptor",
-    since:     "2022",
-    specialty: ["Lion", "Leopard", "Eagle"],
-    medium:    "Charcoal · Mixed Media",
-    quote:     "Every texture is a story the animal already knows.",
-    emoji:     "🦁",
-    bg:        "#1A1810",
-  },
-];
+import { artists } from "@/lib/artists";
 
 export default function S6Artists() {
   const ref = useRef(null);
@@ -104,7 +69,7 @@ export default function S6Artists() {
         }}
       >
         {artists.map((a, i) => (
-          <Link key={a.name} href={`/shop?artist=${encodeURIComponent(a.slug)}`} style={{ textDecoration: "none" }}>
+          <Link key={a.name} href={`/artists/${a.slug}`} style={{ textDecoration: "none" }}>
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -225,7 +190,7 @@ export default function S6Artists() {
               }}
               className="group-hover:!text-[var(--ochre)]"
             >
-              View works →
+              View profile →
             </span>
           </motion.div>
           </Link>

@@ -3,12 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
-
-const artists = [
-  { name: "Christine Mukamana", slug: "Christine Mukamana", role: "Painter", emoji: "🦍" },
-  { name: "Josue Habimana", slug: "Josue Habimana", role: "Painter", emoji: "🐘" },
-  { name: "Rigobert Nzeyimana", slug: "Rigobert Nzeyimana", role: "Painter, Sculptor", emoji: "🦁" },
-];
+import { artists } from "@/lib/artists";
 
 export default function S4Artists() {
   const ref = useRef(null);
@@ -23,7 +18,7 @@ export default function S4Artists() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {artists.map((a) => (
-            <Link key={a.name} href={`/shop?artist=${encodeURIComponent(a.slug)}`} className="block text-center group" style={{ textDecoration: "none" }}>
+            <Link key={a.name} href={`/artists/${a.slug}`} className="block text-center group" style={{ textDecoration: "none" }}>
               <div className="mb-4" style={{ fontSize: 48, opacity: 0.2 }}>{a.emoji}</div>
               <p style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 400, color: "var(--ink)", marginBottom: 4 }}>{a.name}</p>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)" }}>{a.role}</p>

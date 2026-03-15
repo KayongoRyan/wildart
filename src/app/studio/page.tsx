@@ -3,45 +3,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
-
-const artists = [
-  {
-    name: "Christine Mukamana",
-    role: "Lead Artist & Co-founder",
-    since: "2020",
-    medium: "Graphite · Charcoal",
-    specialty: ["Mountain Gorilla", "Golden Monkey", "Crowned Crane"],
-    bio: "Christine grew up walking the forest edges of Musanze, memorising the sounds of the Virunga before she ever held a pencil. Self-taught, she developed a hyper-realist graphite style that captures not just anatomy but the emotional weight of wild animals at rest. Her gorilla portraits have been exhibited in Kigali and featured in conservation publications across East Africa.",
-    quote: "We don't draw from photographs. We draw from what we see at dawn.",
-    emoji: "🦍",
-    bg: "#1C2A1E",
-    order: 0,
-  },
-  {
-    name: "Josue Habimana",
-    role: "Wildlife Illustrator",
-    since: "2021",
-    medium: "Ink · Watercolour",
-    specialty: ["African Elephant", "Buffalo", "Hippopotamus"],
-    bio: "Josue spent three years working as a field guide in Akagera National Park before returning to Musanze to paint. That time in the park transformed his understanding of animal movement — he draws elephants from memory, capturing the exact tilt of a head as a matriarch assesses the horizon. His ink wash technique has become the studio's most requested style among collectors.",
-    quote: "I draw from memory and love — both are infinite.",
-    emoji: "🐘",
-    bg: "#2A1E10",
-    order: 1,
-  },
-  {
-    name: "Rigobert Nzeyimana",
-    role: "Texture Specialist",
-    since: "2022",
-    medium: "Charcoal · Mixed Media",
-    specialty: ["Lion", "Leopard", "African Eagle"],
-    bio: "Rigobert came to SAWA through the Conservation programme, arriving with a sketchbook full of big-cat studies and a fearless approach to scale. His large-format charcoal works — some exceeding 150×200cm — are studies in texture: the grain of a lion's mane rendered hair by hair, the rosettes of a leopard so precise they read as scientific illustration.",
-    quote: "Every texture is a story the animal already knows.",
-    emoji: "🦁",
-    bg: "#1A1810",
-    order: 2,
-  },
-];
+import { artists } from "@/lib/artists";
 
 const values = [
   { label: "Observation over reference", body: "Every artwork begins with direct observation in the field. We visit Volcanoes National Park, Akagera, and Nyungwe regularly — sketching before we ever touch final paper." },
@@ -50,11 +12,12 @@ const values = [
   { label: "Materials as respect", body: "We use only archival-grade papers, Japanese graphite, and conservation-framed glass. A SAWA work is built to last a century." },
 ];
 
-function ArtistCard({ a, index }: { a: typeof artists[0]; index: number }) {
+function ArtistCard({ a, index }: { a: (typeof artists)[0]; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
   const flip = index % 2 !== 0;
   return (
+    <Link href={`/artists/${a.slug}`} style={{ textDecoration: "none" }}>
     <motion.div ref={ref} initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay: index * 0.1 }}
       style={{ background: a.bg, display: "grid", gridTemplateColumns: flip ? "1.5fr 1fr" : "1fr 1.5fr", minHeight: 420, overflow: "hidden" }}>
@@ -76,6 +39,7 @@ function ArtistCard({ a, index }: { a: typeof artists[0]; index: number }) {
         </div>
       </div>
     </motion.div>
+    </Link>
   );
 }
 
