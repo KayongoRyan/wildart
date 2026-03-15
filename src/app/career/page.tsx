@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
+import { apiUrl } from "@/lib/api";
 
 const categories = [
   {
@@ -77,7 +78,7 @@ function InternshipForm({ onSuccess, onClose }: { onSuccess: () => void; onClose
     setSubmitting(true);
     setError("");
     try {
-      const res = await fetch("/api/career/apply", {
+      const res = await fetch(apiUrl("/career/apply"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, type: "internship" }),
@@ -193,7 +194,7 @@ function ArtistsForm({ onSuccess, onClose }: { onSuccess: () => void; onClose: (
     setSubmitting(true);
     setError("");
     try {
-      const res = await fetch("/api/career/apply", {
+      const res = await fetch(apiUrl("/career/apply"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, type: "artists" }),

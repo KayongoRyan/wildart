@@ -1,24 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/db/connect";
-import Order from "@/lib/db/Order";
+import { Router, Request, Response } from "express";
+import { connectDB } from "../db/connect.js";
+import Order from "../models/Order.js";
 
-export async function POST(req: NextRequest) {
+const router = Router();
+
+router.post("/create", async (req: Request, res: Response) => {
   try {
     await connectDB();
-
-    const body = await req.json();
-    const { customerName, customerEmail, customerPhone, amount, currency } = body;
+    const { customerName, customerEmail, customerPhone, amount, currency } = req.body;
 
     if (!customerName || !customerEmail || !amount || amount < 1) {
-      return NextResponse.json(
-        { error: "Missing required fields: name, email, and amount." },
-        { status: 400 }
-      );
+      return res.status(400).json({
+        error: "Missing required fields: name, email, and amount.",
+      });
     }
 
     const amt = Number(amount);
     if (isNaN(amt) || amt < 1) {
-      return NextResponse.json({ error: "Invalid amount." }, { status: 400 });
+      return res.status(400).json({ error: "Invalid amount." });
     }
 
     const order = await Order.create({
@@ -43,9 +42,11 @@ export async function POST(req: NextRequest) {
       paymentStatus: "pending",
     });
 
-    return NextResponse.json({ orderId: order._id.toString() }, { status: 201 });
+    return res.status(201).json({ orderId: order._id.toString() });
   } catch (err) {
     console.error("[donations/create]", err);
-    return NextResponse.json({ error: "Server error." }, { status: 500 });
+    return res.status(500).json({ error: "Server error." });
   }
-}
+});
+
+export default router;

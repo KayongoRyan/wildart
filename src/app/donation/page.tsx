@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
+import { apiUrl } from "@/lib/api";
 
 const tiers = [
   { amount: 50, label: "$50", desc: "Monthly materials for 1 student", emoji: "📚" },
@@ -50,7 +51,7 @@ export default function DonationPage() {
 
     setLoading(true);
     try {
-      const res = await fetch("/api/donations/create", {
+      const res = await fetch(apiUrl("/donations/create"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -68,7 +69,7 @@ export default function DonationPage() {
       }
       const { orderId } = await res.json();
 
-      const payRes = await fetch("/api/payments/initialize", {
+      const payRes = await fetch(apiUrl("/payments/initialize"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
 import { useCurrency } from "@/context/CurrencyContext";
+import { apiUrl } from "@/lib/api";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -36,7 +37,7 @@ export default function CheckoutPage() {
 
     try {
       // Step 1 — create order in MongoDB
-      const orderRes = await fetch("/api/orders/create", {
+      const orderRes = await fetch(apiUrl("/orders/create"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -56,7 +57,7 @@ export default function CheckoutPage() {
       const { orderId } = await orderRes.json();
 
       // Step 2 — initialize payment session with Flutterwave
-      const payRes = await fetch("/api/payments/initialize", {
+      const payRes = await fetch(apiUrl("/payments/initialize"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

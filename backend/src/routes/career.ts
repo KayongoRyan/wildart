@@ -1,23 +1,23 @@
-import { NextRequest, NextResponse } from "next/server";
-import { connectDB } from "@/lib/db/connect";
-import CareerApplication from "@/lib/db/CareerApplication";
+import { Router, Request, Response } from "express";
+import { connectDB } from "../db/connect.js";
+import CareerApplication from "../models/CareerApplication.js";
 
-export async function POST(req: NextRequest) {
+const router = Router();
+
+router.post("/apply", async (req: Request, res: Response) => {
   try {
     await connectDB();
-
-    const body = await req.json();
+    const body = req.body;
     const { type, name, email } = body;
 
     if (!type || !name || !email) {
-      return NextResponse.json(
-        { error: "Name, email, and application type are required." },
-        { status: 400 }
-      );
+      return res.status(400).json({
+        error: "Name, email, and application type are required.",
+      });
     }
 
     if (!["internship", "artists"].includes(type)) {
-      return NextResponse.json({ error: "Invalid application type." }, { status: 400 });
+      return res.status(400).json({ error: "Invalid application type." });
     }
 
     await CareerApplication.create({
@@ -37,10 +37,15 @@ export async function POST(req: NextRequest) {
       whySawa: String(body.whySawa ?? "").trim(),
     });
 
-    return NextResponse.json({ success: true }, { status: 201 });
+    return res.status(201).json({ success: true });
   } catch (err) {
     console.error("[career/apply]", err);
-    const msg = err instanceof Error && err.message?.includes("MONGODB") ? "Database not configured. Please add MONGODB_URI to .env.local" : "Server error. Please try again.";
-    return NextResponse.json({ error: msg }, { status: 500 });
+    const msg =
+      err instanceof Error && err.message?.includes("MONGODB")
+        ? "Database not configured. Please add MONGODB_URI to .env"
+        : "Server error. Please try again.";
+    return res.status(500).json({ error: msg });
   }
-}
+});
+
+export default router;

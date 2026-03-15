@@ -6,16 +6,13 @@ export interface ICareerApplication extends Document {
   email: string;
   phone: string;
   location?: string;
-  // Internship fields
   currentStatus?: string;
   preferredDuration?: string;
   background?: string;
-  // Artists fields
   portfolioUrl?: string;
   preferredMedium?: string;
   wildlifeExperience?: string;
   availability?: string;
-  // Shared
   aboutPractice?: string;
   whySawa?: string;
   createdAt: Date;
@@ -41,8 +38,4 @@ const CareerApplicationSchema = new Schema<ICareerApplication>(
   { timestamps: true }
 );
 
-const CareerApplication: Model<ICareerApplication> =
-  mongoose.models.CareerApplication ??
-  mongoose.model<ICareerApplication>("CareerApplication", CareerApplicationSchema);
-
-export default CareerApplication;
+export default mongoose.model<ICareerApplication>("CareerApplication", CareerApplicationSchema);

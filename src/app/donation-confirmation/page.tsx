@@ -3,6 +3,7 @@ import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useCurrency } from "@/context/CurrencyContext";
+import { apiUrl } from "@/lib/api";
 
 interface OrderData {
   paymentStatus: "pending" | "paid" | "failed";
@@ -48,7 +49,7 @@ function ConfirmationContent() {
     const poll = async () => {
       attempts++;
       try {
-        const res = await fetch(`/api/orders/status?tx_ref=${txRef}`);
+        const res = await fetch(apiUrl(`/orders/status?tx_ref=${txRef}`));
         if (!res.ok) throw new Error("Donation not found.");
         const data: OrderData = await res.json();
 

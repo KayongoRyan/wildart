@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "backend": "cd backend && npm run dev",
+    "db:setup": "mongosh wildart --file scripts/mongodb-setup.js"
   },
   "dependencies": {
     "flutterwave-node-v3": "^1.3.1",
