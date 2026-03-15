@@ -42,7 +42,7 @@ export default function Nav() {
 
   const navLinks = [
     { label: t.nav.studio, href: "/studio" },
-    { label: t.nav.wild, href: "/wild" },
+    { label: t.nav.career, href: "/career" },
     { label: t.nav.tuzivugire, href: "/tuzivugire" },
     { label: t.nav.commission, href: "/commission" },
     { label: t.nav.shop, href: "/shop" },

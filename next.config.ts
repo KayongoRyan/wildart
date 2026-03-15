@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return [{ source: "/wild", destination: "/commission#the-wild", permanent: true }];
+  },
 };
 
 export default nextConfig;

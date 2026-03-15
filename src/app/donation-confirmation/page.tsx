@@ -29,6 +29,7 @@ export default function DonationConfirmationPage() {
 
 function ConfirmationContent() {
   const params = useSearchParams();
+  const { formatPrice } = useCurrency();
   const txRef = params.get("tx_ref");
   const urlStatus = params.get("status");
 
