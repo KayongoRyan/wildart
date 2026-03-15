@@ -3,6 +3,7 @@ import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
+import { useCurrency } from "@/context/CurrencyContext";
 
 const steps = [
   { num: "01", title: "Consultation", body: "Tell us about the animal, size, and feeling you want. We respond within 48 hours with a brief and an estimated timeline." },
@@ -12,10 +13,10 @@ const steps = [
 ];
 
 const pricing = [
-  { size: "Small",  dims: "30×40cm",   price: "$450–$750",   time: "2–3 weeks" },
-  { size: "Medium", dims: "60×80cm",   price: "$900–$1,500", time: "3–5 weeks" },
-  { size: "Large",  dims: "100×120cm", price: "$1,800–$3,000", time: "5–8 weeks" },
-  { size: "Grand",  dims: "150×200cm", price: "From $4,000",  time: "8–12 weeks" },
+  { size: "Small",  dims: "30×40cm",   minUsd: 450,   maxUsd: 750,   time: "2–3 weeks" },
+  { size: "Medium", dims: "60×80cm",   minUsd: 900,  maxUsd: 1500,  time: "3–5 weeks" },
+  { size: "Large",  dims: "100×120cm", minUsd: 1800, maxUsd: 3000,  time: "5–8 weeks" },
+  { size: "Grand",  dims: "150×200cm", minUsd: 4000, maxUsd: null,  time: "8–12 weeks" },
 ];
 
 const animals = ["Mountain Gorilla", "African Elephant", "Lion", "Leopard", "Cheetah", "Eagle", "Buffalo", "Hippopotamus", "Crowned Crane", "Chimpanzee", "Golden Monkey", "Other"];
@@ -41,6 +42,7 @@ const labelStyle: React.CSSProperties = {
 };
 
 export default function CommissionPage() {
+  const { formatPrice } = useCurrency();
   const [form, setForm] = useState({ name: "", email: "", animal: "", medium: "", size: "", budget: "", timeline: "", notes: "" });
   const [submitted, setSubmitted] = useState(false);
 
@@ -92,7 +94,9 @@ export default function CommissionPage() {
               <FadeIn key={p.size} delay={i * 0.08}>
                 <div style={{ background: "rgba(255,255,255,0.04)", padding: "36px 28px", border: "1px solid rgba(255,255,255,0.06)" }}>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 8 }}>{p.size}</p>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 300, color: "var(--cream)", marginBottom: 8 }}>{p.price}</p>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 300, color: "var(--cream)", marginBottom: 8 }}>
+                    {p.maxUsd != null ? `${formatPrice(p.minUsd)}–${formatPrice(p.maxUsd)}` : `From ${formatPrice(p.minUsd)}`}
+                  </p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.35)", marginBottom: 4 }}>{p.dims}</p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "rgba(255,255,255,0.25)", fontStyle: "italic" }}>{p.time}</p>
                 </div>

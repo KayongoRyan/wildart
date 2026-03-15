@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import { useCartStore } from "@/store/cartStore";
 import CartToast from "@/components/CartToast";
+import { useCurrency } from "@/context/CurrencyContext";
 import { works, type Work } from "@/lib/works";
 
 const featured = {
@@ -40,7 +41,7 @@ const prints = [
   { id: "p4", title: "Leopard Study",      price: 130, size: "50×70cm", edition: "Ed. 25", emoji: "🐆" },
 ];
 
-function WorkCard({ work }: { work: Work }) {
+function WorkCard({ work, formatPrice }: { work: Work; formatPrice: (n: number) => string }) {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
 
@@ -71,7 +72,7 @@ function WorkCard({ work }: { work: Work }) {
           <h3 style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 300, color: "var(--ink)", marginBottom: 4 }}>{work.kw}</h3>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginBottom: 10 }}>{work.artist}</p>
           <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: work.available ? "var(--ink)" : "var(--warm-grey)" }}>
-            {work.available ? `$${work.price.toLocaleString()}` : "Sold"}
+            {work.available ? formatPrice(work.price) : "Sold"}
           </p>
         </div>
       </Link>
@@ -79,7 +80,7 @@ function WorkCard({ work }: { work: Work }) {
   );
 }
 
-function Card({ art, onAdd }: { art: typeof newArrivals[0]; onAdd: (art: typeof newArrivals[0]) => void }) {
+function Card({ art, onAdd, formatPrice }: { art: typeof newArrivals[0]; onAdd: (art: typeof newArrivals[0]) => void; formatPrice: (n: number) => string }) {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
 
@@ -111,7 +112,7 @@ function Card({ art, onAdd }: { art: typeof newArrivals[0]; onAdd: (art: typeof 
         <h3 style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 300, color: "var(--ink)", marginBottom: 4 }}>{art.title}</h3>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginBottom: 10 }}>{art.artist}</p>
         <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: art.available ? "var(--ink)" : "var(--warm-grey)" }}>
-          {art.available ? `$${art.price.toLocaleString()}` : "Sold"}
+          {art.available ? formatPrice(art.price) : "Sold"}
         </p>
       </div>
     </motion.div>
@@ -126,6 +127,7 @@ export default function ShopPage() {
   const [toastTitle, setToastTitle] = useState("");
   const [toastVisible, setToastVisible] = useState(false);
   const addItem                  = useCartStore((s) => s.addItem);
+  const { formatPrice }         = useCurrency();
 
   const filteredWorks = works.filter((w) => {
     if (mediumParam) {
@@ -180,7 +182,7 @@ export default function ShopPage() {
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>{featured.artist}</p>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.85, marginBottom: 32 }}>{featured.desc}</p>
             <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 300, color: "var(--cream)" }}>${featured.price.toLocaleString()}</p>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 300, color: "var(--cream)" }}>{formatPrice(featured.price)}</p>
               <button
                 onClick={() => handleAdd({ id: featured.id, title: featured.title, artist: featured.artist, medium: featured.medium, size: featured.size, price: featured.price })}
                 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 32px", border: "none", cursor: "pointer" }}
@@ -224,7 +226,7 @@ export default function ShopPage() {
 
         {tab === "originals" ? (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))", gap: 2 }}>
-            {filteredWorks.length > 0 ? filteredWorks.map((w) => <WorkCard key={w.id} work={w} />) : (
+            {filteredWorks.length > 0 ? filteredWorks.map((w) => <WorkCard key={w.id} work={w} formatPrice={formatPrice} />) : (
               <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--warm-grey)", gridColumn: "1 / -1" }}>No works match this filter.</p>
             )}
           </div>
@@ -246,7 +248,7 @@ export default function ShopPage() {
                     <p style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 6 }}>{p.edition} · {p.size}</p>
                     <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 300, color: "var(--ink)", marginBottom: 10 }}>{p.title}</h3>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)" }}>${p.price}</p>
+                      <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)" }}>{formatPrice(p.price)}</p>
                       <button
                         onClick={() => handleAdd({ id: p.id, title: p.title, medium: "Print", size: p.size, price: p.price })}
                         style={{ fontFamily: "var(--font-sans)", fontSize: 9, letterSpacing: "0.14em", textTransform: "uppercase", background: "var(--ink)", color: "#fff", padding: "7px 14px", border: "none", cursor: "pointer" }}>

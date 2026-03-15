@@ -7,6 +7,7 @@ import { works } from "@/lib/works";
 import Footer from "@/components/Footer";
 import { useCartStore } from "@/store/cartStore";
 import CartToast from "@/components/CartToast";
+import { useCurrency } from "@/context/CurrencyContext";
 
 export default function WorkDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -15,6 +16,7 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
   if (!work) notFound();
 
   const addItem = useCartStore((s) => s.addItem);
+  const { formatPrice } = useCurrency();
   const [toastVisible, setToastVisible] = useState(false);
 
   useEffect(() => {
@@ -210,7 +212,7 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
                   color: work.available ? "var(--ochre)" : "var(--warm-grey)",
                 }}
               >
-                {work.available ? `$${work.price.toLocaleString()}` : "—"}
+                {work.available ? formatPrice(work.price) : "—"}
               </p>
 
               {work.available ? (
@@ -298,7 +300,7 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
                     <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 20, fontWeight: 300, color: "var(--ink)", marginBottom: 4 }}>{r.title}</p>
                     <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 6 }}>{r.artist}</p>
                     <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: r.available ? "var(--ochre)" : "rgba(14,16,15,0.3)" }}>
-                      {r.available ? `$${r.price.toLocaleString()}` : "—"}
+                      {r.available ? formatPrice(r.price) : "—"}
                     </p>
                   </Link>
                 </motion.div>

@@ -3,6 +3,7 @@ import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
+import { useCurrency } from "@/context/CurrencyContext";
 
 interface OrderData {
   paymentStatus: "pending" | "paid" | "failed";
@@ -33,6 +34,7 @@ function ConfirmationContent() {
   const urlStatus = params.get("status");
 
   const clearCart = useCartStore((s) => s.clearCart);
+  const { formatPrice } = useCurrency();
   const cleared = useRef(false);
 
   const [order, setOrder] = useState<OrderData | null>(null);
@@ -134,12 +136,12 @@ function ConfirmationContent() {
                   <p style={{ fontFamily: "var(--font-display)", color: "var(--charcoal)" }}>{item.title}</p>
                   <p className="text-xs opacity-50 mt-0.5">{item.artist} · qty {item.qty}</p>
                 </div>
-                <span style={{ color: "var(--charcoal)" }}>${(item.price * item.qty).toFixed(2)}</span>
+                <span style={{ color: "var(--charcoal)" }}>{formatPrice(item.price * item.qty)}</span>
               </div>
             ))}
             <div className="flex justify-between font-semibold pt-2" style={{ color: "var(--charcoal)" }}>
               <span>Total paid</span>
-              <span>{order.currency} {order.total.toFixed(2)}</span>
+              <span>{formatPrice(order.total)}</span>
             </div>
             {txRef && (
               <p className="text-xs opacity-40 mt-1" style={{ color: "var(--charcoal)" }}>

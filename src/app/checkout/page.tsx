@@ -3,10 +3,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useCartStore } from "@/store/cartStore";
+import { useCurrency } from "@/context/CurrencyContext";
 
 export default function CheckoutPage() {
   const router = useRouter();
   const { items, subtotal, clearCart } = useCartStore();
+  const { formatPrice } = useCurrency();
   const [donation, setDonation] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -131,7 +133,7 @@ export default function CheckoutPage() {
               />
               <span className="text-sm" style={{ color: "var(--charcoal)" }}>
                 Add <strong>5%</strong> to support the <strong>Tuzivugire</strong> youth artists programme
-                {donation && <span className="ml-1 opacity-60">(+${donationAmt.toFixed(2)})</span>}
+                {donation && <span className="ml-1 opacity-60">(+{formatPrice(donationAmt)})</span>}
               </span>
             </label>
 
@@ -164,16 +166,16 @@ export default function CheckoutPage() {
                     <p style={{ fontFamily: "var(--font-display)", fontSize: "1rem", color: "var(--charcoal)" }}>{item.title}</p>
                     <p className="opacity-50 text-xs mt-0.5">{item.artist} · {item.medium}</p>
                   </div>
-                  <span style={{ color: "var(--charcoal)" }}>${(item.price * item.qty).toFixed(2)}</span>
+                  <span style={{ color: "var(--charcoal)" }}>{formatPrice(item.price * item.qty)}</span>
                 </div>
               ))}
             </div>
 
             <div className="flex flex-col gap-2 pt-4 text-sm border-t mt-2" style={{ borderColor: "rgba(0,0,0,0.08)" }}>
-              <Row label="Subtotal" value={`$${sub.toFixed(2)}`} />
-              {donation && <Row label="Tuzivugire (5%)" value={`+$${donationAmt.toFixed(2)}`} />}
-              <Row label="Shipping" value={shipping === 0 ? "Free" : `$${shipping}`} />
-              <Row label="Total" value={`$${total.toFixed(2)}`} bold />
+              <Row label="Subtotal" value={formatPrice(sub)} />
+              {donation && <Row label="Tuzivugire (5%)" value={`+${formatPrice(donationAmt)}`} />}
+              <Row label="Shipping" value={shipping === 0 ? "Free" : formatPrice(shipping)} />
+              <Row label="Total" value={formatPrice(total)} bold />
             </div>
           </div>
         </form>

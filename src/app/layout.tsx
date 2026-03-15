@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { LanguageProvider } from "@/context/LanguageContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 
 export const metadata: Metadata = {
   title: "SAWA — Studio of African Wildlife Art",
@@ -13,8 +14,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body>
         <LanguageProvider>
-          <Nav />
-          {children}
+          <CurrencyProvider>
+            <Nav />
+            {children}
+          </CurrencyProvider>
         </LanguageProvider>
       </body>
     </html>

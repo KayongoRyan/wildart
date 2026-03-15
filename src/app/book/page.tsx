@@ -4,6 +4,7 @@ import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
+import { useCurrency } from "@/context/CurrencyContext";
 
 const experiences = [
   {
@@ -11,7 +12,8 @@ const experiences = [
     emoji: "🎨",
     label: "Studio Visit",
     duration: "2 hours",
-    price: "$60 / person",
+    priceUsd: 60,
+    priceSuffix: " / person",
     maxGuests: 6,
     desc: "Step inside the working studio in Musanze. Watch one of our three artists at work, handle the materials, and hear the stories behind the pieces on the walls. Ends with tea and an open Q&A.",
     includes: ["Guided tour of the studio", "Live drawing demonstration", "Materials handling session", "Tea & conversation with the artist"],
@@ -21,7 +23,8 @@ const experiences = [
     emoji: "🦍",
     label: "Field Observation",
     duration: "Full day",
-    price: "$220 / person",
+    priceUsd: 220,
+    priceSuffix: " / person",
     maxGuests: 4,
     desc: "Join one of our artists on a full-day observation session in the field — gorilla habituation zones, Akagera savanna, or Nyungwe canopy walks. Witness how every artwork begins: with silence, patience, and a sketchbook.",
     includes: ["Pre-dawn departure from Musanze", "Artist-led wildlife observation", "Live field sketching session", "Picnic lunch in the park", "Certificate of participation"],
@@ -31,7 +34,8 @@ const experiences = [
     emoji: "🖼️",
     label: "Private Viewing",
     duration: "3 hours",
-    price: "$120 / group",
+    priceUsd: 120,
+    priceSuffix: " / group",
     maxGuests: 10,
     desc: "An exclusive after-hours viewing of the full SAWA collection — works not yet listed publicly, archive pieces, and works in progress. Ideal for collectors, curators, or anyone considering a commission.",
     includes: ["Full collection access", "Works-in-progress preview", "One-on-one with the artist of your choice", "Complimentary catalogue", "Priority commission slot"],
@@ -68,6 +72,7 @@ const labelStyle: React.CSSProperties = {
 };
 
 export default function BookPage() {
+  const { formatPrice } = useCurrency();
   const [selected, setSelected]   = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
@@ -123,7 +128,7 @@ export default function BookPage() {
                   <span style={{ fontSize: 36, display: "block", marginBottom: 20 }}>{ex.emoji}</span>
 
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 10 }}>
-                    {ex.duration} · {ex.price}
+                    {ex.duration} · {formatPrice(ex.priceUsd)}{ex.priceSuffix}
                   </p>
 
                   <h3 style={{ fontFamily: "var(--font-display)", fontSize: 26, fontWeight: 300, color: isActive ? "#fff" : "var(--ink)", marginBottom: 16 }}>
@@ -205,7 +210,7 @@ export default function BookPage() {
           {selected && (
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "var(--warm-grey)", marginBottom: 48 }}>
               Booking: <strong style={{ color: "var(--ink)", fontWeight: 500 }}>{selectedExp?.label}</strong>
-              {" · "}{selectedExp?.price}
+              {selectedExp && ` · ${formatPrice(selectedExp.priceUsd)}${selectedExp.priceSuffix}`}
               <button onClick={() => setSelected(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--ochre)", fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", marginLeft: 12, padding: 0 }}>
                 Change ×
               </button>
@@ -332,7 +337,7 @@ export default function BookPage() {
                     {selectedExp?.label}
                   </p>
                   <p style={{ fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 300, color: "var(--ink)" }}>
-                    {selectedExp?.price}
+                    {selectedExp && `${formatPrice(selectedExp.priceUsd)}${selectedExp.priceSuffix}`}
                   </p>
                 </div>
                 <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)" }}>

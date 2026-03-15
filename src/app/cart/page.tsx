@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
+import { useCurrency } from "@/context/CurrencyContext";
 
 const initialItems = [
   { id: 1, title: "Silverback at Dawn", artist: "Christine Mukamana", medium: "Graphite", size: "60×80cm", price: 1200, qty: 1, emoji: "🦍" },
@@ -10,6 +11,7 @@ const initialItems = [
 ];
 
 export default function CartPage() {
+  const { formatPrice } = useCurrency();
   const [items, setItems] = useState(initialItems);
   const [donation, setDonation] = useState(true);
   const [promoCode, setPromoCode] = useState("");
@@ -65,7 +67,7 @@ export default function CartPage() {
                     <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", marginBottom: 16 }}>{item.artist}</p>
                   </div>
                   <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                    <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--ink)" }}>${item.price.toLocaleString()}</p>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--ink)" }}>{formatPrice(item.price)}</p>
                     <button onClick={() => remove(item.id)}
                       style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--warm-grey)", background: "none", border: "none", cursor: "pointer", borderBottom: "1px solid rgba(14,16,15,0.2)", paddingBottom: 2 }}
                       className="hover:text-red-500 transition-colors">
@@ -83,7 +85,7 @@ export default function CartPage() {
                   style={{ width: 16, height: 16, marginTop: 2, accentColor: "var(--ochre)", flexShrink: 0 }} />
                 <div>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, fontWeight: 500, color: "var(--cream)", marginBottom: 6 }}>
-                    Add 5% to Tuzivugire — ${Math.round(subtotal * 0.05)}
+                    Add 5% to Tuzivugire — {formatPrice(Math.round(subtotal * 0.05))}
                   </p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.45)", lineHeight: 1.7 }}>
                     Funds art materials and park-visit transport for young artists in our education programme. Optional but meaningful.
@@ -101,9 +103,9 @@ export default function CartPage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 24 }}>
               {[
-                ["Subtotal", `$${subtotal.toLocaleString()}`],
-                ["Shipping", shipping === 0 ? "Free" : `$${shipping}`],
-                ...(donation ? [["Tuzivugire (5%)", `$${donationAmt}`]] : []),
+                ["Subtotal", formatPrice(subtotal)],
+                ["Shipping", shipping === 0 ? "Free" : formatPrice(shipping)],
+                ...(donation ? [["Tuzivugire (5%)", formatPrice(donationAmt)]] : []),
               ].map(([label, val]) => (
                 <div key={label} style={{ display: "flex", justifyContent: "space-between" }}>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)" }}>{label}</p>
@@ -114,7 +116,7 @@ export default function CartPage() {
 
             {shipping === 0 && (
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--sage)", marginBottom: 16, padding: "8px 12px", background: "rgba(92,122,94,0.1)" }}>
-                ✓ Free worldwide shipping on orders over $2,000
+                ✓ Free worldwide shipping on orders over {formatPrice(2000)}
               </p>
             )}
 
@@ -132,7 +134,7 @@ export default function CartPage() {
             <div style={{ borderTop: "1px solid rgba(14,16,15,0.1)", paddingTop: 20, marginBottom: 24 }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 300, color: "var(--ink)" }}>Total</p>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 300, color: "var(--ink)" }}>${total.toLocaleString()}</p>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 300, color: "var(--ink)" }}>{formatPrice(total)}</p>
               </div>
             </div>
 

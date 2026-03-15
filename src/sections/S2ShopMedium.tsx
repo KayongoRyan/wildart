@@ -17,7 +17,7 @@ export default function S2ShopMedium() {
         <div className="grid grid-cols-3 gap-4 lg:gap-6">
           {mediums.map((m) => (
             <Link key={m.id} href={m.href} className="block group" style={{ textDecoration: "none" }} aria-label={`View ${m.id} in shop`}>
-              <div className="relative overflow-hidden flex items-center justify-center cursor-pointer" style={{ aspectRatio: "4/5", minHeight: 200, backgroundColor: m.bg }}>
+              <div className="relative overflow-hidden flex items-center justify-center cursor-pointer" style={{ aspectRatio: "16/9", backgroundColor: m.bg }}>
                 <span style={{ fontSize: "clamp(64px, 10vw, 120px)", opacity: 0.15 }} className="block group-hover:opacity-25 transition-opacity">{m.emoji}</span>
               </div>
             </Link>

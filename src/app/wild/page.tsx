@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import PageHero from "@/components/PageHero";
 import { useCartStore } from "@/store/cartStore";
 import CartToast from "@/components/CartToast";
+import { useCurrency } from "@/context/CurrencyContext";
 
 const artworks = [
   { id: 1,  title: "Silverback at Dawn",       animal: "Mountain Gorilla", artist: "Christine Mukamana",  medium: "Graphite",    price: 1200, size: "60×80cm",   available: true,  featured: true,  emoji: "🦍" },
@@ -27,6 +28,7 @@ const mediums = ["All Media", "Graphite", "Charcoal", "Ink", "Mixed Media"];
 function ArtworkCard({ art, delay = 0, onAdd }: { art: typeof artworks[0]; delay?: number; onAdd: (art: typeof artworks[0]) => void }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
+  const { formatPrice } = useCurrency();
   return (
     <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay }}
@@ -67,7 +69,7 @@ function ArtworkCard({ art, delay = 0, onAdd }: { art: typeof artworks[0]; delay
         <h3 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)", marginBottom: 4, lineHeight: 1.2 }}>{art.title}</h3>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", marginBottom: 12 }}>{art.artist}</p>
         <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: art.available ? "var(--ink)" : "var(--warm-grey)" }}>
-          {art.available ? `$${art.price.toLocaleString()}` : "Sold"}
+          {art.available ? formatPrice(art.price) : "Sold"}
         </p>
       </div>
     </motion.div>

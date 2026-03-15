@@ -2,6 +2,7 @@
 import { Suspense, useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { useCurrency } from "@/context/CurrencyContext";
 
 interface OrderData {
   paymentStatus: "pending" | "paid" | "failed";
@@ -125,7 +126,7 @@ function ConfirmationContent() {
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: 16, borderBottom: "1px solid rgba(107, 103, 96, 0.1)" }}>
               <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ink)" }}>Tuzivugire Programme</p>
               <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--ochre)" }}>
-                ${order.total.toFixed(2)}
+                {formatPrice(order.total)}
               </p>
             </div>
             {txRef && (

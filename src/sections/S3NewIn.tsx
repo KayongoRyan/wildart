@@ -3,12 +3,14 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import { useLanguage } from "@/context/LanguageContext";
+import { useCurrency } from "@/context/CurrencyContext";
 import { getNewInWorks } from "@/lib/works";
 
 export default function S3NewIn() {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
   const { t } = useLanguage();
+  const { formatPrice } = useCurrency();
   const works = getNewInWorks(4);
 
   return (
@@ -26,7 +28,7 @@ export default function S3NewIn() {
               <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 400, color: "var(--ink)", marginBottom: 4 }}>{w.kw}</p>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 4 }}>{w.year} | Rwanda | {w.medium}</p>
               <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, color: "var(--warm-grey)" }}>{w.size}</p>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 400, color: "var(--ochre)", marginTop: 4 }}>${w.price.toLocaleString()}</p>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 400, color: "var(--ochre)", marginTop: 4 }}>{formatPrice(w.price)}</p>
             </Link>
           ))}
         </div>
