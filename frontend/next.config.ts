@@ -17,7 +17,6 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ["framer-motion"],
   },
-  // Fix resolution from wrong directory (e.g. when package.json exists in parent)
   webpack: (config) => {
     config.context = projectRoot;
     config.resolve = config.resolve ?? {};
