@@ -41,3 +41,17 @@ npm run db:setup
 ## Environment
 
 Copy `frontend/.env.example` to `frontend/.env.local` and fill in your values.
+
+## Docker
+
+```bash
+# Create .env at project root with MONGODB_URI (and Flutterwave keys if needed)
+cp .env.example .env
+# Edit .env with your MongoDB Atlas connection string
+
+# Build and run
+docker compose up --build
+
+# Frontend: http://localhost:3000
+# Backend:  http://localhost:4000
+```

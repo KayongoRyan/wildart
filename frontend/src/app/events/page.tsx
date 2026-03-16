@@ -69,7 +69,7 @@ function EventCard({
   event: EventItem;
   isPast: boolean;
   onView: () => void;
-  t: { viewEvent: string; viewExhibition: string };
+  t: { viewEvent: string; viewExhibition: string; pastLabel: string; exhibitionLabel: string };
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });

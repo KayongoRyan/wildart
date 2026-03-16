@@ -57,7 +57,7 @@ router.post("/initialize", async (req: Request, res: Response) => {
       payment_options: "mobilemoneyghana,mobilemoneyrwanda,card,banktransfer",
     };
 
-    const response = await flw.Payment.initiate(payload);
+    const response = (await flw.Payment.initiate(payload)) as { status: string; message?: string; data?: { link: string } };
 
     if (response.status !== "success") {
       throw new Error(response.message ?? "Flutterwave initiation failed.");
@@ -74,7 +74,7 @@ router.post("/initialize", async (req: Request, res: Response) => {
 
     await Order.findByIdAndUpdate(orderId, { flutterwaveRef: txRef });
 
-    return res.json({ paymentLink: response.data.link });
+    return res.json({ paymentLink: response.data?.link ?? "" });
   } catch (err) {
     console.error("[payments/initialize]", err);
     return res.status(500).json({ error: "Server error." });
