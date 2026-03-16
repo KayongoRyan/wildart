@@ -8,6 +8,13 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    screens: {
+      sm: "640px",   /* Phone landscape / large phone */
+      md: "768px",   /* Tablet portrait */
+      lg: "1024px",  /* Tablet landscape / laptop */
+      xl: "1280px",  /* Desktop */
+      "2xl": "1536px", /* Large desktop */
+    },
     extend: {
       colors: {
         cream:       "#F5F0E8",

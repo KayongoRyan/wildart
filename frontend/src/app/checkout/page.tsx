@@ -93,7 +93,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <main className="min-h-screen pt-28 pb-20 px-6" style={{ background: "var(--cream)" }}>
+    <main className="min-h-screen pt-28 pb-12 sm:pb-16 md:pb-20 px-4 sm:px-6" style={{ background: "var(--cream)" }}>
       <div className="max-w-5xl mx-auto">
         <h1 className="mb-10" style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,4vw,48px)", color: "var(--charcoal)" }}>
           Checkout

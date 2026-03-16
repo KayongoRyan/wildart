@@ -22,11 +22,9 @@ export default function PageHero({ label, headline, subtitle, emoji = "🦍", ch
 
   return (
     <motion.section
-      className="relative flex flex-col items-center justify-center text-center overflow-hidden"
+      className="relative flex flex-col items-center justify-center text-center overflow-hidden min-h-[min(70vh,520px)] sm:min-h-[min(80vh,620px)] lg:min-h-[min(85vh,720px)] px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24"
       style={{
-        minHeight: "min(85vh, 720px)",
         background,
-        padding: "clamp(80px, 12vw, 160px) clamp(24px, 6vw, 80px)",
       }}
     >
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 50% at 50% 50%, rgba(200,144,58,0.04) 0%, transparent 70%)" }} />

@@ -17,20 +17,16 @@ export default function ArtistProfilePage({ params }: { params: Promise<{ slug: 
   const artistWorks = works.filter((w) => w.artist === artist.name && w.available);
 
   return (
-    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+    <main className="pt-[72px]" style={{ background: "var(--cream)" }}>
       {/* Hero */}
       <section
+        className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24"
         style={{
           background: artist.bg,
-          padding: "clamp(80px,12vw,140px) clamp(24px,6vw,80px)",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 80,
-          alignItems: "center",
           minHeight: "min(70vh, 560px)",
         }}
       >
-        <div>
+        <div className="order-2 md:order-1">
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>
             Featured Artist
           </p>
@@ -62,13 +58,13 @@ export default function ArtistProfilePage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+        <div className="flex items-center justify-center relative order-1 md:order-2 py-8 md:py-0">
           <span style={{ fontSize: "clamp(120px,20vw,280px)", opacity: 0.18 }}>{artist.emoji}</span>
         </div>
       </section>
 
       {/* Bio */}
-      <section style={{ padding: "80px clamp(24px,6vw,80px)", maxWidth: 800, margin: "0 auto" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ maxWidth: 800, margin: "0 auto" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 15, color: "rgba(14,16,15,0.7)", lineHeight: 1.9, marginBottom: 40 }}>
           {artist.bio}
         </p>
@@ -79,7 +75,7 @@ export default function ArtistProfilePage({ params }: { params: Promise<{ slug: 
 
       {/* Works by this artist */}
       {artistWorks.length > 0 && (
-        <section style={{ padding: "0 clamp(24px,6vw,80px) 100px", maxWidth: 1100, margin: "0 auto" }}>
+        <section className="px-4 sm:px-6 md:px-8 lg:px-16 pb-16 sm:pb-20 md:pb-24" style={{ maxWidth: 1100, margin: "0 auto" }}>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>
             Works by {artist.name}
           </p>
@@ -112,11 +108,11 @@ export default function ArtistProfilePage({ params }: { params: Promise<{ slug: 
       )}
 
       {/* Other artists */}
-      <section style={{ padding: "80px clamp(24px,6vw,80px)", background: "var(--cream-warm)", borderTop: "1px solid rgba(14,16,15,0.06)" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--cream-warm)", borderTop: "1px solid rgba(14,16,15,0.06)" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 32 }}>
           Other artists
         </p>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 24 }}>
+        <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6">
           {artists.filter((a) => a.slug !== artist.slug).map((a) => (
             <Link key={a.slug} href={`/artists/${a.slug}`} style={{ textDecoration: "none" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 16, padding: "16px 24px", background: "var(--cream)", border: "1px solid rgba(14,16,15,0.08)", transition: "border-color 0.2s" }} className="hover:!border-[var(--ochre)]">
@@ -132,7 +128,7 @@ export default function ArtistProfilePage({ params }: { params: Promise<{ slug: 
       </section>
 
       {/* CTA */}
-      <section style={{ padding: "80px clamp(24px,6vw,80px)", textAlign: "center", background: "var(--ink)" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 text-center" style={{ background: "var(--ink)" }}>
         <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "clamp(18px,2.5vw,28px)", fontWeight: 300, color: "rgba(255,255,255,0.5)", marginBottom: 16 }}>
           Commission a piece from {artist.name.split(" ")[0]}.
         </p>

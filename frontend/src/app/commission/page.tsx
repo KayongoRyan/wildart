@@ -153,7 +153,7 @@ export default function CommissionPage() {
   };
 
   return (
-    <main style={{ paddingTop: 72 }}>
+    <main className="pt-[72px]">
       <PageHero
         label="Commission a Piece"
         headline="A work made for you. An animal documented for the world."
@@ -162,7 +162,7 @@ export default function CommissionPage() {
       />
 
       {/* How it works */}
-      <section style={{ background: "var(--cream)", padding: "100px clamp(24px,6vw,80px)" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24" style={{ background: "var(--cream)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,52px)", fontWeight: 300, color: "var(--ink)", marginBottom: 72 }}>How the process works</h2>
@@ -182,7 +182,7 @@ export default function CommissionPage() {
       </section>
 
       {/* The Wild — Original works from the field */}
-      <section id="the-wild" style={{ background: "var(--cream-warm)", padding: "80px clamp(24px,6vw,80px)" }}>
+      <section id="the-wild" className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--cream-warm)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <FadeIn>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Wild</p>
@@ -237,7 +237,7 @@ export default function CommissionPage() {
       </section>
 
       {/* Pricing */}
-      <section style={{ background: "var(--forest)", padding: "80px clamp(24px,6vw,80px)" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--forest)" }}>
         <div style={{ maxWidth: 1100, margin: "0 auto" }}>
           <FadeIn>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px,3vw,44px)", fontWeight: 300, color: "var(--cream)", marginBottom: 48 }}>Pricing guide</h2>

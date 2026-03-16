@@ -14,12 +14,12 @@ export default function S3NewIn() {
   const works = getNewInWorks(4);
 
   return (
-    <section ref={ref} className="flex flex-col justify-center py-16 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream-warm)" }}>
-      <div className="max-w-[1200px] mx-auto px-8 lg:px-16">
+    <section ref={ref} className="flex flex-col justify-center py-12 sm:py-16 md:py-20 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream-warm)" }}>
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
         <h2 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 24 }}>
           {t.works.newIn}
         </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
           {works.map((w) => (
             <Link key={w.id} href={`/shop/${w.id}`} className="block group" style={{ textDecoration: "none" }}>
               <div className="relative overflow-hidden mb-3" style={{ aspectRatio: "3/4", backgroundColor: "#1C2A1E" }}>

@@ -80,15 +80,9 @@ function EventCard({
       initial={{ opacity: 0, y: 40 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6 }}
-      className="group"
+      className="group flex flex-col items-center justify-center p-6 sm:p-8 md:p-10 lg:p-12 min-h-[280px] sm:min-h-[320px]"
       style={{
         background: "#1A1E1A",
-        minHeight: 320,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "48px 40px",
         position: "relative",
         overflow: "hidden",
       }}
@@ -135,9 +129,9 @@ function EventDetail({ event, onClose, t }: { event: EventItem; onClose: () => v
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
+      className="p-6 sm:p-8 md:p-10 lg:p-12"
       style={{
         background: "var(--cream)",
-        padding: "48px 40px",
         borderTop: "1px solid rgba(14,16,15,0.08)",
       }}
     >
@@ -218,7 +212,7 @@ export default function EventsPage() {
   const expandedEvent = expandedId ? allEvents.find((e) => e.id === expandedId) : null;
 
   return (
-    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+    <main className="pt-[72px]" style={{ background: "var(--cream)" }}>
       <PageHero
         label="Events"
         headline={<>Exhibitions, workshops,<br />and studio open days.</>}
@@ -227,7 +221,7 @@ export default function EventsPage() {
       />
 
       {/* Upcoming Events */}
-      <section style={{ padding: "80px clamp(24px,6vw,80px)", maxWidth: 1100, margin: "0 auto" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 40 }}>
           {t.events.upcoming}
         </p>
@@ -251,7 +245,7 @@ export default function EventsPage() {
       </section>
 
       {/* Past Events */}
-      <section style={{ padding: "0 clamp(24px,6vw,80px) 100px", maxWidth: 1100, margin: "0 auto" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 pb-12 sm:pb-16 md:pb-24" style={{ maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 40 }}>
           {t.events.past}
         </p>

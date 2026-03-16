@@ -45,16 +45,12 @@ export default function Footer() {
         </span>
       </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-8 lg:px-16">
+      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
         {/* Main grid */}
         <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 sm:gap-10 md:gap-12 lg:gap-16 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-10 sm:pb-12 md:pb-16"
           style={{
-            paddingTop: "clamp(64px, 10vw, 96px)",
-            paddingBottom: "clamp(48px, 6vw, 64px)",
             borderBottom: "1px solid rgba(255,255,255,0.06)",
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "clamp(40px, 6vw, 64px)",
           }}
         >
           {/* Brand + Visit */}
@@ -269,17 +265,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div
-          style={{
-            paddingTop: 24,
-            paddingBottom: 32,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 16,
-          }}
-        >
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 pt-6 pb-8">
           <p
             style={{
               fontFamily: "var(--font-sans)",

@@ -62,7 +62,7 @@ export default function Nav() {
           boxShadow: "0 1px 0 rgba(255,255,255,0.5)",
         }}
       >
-        <div className="h-full max-w-[1400px] mx-auto px-6 lg:px-12 flex items-center">
+        <div className="h-full max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12 flex items-center">
           {/* Left nav */}
           <nav className="hidden lg:flex items-center gap-8 flex-1">
             {navLinks.slice(0, 3).map(({ label, href }) => {
@@ -96,14 +96,13 @@ export default function Nav() {
               href="/"
               style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 22,
                 fontWeight: 400,
                 letterSpacing: "0.28em",
                 color: "var(--ink)",
                 textTransform: "uppercase",
                 textDecoration: "none",
               }}
-              className="hover:opacity-70 transition-opacity"
+              className="hover:opacity-70 transition-opacity text-lg sm:text-xl lg:text-[22px]"
             >
               SAWA
             </Link>

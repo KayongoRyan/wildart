@@ -168,7 +168,7 @@ function ShopContent() {
   }
 
   return (
-    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+    <main className="pt-[72px]" style={{ background: "var(--cream)" }}>
       <PageHero
         label="The Shop"
         headline="Collect African wildlife art. Support African wildlife."
@@ -176,19 +176,19 @@ function ShopContent() {
       />
 
       {/* Featured piece */}
-      <section style={{ padding: "80px clamp(24px,6vw,80px)", maxWidth: 1100, margin: "0 auto" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24" style={{ maxWidth: 1100, margin: "0 auto" }}>
         <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 32 }}>Featured Work</p>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 2, background: "var(--ink)" }}>
-          <div style={{ background: "#1C2A1E", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 360 }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0" style={{ background: "var(--ink)" }}>
+          <div style={{ background: "#1C2A1E", aspectRatio: "4/3", display: "flex", alignItems: "center", justifyContent: "center", minHeight: 280 }} className="min-h-[280px] md:min-h-[360px]">
             <span style={{ fontSize: "clamp(120px,20vw,220px)", opacity: 0.2 }}>{featured.emoji}</span>
           </div>
-          <div style={{ padding: "56px 48px", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          <div className="p-6 sm:p-8 md:p-10 lg:p-12 flex flex-col justify-center">
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 12 }}>{featured.medium} · {featured.size}</p>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,3.5vw,48px)", fontWeight: 300, color: "var(--cream)", marginBottom: 8, lineHeight: 1.1 }}>{featured.title}</h2>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "rgba(255,255,255,0.4)", marginBottom: 20 }}>{featured.artist}</p>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 13, color: "rgba(255,255,255,0.5)", lineHeight: 1.85, marginBottom: 32 }}>{featured.desc}</p>
-            <div style={{ display: "flex", alignItems: "center", gap: 24 }}>
-              <p style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 300, color: "var(--cream)" }}>{formatPrice(featured.price)}</p>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6">
+              <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,4vw,36px)", fontWeight: 300, color: "var(--cream)" }}>{formatPrice(featured.price)}</p>
               <button
                 onClick={() => handleAdd({ id: featured.id, title: featured.title, artist: featured.artist, medium: featured.medium, size: featured.size, price: featured.price })}
                 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "14px 32px", border: "none", cursor: "pointer" }}
@@ -201,12 +201,12 @@ function ShopContent() {
       </section>
 
       {/* Originals / Prints / Featured Work tabs */}
-      <section style={{ padding: "0 clamp(24px,6vw,80px) 100px", maxWidth: 1100, margin: "0 auto" }}>
-        <div style={{ display: "flex", gap: 0, marginBottom: 48, borderBottom: "1px solid rgba(14,16,15,0.12)" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 pb-16 sm:pb-20 md:pb-24" style={{ maxWidth: 1100, margin: "0 auto" }}>
+        <div className="flex flex-wrap gap-0 mb-8 sm:mb-12 border-b border-[rgba(14,16,15,0.12)] overflow-x-auto no-scrollbar">
           {(["originals", "prints", "featured"] as const).map((t) => (
             <button key={t} onClick={() => setTab(t)}
-              style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", padding: "14px 28px", background: "none", border: "none", cursor: "pointer", borderBottom: `2px solid ${tab === t ? "var(--ink)" : "transparent"}`, color: tab === t ? "var(--ink)" : "var(--warm-grey)", transition: "all 0.2s" }}>
-              {t === "originals" ? "Original Works" : t === "prints" ? "Limited Prints" : "Featured Work"}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", padding: "12px 16px", background: "none", border: "none", cursor: "pointer", borderBottom: `2px solid ${tab === t ? "var(--ink)" : "transparent"}`, color: tab === t ? "var(--ink)" : "var(--warm-grey)", transition: "all 0.2s", whiteSpace: "nowrap" }} className="sm:text-[11px] sm:px-7 sm:py-3.5">
+              {t === "originals" ? "Originals" : t === "prints" ? "Prints" : "Featured"}
             </button>
           ))}
         </div>
@@ -301,7 +301,7 @@ function ShopContent() {
       </section>
 
       {/* Commission CTA */}
-      <section style={{ background: "var(--forest)", padding: "80px clamp(24px,6vw,80px)", textAlign: "center" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 text-center" style={{ background: "var(--forest)" }}>
         <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: "clamp(20px,3vw,36px)", fontWeight: 300, color: "rgba(255,255,255,0.5)", marginBottom: 12 }}>Can&rsquo;t find what you&rsquo;re looking for?</p>
         <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(28px,4vw,54px)", fontWeight: 300, color: "var(--cream)", marginBottom: 40 }}>Commission it directly from the artist.</p>
         <Link href="/commission" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "16px 44px", textDecoration: "none" }}

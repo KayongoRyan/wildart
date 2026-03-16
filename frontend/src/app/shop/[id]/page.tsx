@@ -44,10 +44,10 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
   const related = works.filter((w) => w.id !== work.id && w.medium === work.medium).slice(0, 3);
 
   return (
-    <main style={{ paddingTop: 72, background: "var(--cream)" }}>
+    <main className="pt-[72px]" style={{ background: "var(--cream)" }}>
 
       {/* Breadcrumb */}
-      <div style={{ padding: "24px clamp(24px,6vw,80px)", maxWidth: 1100, margin: "0 auto" }}>
+      <div className="px-4 sm:px-6 md:px-8 lg:px-16 py-4 sm:py-6" style={{ maxWidth: 1100, margin: "0 auto" }}>
         <nav style={{ display: "flex", gap: 8, alignItems: "center" }}>
           <Link href="/" style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--warm-grey)", textDecoration: "none" }}
             className="hover:text-[var(--ink)]">Home</Link>
@@ -60,14 +60,14 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
       </div>
 
       {/* Main product section — framed two-column layout */}
-      <section style={{ padding: "0 clamp(24px,6vw,80px) 80px", maxWidth: 1200, margin: "0 auto" }}>
+      <section className="px-4 sm:px-6 md:px-8 lg:px-16 pb-12 md:pb-20" style={{ maxWidth: 1200, margin: "0 auto" }}>
         <div
           style={{
             border: "1px solid rgba(245,240,232,0.6)",
             overflow: "hidden",
           }}
         >
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", minHeight: "min(85vh, 700px)" }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[min(70vh,500px)] md:min-h-[min(85vh,700px)]">
 
             {/* Left: Artwork on dark green */}
             <motion.div
@@ -255,13 +255,13 @@ export default function WorkDetailPage({ params }: { params: Promise<{ id: strin
 
       {/* Related works */}
       {related.length > 0 && (
-        <section style={{ padding: "80px clamp(24px,6vw,80px)", background: "var(--cream-warm)" }}>
+        <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--cream-warm)" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
             <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 12 }}>More {work.medium} Works</p>
             <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(24px,3vw,40px)", fontWeight: 300, color: "var(--ink)", marginBottom: 40 }}>
               You may also like
             </h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 2 }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
               {related.map((r, i) => (
                 <motion.div
                   key={r.id}
