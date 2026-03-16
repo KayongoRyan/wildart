@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --cream: #F5F0E8;
+    --cream-warm: #EDE4D4;
+    --ink: #0A0C0A;
+    --ink-soft: #1A1D1A;
+    --forest: #0E100F;
+    --ochre: #C8903A;
+    --ochre-light: #D4A055;
+    --sand: #D4C4A8;
+    --warm-grey: #6B6760;
+    --sage: #5C7A5E;
+    --green: #042D29;
+    --white: #FFFFFF;
+
+    /* Display serif — Georgia is widely installed and renders beautifully */
+    --font-display: Georgia, "Times New Roman", "Palatino Linotype", Palatino, serif;
+    /* Sans — Poppins via next/font/google */
+    --font-sans: var(--font-poppins, "Poppins"), system-ui, sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--cream);
+    color: var(--ink);
+    font-family: var(--font-poppins, "Poppins"), system-ui, sans-serif;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--ochre);
+    color: #fff;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--cream);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--sand);
+  }
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .page-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .page-padding {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .page-padding {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .page-padding {
+      padding-left: 4rem;
+      padding-right: 4rem;
+    }
+  }
+}
+
+@keyframes bg-color-transition {
+
+  0%,
+  100% {
+    background: linear-gradient(180deg, rgba(92, 122, 94, 0.58) 0%, rgba(92, 122, 94, 0.48) 100%);
+  }
+
+  50% {
+    background: linear-gradient(180deg, rgba(92, 122, 94, 0.64) 0%, rgba(200, 144, 58, 0.48) 100%);
+  }
+}
+
+@keyframes bg-color-transition-hero {
+
+  0%,
+  100% {
+    background-color: rgba(92, 122, 94, 0.67);
+  }
+
+  50% {
+    background-color: rgba(92, 122, 94, 0.75);
+  }
+}

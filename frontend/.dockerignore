@@ -1,0 +1,13 @@
+node_modules
+.next
+.git
+.env*
+.env.local
+*.log
+.cursor
+.vscode
+*.md
+README*
+.gitignore
+# Exclude path that causes "invalid file request" on Windows/OneDrive
+src/app/api/webhooks
