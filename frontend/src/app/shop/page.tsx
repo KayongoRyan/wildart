@@ -86,6 +86,44 @@ function WorkCard({ work, formatPrice }: { work: Work; formatPrice: (n: number) 
   );
 }
 
+function WildArtworkCard({ work, onAdd, formatPrice }: { work: Work; onAdd: (w: Work) => void; formatPrice: (n: number) => string }) {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "-5%" });
+  return (
+    <motion.div ref={ref} initial={{ opacity: 0, y: 30 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }} className="group"
+      style={{ background: "var(--cream-warm)", overflow: "hidden", cursor: "pointer", position: "relative" }}>
+      <div style={{ aspectRatio: "4/5", background: "#E8E0D0", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", position: "relative" }}>
+        <span className="transition-transform duration-700 group-hover:scale-110 inline-block" style={{ fontSize: "clamp(80px,12vw,140px)", opacity: 0.25 }}>{work.emoji}</span>
+        {!work.available && (
+          <div style={{ position: "absolute", inset: 0, background: "rgba(14,16,15,0.55)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.8)", border: "1px solid rgba(255,255,255,0.3)", padding: "8px 20px" }}>Sold</p>
+          </div>
+        )}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-5"
+          style={{ background: "linear-gradient(to top, rgba(14,16,15,0.8) 0%, transparent 50%)" }}>
+          {work.available && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onAdd(work); }}
+              style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", background: "var(--ochre)", color: "#fff", padding: "10px 22px", border: "none", cursor: "pointer", width: "100%", textAlign: "center", display: "block" }}
+              className="hover:opacity-90 transition-opacity">
+              Add to Cart
+            </button>
+          )}
+        </div>
+      </div>
+      <div style={{ padding: "20px 20px 24px" }}>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--warm-grey)", marginBottom: 6 }}>{work.medium} · {work.size}</p>
+        <h3 style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: "var(--ink)", marginBottom: 4, lineHeight: 1.2 }}>{work.kw}</h3>
+        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--warm-grey)", marginBottom: 12 }}>{work.artist}</p>
+        <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 300, color: work.available ? "var(--ink)" : "var(--warm-grey)" }}>
+          {work.available ? formatPrice(work.price) : "Sold"}
+        </p>
+      </div>
+    </motion.div>
+  );
+}
+
 function Card({ art, onAdd, formatPrice }: { art: typeof newArrivals[0]; onAdd: (art: typeof newArrivals[0]) => void; formatPrice: (n: number) => string }) {
   const ref    = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
@@ -146,6 +184,16 @@ function ShopContent() {
     return true;
   });
 
+  const [wildFilter, setWildFilter] = useState("All");
+  const [wildMedium, setWildMedium] = useState("All Media");
+  const wildFilters = ["All", ...new Set(works.map((w) => w.animal))].filter(Boolean);
+  const wildMediums = ["All Media", ...new Set(works.map((w) => w.medium))].filter(Boolean);
+  const filteredWild = works.filter((w) => {
+    const animalMatch = wildFilter === "All" || w.animal === wildFilter;
+    const mediumMatch = wildMedium === "All Media" || w.medium === wildMedium;
+    return animalMatch && mediumMatch;
+  });
+
   useEffect(() => {
     if (!toastVisible) return;
     const t = setTimeout(() => setToastVisible(false), 3500);
@@ -167,6 +215,17 @@ function ShopContent() {
     setTimeout(() => setToastVisible(true), 10);
   }
 
+  function handleAddWork(work: Work) {
+    handleAdd({
+      id: work.id,
+      title: work.title,
+      artist: work.artist,
+      medium: work.medium,
+      size: work.size,
+      price: work.price,
+    });
+  }
+
   return (
     <main className="pt-[72px]" style={{ background: "var(--cream)" }}>
       <PageHero
@@ -174,6 +233,61 @@ function ShopContent() {
         headline="Collect African wildlife art. Support African wildlife."
         emoji="🦍"
       />
+
+      {/* Original works from the field */}
+      <section id="the-wild" className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20" style={{ background: "var(--cream-warm)" }}>
+        <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Wild</p>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px,3vw,44px)", fontWeight: 300, color: "var(--ink)", marginBottom: 24 }}>
+            Original works from the field
+          </h2>
+          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(14,16,15,0.6)", lineHeight: 1.8, marginBottom: 40 }}>
+            Every piece in this collection began as a field sketch — observed directly in Volcanoes, Akagera, or Nyungwe National Parks.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3">
+            {wildFilters.map((f) => (
+              <button key={f} onClick={() => setWildFilter(f)}
+                style={{
+                  fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase",
+                  padding: "10px 16px",
+                  border: wildFilter === f ? "none" : "1px solid rgba(107, 103, 96, 0.25)",
+                  background: wildFilter === f ? "var(--ink)" : "var(--cream)",
+                  color: wildFilter === f ? "#fff" : "var(--warm-grey)", cursor: "pointer", transition: "all 0.2s",
+                }}>
+                {f.toUpperCase()}
+              </button>
+            ))}
+          </div>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-8">
+            {wildMediums.map((m) => (
+              <button key={m} onClick={() => setWildMedium(m)}
+                style={{
+                  fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase",
+                  padding: "10px 16px",
+                  border: wildMedium === m ? "none" : "1px solid rgba(107, 103, 96, 0.25)",
+                  background: wildMedium === m ? "var(--ochre)" : "var(--cream)",
+                  color: wildMedium === m ? "#fff" : "var(--warm-grey)", cursor: "pointer", transition: "all 0.2s",
+                }}>
+                {m.toUpperCase()}
+              </button>
+            ))}
+            <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, color: "var(--warm-grey)", marginLeft: "auto", letterSpacing: "0.06em" }}>{filteredWild.length} works</p>
+          </div>
+
+          {filteredWild.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "60px 0" }}>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 300, color: "var(--warm-grey)" }}>No works match this filter.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
+              {filteredWild.map((work, i) => (
+                <WildArtworkCard key={work.id} work={work} onAdd={handleAddWork} formatPrice={formatPrice} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Featured piece */}
       <section className="px-4 sm:px-6 md:px-8 lg:px-16 py-12 sm:py-16 md:py-20 lg:py-24" style={{ maxWidth: 1100, margin: "0 auto" }}>

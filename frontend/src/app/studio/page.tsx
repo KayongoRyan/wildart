@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import Footer from "@/components/Footer";
 import { artists } from "@/lib/artists";
 
@@ -15,30 +16,43 @@ const values = [
 function ArtistCard({ a, index }: { a: (typeof artists)[0]; index: number }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-5%" });
-  const flip = index % 2 !== 0;
   return (
-    <Link href={`/artists/${a.slug}`} style={{ textDecoration: "none" }}>
-    <motion.div ref={ref} initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.3, delay: index * 0.05 }}
-      style={{ background: a.bg, display: "grid", gridTemplateColumns: flip ? "1.5fr 1fr" : "1fr 1.5fr", minHeight: 420, overflow: "hidden" }}>
-      {/* Text side */}
-      <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", order: flip ? 2 : 0 }}>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 12 }}>Since {a.since} · {a.medium}</p>
-        <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(26px,3vw,42px)", fontWeight: 300, color: "var(--cream)", marginBottom: 8, lineHeight: 1.1 }}>{a.name}</h3>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 12, color: "var(--ochre)", marginBottom: 24 }}>{a.role}</p>
-        <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "rgba(245,240,232,0.55)", lineHeight: 1.85, marginBottom: 28 }}>{a.bio}</p>
-        <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 17, color: "rgba(245,240,232,0.4)", lineHeight: 1.6 }}>&ldquo;{a.quote}&rdquo;</p>
-      </div>
-      {/* Visual side */}
-      <div style={{ background: "rgba(0,0,0,0.2)", display: "flex", alignItems: "center", justifyContent: "center", order: flip ? 1 : 0, position: "relative", minHeight: 380 }}>
-        <span style={{ fontSize: "clamp(120px,20vw,260px)", opacity: 0.18 }}>{a.emoji}</span>
-        <div style={{ position: "absolute", bottom: 32, left: 32, display: "flex", flexWrap: "wrap", gap: 8 }}>
-          {a.specialty.map(s => (
-            <span key={s} style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.12)", padding: "4px 10px" }}>{s}</span>
-          ))}
+    <Link href={`/artists/${a.slug}`} style={{ textDecoration: "none" }} className="block">
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0, y: 16 }}
+        animate={inView ? { opacity: 1, y: 0 } : {}}
+        transition={{ duration: 0.3, delay: index * 0.05 }}
+        className="overflow-hidden bg-[var(--ink)]"
+      >
+        <div className="relative aspect-[3/4] w-full overflow-hidden">
+          {a.image ? (
+            <Image
+              src={a.image}
+              alt={a.name}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 20vw"
+              className="object-cover transition-transform duration-300 hover:scale-[1.02]"
+            />
+          ) : (
+            <div style={{ background: a.bg }} className="flex h-full w-full items-center justify-center">
+              <span className="text-[clamp(80px,15vw,160px)] opacity-30">{a.emoji}</span>
+            </div>
+          )}
         </div>
-      </div>
-    </motion.div>
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(18px, 2vw, 24px)",
+            fontWeight: 300,
+            color: "var(--cream)",
+            padding: "20px 0 0",
+            lineHeight: 1.2,
+          }}
+        >
+          {a.name}
+        </p>
+      </motion.div>
     </Link>
   );
 }
@@ -92,7 +106,7 @@ export default function StudioPage() {
               marginBottom: 28,
             }}
           >
-            Three artists.<br />One forest.<br />Infinite subjects.
+            Five artists.<br />One forest.<br />Infinite subjects.
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -137,7 +151,7 @@ export default function StudioPage() {
         <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 clamp(24px,6vw,80px)" }}>
           <p style={{ fontFamily: "var(--font-sans)", fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>The Artists</p>
           <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px,4vw,58px)", fontWeight: 300, color: "var(--cream)", marginBottom: 80 }}>Meet the hands behind the work</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-6">
             {artists.map((a, i) => <ArtistCard key={a.name} a={a} index={i} />)}
           </div>
         </div>
@@ -170,7 +184,7 @@ export default function StudioPage() {
               The studio sits 20 minutes from the Volcanoes National Park gate, at 1,850m above sea level. Collectors who visit in person can meet the artists, see works in progress, and arrange a guided walk through the bamboo zones where Christine sketches at dawn.
             </p>
             <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
-              {[["1,850m", "Altitude"], ["20 min", "To the park"], ["3", "Artists resident"]].map(([val, lbl]) => (
+              {[["1,850m", "Altitude"], ["20 min", "To the park"], ["5", "Artists resident"]].map(([val, lbl]) => (
                 <div key={lbl}>
                   <p style={{ fontFamily: "var(--font-display)", fontSize: 32, fontWeight: 300, color: "var(--ochre)" }}>{val}</p>
                   <p style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(255,255,255,0.35)" }}>{lbl}</p>

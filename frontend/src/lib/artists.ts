@@ -10,6 +10,7 @@ export interface Artist {
   emoji: string;
   bg: string;
   order: number;
+  image?: string;
 }
 
 export const artists: Artist[] = [
@@ -25,6 +26,7 @@ export const artists: Artist[] = [
     emoji: "🦍",
     bg: "#1C2A1E",
     order: 0,
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=600&h=750&fit=crop",
   },
   {
     name: "Josue Habimana",
@@ -38,6 +40,7 @@ export const artists: Artist[] = [
     emoji: "🐘",
     bg: "#2A1E10",
     order: 1,
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=750&fit=crop",
   },
   {
     name: "Rigobert Nzeyimana",
@@ -51,6 +54,35 @@ export const artists: Artist[] = [
     emoji: "🦁",
     bg: "#1A1810",
     order: 2,
+    image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&h=750&fit=crop",
+  },
+  {
+    name: "Marie Uwimana",
+    slug: "marie-uwimana",
+    role: "Conservation Artist",
+    since: "2023",
+    medium: "Graphite · Ink",
+    specialty: ["Crowned Crane", "Fish Eagle", "Waterfowl"],
+    bio: "Marie joined SAWA after completing the Conservation youth programme. Her work focuses on birds of the wetlands — crowned cranes, fish eagles, and the migratory species that pass through Rwanda. She brings a delicate line quality that captures the weightlessness of flight.",
+    quote: "Birds teach us to look up.",
+    emoji: "🦢",
+    bg: "#1A2A1E",
+    order: 3,
+    image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&h=750&fit=crop",
+  },
+  {
+    name: "Patrick Habiyambere",
+    slug: "patrick-habiyambere",
+    role: "Field Artist",
+    since: "2023",
+    medium: "Charcoal · Graphite",
+    specialty: ["Buffalo", "Hippopotamus", "Savanna Life"],
+    bio: "Patrick trained as a ranger before turning to art. His field sketches from Akagera are the foundation of every studio visit — he captures the rhythm of the savanna in quick, confident strokes. His larger works are built from these sketches, layered over weeks.",
+    quote: "The sketch is the truth. The painting is the story.",
+    emoji: "🐃",
+    bg: "#2A1E10",
+    order: 4,
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&h=750&fit=crop",
   },
 ];
 

@@ -4,7 +4,7 @@ import { useLanguage } from "@/context/LanguageContext";
 
 const exploreLinks = [
   { label: "The Studio", href: "/studio" },
-  { label: "The Wild", href: "/commission#the-wild" },
+  { label: "The Wild", href: "/shop#the-wild" },
   { label: "Artists", href: "/#artists" },
   { label: "Exhibitions", href: "/#programme" },
 ];
