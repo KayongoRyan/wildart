@@ -18,8 +18,8 @@ function ArtistCard({ a, index }: { a: (typeof artists)[0]; index: number }) {
   const flip = index % 2 !== 0;
   return (
     <Link href={`/artists/${a.slug}`} style={{ textDecoration: "none" }}>
-    <motion.div ref={ref} initial={{ opacity: 0, y: 40 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.1 }}
+    <motion.div ref={ref} initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.3, delay: index * 0.05 }}
       style={{ background: a.bg, display: "grid", gridTemplateColumns: flip ? "1.5fr 1fr" : "1fr 1.5fr", minHeight: 420, overflow: "hidden" }}>
       {/* Text side */}
       <div style={{ padding: "64px 56px", display: "flex", flexDirection: "column", justifyContent: "center", order: flip ? 2 : 0 }}>
@@ -47,8 +47,8 @@ function FadeIn({ children, delay = 0, bg = "transparent" }: { children: React.R
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay }} style={{ background: bg }}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 16 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.3, delay }} style={{ background: bg }}>
       {children}
     </motion.div>
   );
@@ -71,17 +71,17 @@ export default function StudioPage() {
         <div className="absolute right-[10%] top-[40%] text-[clamp(120px,25vw,320px)] opacity-[0.04] select-none" aria-hidden>🦍</div>
         <div className="relative z-10 max-w-[720px]">
           <motion.p
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            transition={{ delay: 0.1, duration: 0.25 }}
             style={{ fontFamily: "var(--font-sans)", fontSize: "clamp(10px,1.2vw,12px)", letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 20 }}
           >
             Est. Musanze, Rwanda — 2020
           </motion.p>
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.35, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ delay: 0.15, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
             className="text-balance"
             style={{
               fontFamily: "var(--font-display)",
@@ -97,7 +97,7 @@ export default function StudioPage() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
+            transition={{ delay: 0.25, duration: 0.3 }}
             style={{
               fontFamily: "var(--font-display)",
               fontStyle: "italic",

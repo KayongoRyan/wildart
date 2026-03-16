@@ -53,10 +53,10 @@ function WorkCard({ work, formatPrice }: { work: Work; formatPrice: (n: number) 
 
   return (
     <motion.div ref={ref}
-      initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
+      initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.25 }}
       className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
-      <Link href={`/shop/${work.id}`} style={{ textDecoration: "none", display: "block" }}>
+      <Link href={`/shop/${work.id}`} prefetch={true} style={{ textDecoration: "none", display: "block" }}>
         <div style={{ aspectRatio: "4/5", background: "#1C2A1E", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
           <span className="transition-transform duration-700 group-hover:scale-110 inline-block" style={{ fontSize: 100, opacity: 0.12 }}>{work.emoji}</span>
           {!work.available && (
@@ -92,8 +92,8 @@ function Card({ art, onAdd, formatPrice }: { art: typeof newArrivals[0]; onAdd: 
 
   return (
     <motion.div ref={ref}
-      initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6 }}
+      initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.25 }}
       className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
       <div style={{ aspectRatio: "4/5", background: "#E0D8C8", display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
         <span className="transition-transform duration-700 group-hover:scale-110 inline-block" style={{ fontSize: 100, opacity: 0.22 }}>{art.emoji}</span>
@@ -225,8 +225,8 @@ function ShopContent() {
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 2 }}>
               {prints.map((p, i) => (
                 <motion.div key={p.title}
-                  initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                  initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }} transition={{ duration: 0.2, delay: i * 0.03 }}
                   className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
                   <div style={{ aspectRatio: "4/5", background: "#DDD5C2", display: "flex", alignItems: "center", justifyContent: "center" }}>
                     <span style={{ fontSize: 80, opacity: 0.18 }} className="group-hover:scale-110 transition-transform duration-700 inline-block">{p.emoji}</span>
@@ -255,8 +255,8 @@ function ShopContent() {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 2 }}>
                 {photography.map((ph, i) => (
                   <motion.div key={ph.id}
-                    initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }} transition={{ delay: i * 0.08 }}
+                    initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.2, delay: i * 0.03 }}
                     className="group" style={{ background: "var(--cream-warm)", overflow: "hidden" }}>
                     <div style={{ aspectRatio: "4/5", background: "#1C2A1E", display: "flex", alignItems: "center", justifyContent: "center" }}>
                       <span style={{ fontSize: 80, opacity: 0.18 }} className="group-hover:scale-110 transition-transform duration-700 inline-block">{ph.emoji}</span>
@@ -284,8 +284,8 @@ function ShopContent() {
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 2 }}>
                 {collections.map((c, i) => (
                   <motion.div key={c.name}
-                    initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                    initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }} transition={{ duration: 0.2, delay: i * 0.04 }}
                     className="group cursor-pointer"
                     style={{ background: c.bg, padding: "48px 36px", position: "relative", overflow: "hidden" }}>
                     <div style={{ position: "absolute", right: 20, bottom: 10, fontSize: 80, opacity: 0.12, transition: "opacity 0.4s, transform 0.4s" }} className="group-hover:opacity-25 group-hover:scale-110">{c.emoji}</div>

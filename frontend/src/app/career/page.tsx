@@ -48,7 +48,7 @@ function FadeIn({ children, delay = 0, style }: { children: React.ReactNode; del
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-8%" });
   return (
-    <motion.div ref={ref} initial={{ opacity: 0, y: 28 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.7, delay }} style={{ height: "100%", ...style }}>
+    <motion.div ref={ref} initial={{ opacity: 0, y: 12 }} animate={inView ? { opacity: 1, y: 0 } : {}} transition={{ duration: 0.3, delay }} style={{ height: "100%", ...style }}>
       {children}
     </motion.div>
   );
