@@ -103,21 +103,21 @@ export default function Nav() {
                         </Link>
                     </nav>
 
-                    {/* Centre: Logo Name placeholder for alignment */}
+                    {/* Centre: Shop */}
                     <div className="hidden lg:flex justify-center items-start">
                         <Link
-                            href="/"
+                            href="/shop"
                             style={{
-                                fontFamily: "var(--font-display)",
-                                fontWeight: 400,
-                                letterSpacing: "0.28em",
-                                color: "#fff",
-                                textTransform: "uppercase",
+                                fontFamily: "var(--font-sans)",
+                                fontSize: 15,
+                                fontWeight: pathname === "/shop" ? 500 : 400,
+                                color: textColor,
                                 textDecoration: "none",
+                                transition: "color 0.3s",
                             }}
-                            className="hover:opacity-70 transition-opacity text-lg sm:text-xl lg:text-[22px]"
+                            className="hover:!text-white"
                         >
-                            SAWA
+                            Shop
                         </Link>
                     </div>
 
@@ -370,14 +370,10 @@ export default function Nav() {
                                 style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginTop: 8 }}
                             >
                                 <div style={{ display: "flex", gap: 16 }}>
-                                    {[
-                                        { code: "en", native: "EN" },
-                                        { code: "fr", native: "FR" },
-                                        { code: "es", native: "ES" }
-                                    ].map((l) => (
+                                    {LANGUAGES.map((l) => (
                                         <button
                                             key={l.code}
-                                            onClick={() => { setLang(l.code as Lang); setOpen(false); }}
+                                            onClick={() => { setLang(l.code); setOpen(false); }}
                                             style={{
                                                 fontFamily: "var(--font-sans)", fontSize: 13, letterSpacing: "0.18em",
                                                 textTransform: "uppercase", background: "none", border: "none", cursor: "pointer",

@@ -26,7 +26,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden py-32"
+      className="relative overflow-hidden py-32" // Matched py-32 from S4Artists
       style={{
         backgroundColor: "var(--green)",
         borderTop: "1px solid rgba(255,255,255,0.15)"
@@ -51,6 +51,7 @@ export default function Footer() {
         </span>
       </div>
 
+      {/* Container matched to S4Artists: max-w-[1480px], mx-auto, px-8 */}
       <div className="relative z-10 max-w-[1480px] mx-auto px-8">
         {/* Main grid */}
         <div
@@ -305,6 +306,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </footer>
+    </footer >
   );
 }
