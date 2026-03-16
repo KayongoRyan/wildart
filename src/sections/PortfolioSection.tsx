@@ -38,6 +38,7 @@ function WorkItem({ work }: { work: (typeof WORKS)[0] }) {
       ref={ref}
       className="relative h-[80vh] md:h-[100svh] w-full overflow-hidden flex items-center justify-center"
     >
+      {/* Parallax image */}
       <motion.div
         className="absolute inset-x-0 h-[130%] z-0"
         style={{ top: "-15%", y }}
@@ -49,35 +50,45 @@ function WorkItem({ work }: { work: (typeof WORKS)[0] }) {
         />
       </motion.div>
 
+      {/* Subtle mid-overlay */}
       <div className="absolute inset-0 bg-black/20 z-10" />
 
-      <div className="absolute bottom-8 left-8 right-8 z-30 flex justify-between items-end text-[10px] sm:text-xs font-sans tracking-[0.1em] uppercase text-white drop-shadow-md">
-        <motion.div
-          className="text-left flex flex-col gap-1"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-        >
-          <span className="opacity-50 text-[9px] sm:text-[10px]">Art Piece</span>
-          <span>{work.title}</span>
-        </motion.div>
-        <motion.div
-          className="text-right flex flex-col gap-1"
-          initial={{ opacity: 0, y: 15 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.1 }}
-        >
-          <span className="opacity-50 text-[9px] sm:text-[10px]">Client</span>
-          <span>{work.client}</span>
-        </motion.div>
+      {/* Strong gradient at bottom so text is always readable */}
+      <div
+        className="absolute bottom-0 left-0 right-0 z-20 h-40"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 60%, transparent 100%)",
+        }}
+      />
+
+      {/* Labels row */}
+      <div className="absolute bottom-8 left-8 right-8 z-30 flex justify-between items-end text-[10px] sm:text-xs tracking-[0.1em] uppercase text-white">
+        {/* Left: Art piece */}
+        <div className="text-left flex flex-col gap-1">
+          <span className="text-[9px] sm:text-[10px]" style={{ opacity: 0.65 }}>
+            Art Piece
+          </span>
+          <span style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontWeight: 500 }}>
+            {work.title}
+          </span>
+        </div>
+
+        {/* Right: Client */}
+        <div className="text-right flex flex-col gap-1">
+          <span className="text-[9px] sm:text-[10px]" style={{ opacity: 0.65 }}>
+            Client
+          </span>
+          <span style={{ textShadow: "0 1px 6px rgba(0,0,0,0.8)", fontWeight: 500 }}>
+            {work.client}
+          </span>
+        </div>
       </div>
     </div>
   );
 }
 
-export default function ServicesSection() {
+export default function PortfolioSection() {
   return (
     <section className="bg-[#042D29] text-[var(--cream-warm)] flex flex-col items-center">
       <div className="w-full py-8 flex justify-center items-center relative z-10 bg-[#042D29]">

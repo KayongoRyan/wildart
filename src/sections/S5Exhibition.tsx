@@ -1,4 +1,5 @@
 "use client";
+
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
@@ -10,7 +11,7 @@ export default function S5Exhibition() {
   const inView = useInView(ref, { once: true });
 
   const labelStyle = {
-    fontFamily: "var(--font-sans)",
+    fontFamily: "'Poppins', var(--font-sans), sans-serif",
     fontSize: 10,
     letterSpacing: "0.2em",
     textTransform: "uppercase" as const,
@@ -21,102 +22,144 @@ export default function S5Exhibition() {
     <section
       id="programme"
       ref={ref}
-      className="flex flex-col justify-center"
+      className="relative w-full overflow-hidden"
       style={{
-        minHeight: "calc(100vh - 72px)",
+        height: "auto",
+        maxHeight: "580px", // Slightly tighter to keep it compact
         backgroundColor: "var(--ink)",
-        padding: "clamp(80px, 12vw, 140px) clamp(24px, 6vw, 80px)",
       }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ maxWidth: 520 }}>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5 }}
-            style={{ ...labelStyle, marginBottom: 12 }}
-          >
-            Exhibition
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.08 }}
-            style={{ ...labelStyle, marginBottom: 40 }}
-          >
-            January 24 – March 10, 2026
-          </motion.p>
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(36px, 5.5vw, 64px)",
-              fontWeight: 600,
-              color: "var(--cream)",
-              lineHeight: 1.05,
-              marginBottom: 16,
-              letterSpacing: "-0.02em",
-            }}
-          >
-            Virunga Studies
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            style={{
-              fontFamily: "var(--font-display)",
-              fontStyle: "italic",
-              fontSize: "clamp(16px, 1.8vw, 20px)",
-              color: "rgba(255,255,255,0.45)",
-              marginBottom: 48,
-            }}
-          >
-            Christine Mukamana
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.35 }}
-            style={{ display: "flex", flexWrap: "wrap", gap: 24, alignItems: "center" }}
-          >
-            <Link
-              href="/events"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "#fff",
-                background: "var(--ochre)",
-                padding: "14px 32px",
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-              className="transition-opacity duration-200 hover:!opacity-90"
+      <div className="grid grid-cols-1 md:grid-cols-2 h-full">
+        {/* Left column: Image */}
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          animate={inView ? { opacity: 1, x: 0 } : {}}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          className="relative h-[35vh] md:h-[580px] w-full bg-[#1A1810]"
+        >
+          <img
+            src="https://images.unsplash.com/photo-1549490349-8643362247b5?q=80&w=2574&auto=format&fit=crop"
+            alt="Artist at work"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/15" />
+        </motion.div>
+
+        {/* Right column: Content */}
+        <div className="flex flex-col justify-center py-10 px-8 lg:px-20 xl:px-32">
+          <div className="max-w-[480px]">
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5 }}
+              style={{ ...labelStyle, marginBottom: 8 }}
             >
-              {t.nav.events}
-            </Link>
-            <Link
-              href="/events"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                letterSpacing: "0.18em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.5)",
-                textDecoration: "none",
-                borderBottom: "1px solid rgba(255,255,255,0.4)",
-                paddingBottom: 4,
-                display: "inline-block",
-              }}
-              className="transition-colors duration-200 hover:!text-[var(--ochre)] hover:!border-[var(--ochre)]"
+              Exhibition
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              style={{ ...labelStyle, marginBottom: 20 }}
             >
-              {t.events.viewExhibition}
-            </Link>
-          </motion.div>
+              January 24 – March 10, 2026
+            </motion.p>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.15 }}
+              style={{
+                fontFamily: "'Poppins', var(--font-sans), sans-serif",
+                fontSize: "clamp(30px, 3.8vw, 44px)",
+                fontWeight: 600,
+                color: "var(--cream)",
+                lineHeight: 1.1,
+                marginBottom: 10,
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Virunga Studies
+            </motion.h2>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.25 }}
+              style={{
+                fontFamily: "'Poppins', var(--font-sans), sans-serif",
+                fontSize: "15px",
+                color: "rgba(255,255,255,0.45)",
+                marginBottom: 14,
+              }}
+            >
+              Christine Mukamana
+            </motion.p>
+            <motion.p
+              initial={{ opacity: 0, y: 12 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.5, delay: 0.32 }}
+              style={{
+                fontFamily: "'Poppins', var(--font-sans), sans-serif",
+                fontSize: "14px",
+                fontWeight: 400,
+                lineHeight: 1.6,
+                color: "rgba(255,255,255,0.55)",
+                marginBottom: 28,
+              }}
+            >
+              A solo exhibition of graphite and charcoal works documenting the
+              mountain gorilla families of Volcanoes National Park.
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                gap: 28,
+                alignItems: "center",
+              }}
+            >
+              <Link
+                href="/booking"
+                style={{
+                  fontFamily: "'Poppins', var(--font-sans), sans-serif",
+                  fontSize: 11,
+                  fontWeight: 500,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  background: "var(--ochre)",
+                  padding: "14px 48px", // Increased width
+                  minWidth: "160px",   // Ensures consistent "CTA" presence
+                  textAlign: "center",
+                  textDecoration: "none",
+                  display: "inline-block",
+                }}
+                className="transition-all duration-200 hover:!opacity-90 hover:tracking-widest"
+              >
+                Book
+              </Link>
+              <Link
+                href="/events"
+                style={{
+                  fontFamily: "'Poppins', var(--font-sans), sans-serif",
+                  fontSize: 11,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.5)",
+                  textDecoration: "none",
+                  borderBottom: "1px solid rgba(255,255,255,0.3)",
+                  paddingBottom: 4,
+                  display: "inline-block",
+                }}
+                className="transition-colors duration-200 hover:!text-[var(--ochre)] hover:!border-[var(--ochre)]"
+              >
+                View More
+              </Link>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

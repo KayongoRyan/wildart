@@ -8,27 +8,114 @@ export default function S6Visit() {
   const [subscribed, setSubscribed] = useState(false);
 
   return (
-    <section className="flex flex-col justify-center py-16 lg:py-24" style={{ minHeight: "calc(100vh - 72px)", backgroundColor: "var(--cream)" }}>
-      <div className="max-w-[1200px] mx-auto px-8 lg:px-16 grid md:grid-cols-2 gap-16">
-        <div>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(32px,4vw,48px)", fontWeight: 300, color: "var(--ink)", marginBottom: 24 }}>Visit us</h2>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 16, color: "var(--ink)", marginBottom: 16 }}>Musanze, Rwanda</p>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--warm-grey)", marginBottom: 8 }}>Monday–Saturday 10am–6pm</p>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--warm-grey)", marginBottom: 16 }}>Sunday 12pm–6pm</p>
-          <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--warm-grey)" }}>Free entry</p>
+    <section
+      className="w-full py-32" // Matched py-32 from S4Artists
+      style={{
+        backgroundColor: "var(--green)",
+        display: "flex",
+        alignItems: "center"
+      }}
+    >
+      {/* Container matched to S4Artists: max-w-[1480px], mx-auto, px-8 */}
+      <div className="max-w-[1480px] mx-auto px-8 w-full grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
+
+        {/* Left Side: Headline & Text */}
+        <div className="md:col-span-3">
+          <h2 style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "clamp(32px, 4.5vw, 56px)",
+            fontWeight: 600,
+            color: "var(--cream)",
+            lineHeight: 1.1,
+            marginBottom: 20
+          }}>
+            Subscribe to our newsletter
+          </h2>
+          <p style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: "16px",
+            color: "rgba(255,255,255,0.85)",
+            maxWidth: "440px",
+            lineHeight: 1.6
+          }}>
+            Join our newsletter to get exclusive insights, timely updates, and expert tips that help you stay connected.
+          </p>
         </div>
-        <div>
-          <h3 style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--ochre)", marginBottom: 16 }}>Newsletter</h3>
+
+        {/* Right Side: Form */}
+        <div className="md:col-span-2">
+          <p style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 12,
+            letterSpacing: "0.1em",
+            textTransform: "uppercase",
+            color: "var(--cream)",
+            marginBottom: 12,
+            fontWeight: 500
+          }}>
+            Stay Informed
+          </p>
+
           {subscribed ? (
-            <p style={{ fontFamily: "var(--font-display)", fontStyle: "italic", fontSize: 16, color: "var(--ochre)" }}>Thank you!</p>
+            <div style={{ padding: "14px 0" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: 18, color: "var(--cream)" }}>
+                ✓ Thank you for subscribing!
+              </p>
+            </div>
           ) : (
-            <form onSubmit={(e) => { e.preventDefault(); if (email.trim()) setSubscribed(true); }} className="flex flex-col gap-3">
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required
-                style={{ fontFamily: "var(--font-sans)", fontSize: 14, padding: "12px 16px", border: "1px solid rgba(14,16,15,0.2)", background: "var(--cream)", outline: "none" }} />
-              <button type="submit" style={{ fontFamily: "var(--font-sans)", fontSize: 11, letterSpacing: "0.16em", textTransform: "uppercase", padding: "12px 24px", background: "var(--ink)", color: "#fff", border: "none", cursor: "pointer", alignSelf: "flex-start" }}>Sign Up</button>
+            <form
+              onSubmit={(e) => { e.preventDefault(); if (email.trim()) setSubscribed(true); }}
+              className="flex flex-col sm:flex-row gap-3 w-full"
+            >
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+                style={{
+                  flex: 1,
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 14,
+                  padding: "16px 20px",
+                  borderRadius: "40px",
+                  border: "none",
+                  background: "var(--cream)",
+                  color: "var(--ink)",
+                  outline: "none"
+                }}
+              />
+              <button
+                type="submit"
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 12,
+                  fontWeight: 600,
+                  letterSpacing: "0.05em",
+                  padding: "16px 32px",
+                  borderRadius: "40px",
+                  background: "var(--ochre)",
+                  color: "#fff",
+                  border: "none",
+                  cursor: "pointer",
+                  whiteSpace: "nowrap"
+                }}
+              >
+                Subscribe
+              </button>
             </form>
           )}
+
+          <p style={{
+            fontFamily: "var(--font-sans)",
+            fontSize: 11,
+            color: "rgba(255,255,255,0.7)",
+            marginTop: 16
+          }}>
+            By subscribing you agree to our <span style={{ textDecoration: "underline", cursor: "pointer" }}>Privacy Policy</span>
+          </p>
         </div>
+
       </div>
     </section>
   );

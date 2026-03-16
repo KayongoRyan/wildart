@@ -25,7 +25,13 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="relative overflow-hidden" style={{ backgroundColor: "var(--ink)" }}>
+    <footer
+      className="relative overflow-hidden py-32" // Matched py-32 from S4Artists
+      style={{
+        backgroundColor: "var(--green)",
+        borderTop: "1px solid rgba(255,255,255,0.15)"
+      }}
+    >
       {/* Subtle watermark */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
@@ -33,9 +39,9 @@ export default function Footer() {
       >
         <span
           style={{
-            fontFamily: "var(--font-display)",
+            fontFamily: "var(--font-sans)",
             fontSize: "clamp(120px, 18vw, 280px)",
-            fontWeight: 300,
+            fontWeight: 700,
             color: "rgba(245,240,232,0.02)",
             lineHeight: 1,
             letterSpacing: "0.12em",
@@ -45,11 +51,11 @@ export default function Footer() {
         </span>
       </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-8 lg:px-16">
+      {/* Container matched to S4Artists: max-w-[1480px], mx-auto, px-8 */}
+      <div className="relative z-10 max-w-[1480px] mx-auto px-8">
         {/* Main grid */}
         <div
           style={{
-            paddingTop: "clamp(64px, 10vw, 96px)",
             paddingBottom: "clamp(48px, 6vw, 64px)",
             borderBottom: "1px solid rgba(255,255,255,0.06)",
             display: "grid",
@@ -61,9 +67,9 @@ export default function Footer() {
           <div style={{ maxWidth: 280 }}>
             <p
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-sans)",
                 fontSize: 28,
-                fontWeight: 300,
+                fontWeight: 600,
                 letterSpacing: "0.2em",
                 color: "var(--cream)",
                 textTransform: "uppercase",
@@ -72,22 +78,10 @@ export default function Footer() {
             >
               SAWA
             </p>
+
             <p
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
-                marginBottom: 12,
-              }}
-            >
-              1°30′S 29°38′E
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
                 fontSize: 14,
                 color: "rgba(255,255,255,0.4)",
                 lineHeight: 1.7,
@@ -112,7 +106,7 @@ export default function Footer() {
             </p>
             <p
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-sans)",
                 fontStyle: "italic",
                 fontSize: 14,
                 color: "rgba(255,255,255,0.4)",
@@ -272,7 +266,6 @@ export default function Footer() {
         <div
           style={{
             paddingTop: 24,
-            paddingBottom: 32,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
