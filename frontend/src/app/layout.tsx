@@ -1,9 +1,5 @@
-<<<<<<< HEAD:src/app/layout.tsx
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-=======
 import type { Metadata, Viewport } from "next";
->>>>>>> origin/master:frontend/src/app/layout.tsx
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -29,20 +25,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-<<<<<<< HEAD:src/app/layout.tsx
-        <html lang="en" className={poppins.variable}>
-            <body className={poppins.className}>
-=======
-    <html lang="en" data-scroll-behavior="smooth">
-                    <body className="relative">
->>>>>>> origin/master:frontend/src/app/layout.tsx
-                        <LanguageProvider>
-                            <CurrencyProvider>
-                                <Nav />
-                                {children}
-                            </CurrencyProvider>
-                        </LanguageProvider>
-                    </body>
-                </html>
-                );
+        <html lang="en" className={poppins.variable} data-scroll-behavior="smooth">
+            <body className={`${poppins.className} relative`}>
+                <LanguageProvider>
+                    <CurrencyProvider>
+                        <Nav />
+                        {children}
+                    </CurrencyProvider>
+                </LanguageProvider>
+            </body>
+        </html>
+    );
 }
