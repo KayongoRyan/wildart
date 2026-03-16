@@ -39,6 +39,9 @@ jobs:
   verify:
     name: Lint & build
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,10 +54,10 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install
-        run: cd frontend && npm ci
+        run: npm ci
 
       - name: Lint
-        run: cd frontend && npm run lint
+        run: npm run lint
 
       - name: Build
-        run: cd frontend && npm run build
+        run: npm run build
