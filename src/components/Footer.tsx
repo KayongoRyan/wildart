@@ -65,19 +65,13 @@ export default function Footer() {
         >
           {/* Brand + Visit */}
           <div style={{ maxWidth: 280 }}>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 28,
-                fontWeight: 600,
-                letterSpacing: "0.2em",
-                color: "var(--cream)",
-                textTransform: "uppercase",
-                marginBottom: 20,
-              }}
-            >
-              SAWA
-            </p>
+            <div style={{ marginBottom: 28 }}>
+              <img
+                src="/assets/sawa-logo2.svg"
+                alt="SAWA Logo"
+                style={{ height: 40, width: "auto" }}
+              />
+            </div>
 
             <p
               style={{

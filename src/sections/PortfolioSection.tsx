@@ -93,7 +93,7 @@ export default function PortfolioSection() {
     <section className="bg-[#042D29] text-[var(--cream-warm)] flex flex-col items-center">
       <div className="w-full py-8 flex justify-center items-center relative z-10 bg-[#042D29]">
         <span className="text-[10px] md:text-xs tracking-[0.2em] font-sans uppercase">
-          Our Work
+          Welcome to Africa's best worldlife and contemporary art studio
         </span>
         <div className="absolute bottom-[-4px] w-1 h-1 rounded-full bg-white opacity-50 z-20" />
       </div>

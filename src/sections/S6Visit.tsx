@@ -9,11 +9,12 @@ export default function S6Visit() {
 
   return (
     <section
-      className="w-full py-32" // Matched py-32 from S4Artists
+      className="w-full py-32"
       style={{
-        backgroundColor: "var(--green)",
+        backgroundColor: "#ffffff", // Changed to white
         display: "flex",
-        alignItems: "center"
+        alignItems: "center",
+        borderTop: "1px solid rgba(0,0,0,0.05)" // Optional: subtle top border for separation
       }}
     >
       {/* Container matched to S4Artists: max-w-[1480px], mx-auto, px-8 */}
@@ -25,7 +26,7 @@ export default function S6Visit() {
             fontFamily: "var(--font-sans)",
             fontSize: "clamp(32px, 4.5vw, 56px)",
             fontWeight: 600,
-            color: "var(--cream)",
+            color: "var(--ink)", // Changed to dark color for white background
             lineHeight: 1.1,
             marginBottom: 20
           }}>
@@ -34,7 +35,7 @@ export default function S6Visit() {
           <p style={{
             fontFamily: "var(--font-sans)",
             fontSize: "16px",
-            color: "rgba(255,255,255,0.85)",
+            color: "rgba(14, 16, 15, 0.7)", // Adjusted opacity for dark text
             maxWidth: "440px",
             lineHeight: 1.6
           }}>
@@ -49,7 +50,7 @@ export default function S6Visit() {
             fontSize: 12,
             letterSpacing: "0.1em",
             textTransform: "uppercase",
-            color: "var(--cream)",
+            color: "var(--ink)", // Changed for visibility
             marginBottom: 12,
             fontWeight: 500
           }}>
@@ -58,14 +59,14 @@ export default function S6Visit() {
 
           {subscribed ? (
             <div style={{ padding: "14px 0" }}>
-              <p style={{ fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: 18, color: "var(--cream)" }}>
+              <p style={{ fontFamily: "var(--font-sans)", fontWeight: 500, fontSize: 18, color: "var(--ochre)" }}>
                 ✓ Thank you for subscribing!
               </p>
             </div>
           ) : (
             <form
               onSubmit={(e) => { e.preventDefault(); if (email.trim()) setSubscribed(true); }}
-              className="flex flex-col sm:flex-row gap-3 w-full"
+              className="flex flex-col sm:flex-row gap-0 w-full" // gap-0 for a more "unified" square block look
             >
               <input
                 type="email"
@@ -78,9 +79,9 @@ export default function S6Visit() {
                   fontFamily: "var(--font-sans)",
                   fontSize: 14,
                   padding: "16px 20px",
-                  borderRadius: "40px",
-                  border: "none",
-                  background: "var(--cream)",
+                  borderRadius: "0px", // Removed corner radius
+                  border: "1px solid rgba(14, 16, 15, 0.15)", // Added border for white background
+                  background: "#fff",
                   color: "var(--ink)",
                   outline: "none"
                 }}
@@ -93,8 +94,8 @@ export default function S6Visit() {
                   fontWeight: 600,
                   letterSpacing: "0.05em",
                   padding: "16px 32px",
-                  borderRadius: "40px",
-                  background: "var(--ochre)",
+                  borderRadius: "0px", // Removed corner radius
+                  background: "var(--ochre)", // Changed to ink for a more high-end feel
                   color: "#fff",
                   border: "none",
                   cursor: "pointer",
@@ -109,7 +110,7 @@ export default function S6Visit() {
           <p style={{
             fontFamily: "var(--font-sans)",
             fontSize: 11,
-            color: "rgba(255,255,255,0.7)",
+            color: "rgba(14, 16, 15, 0.4)", // Darker muted text
             marginTop: 16
           }}>
             By subscribing you agree to our <span style={{ textDecoration: "underline", cursor: "pointer" }}>Privacy Policy</span>
