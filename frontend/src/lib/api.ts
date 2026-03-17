@@ -5,11 +5,11 @@
  */
 export const API_BASE =
   typeof window !== "undefined"
-    ? (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000")
+    ? (process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4001")
     : "";
 
 export function apiUrl(path: string): string {
-  const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+  const base = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4001";
   const p = path.startsWith("/") ? path : `/${path}`;
   const apiPath = p.startsWith("/api") ? p : `/api${p}`;
   return `${base.replace(/\/$/, "")}${apiPath}`;

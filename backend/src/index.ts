@@ -9,7 +9,7 @@ import webhooksRouter from "./routes/webhooks.js";
 import dbRouter from "./routes/db.js";
 
 const app = express();
-const PORT = process.env.PORT ?? 4000;
+const PORT = process.env.PORT ?? 4001;
 
 app.use(cors({ origin: process.env.BASE_URL ?? "http://localhost:3000" }));
 app.use(express.json());
