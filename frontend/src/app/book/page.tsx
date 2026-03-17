@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
 import Footer from "@/components/Footer";
@@ -75,9 +75,17 @@ export default function BookPage() {
   const { formatPrice } = useCurrency();
   const [selected, setSelected]   = useState<string | null>(null);
   const [submitted, setSubmitted] = useState(false);
+  const [minDate, setMinDate] = useState("");
   const [form, setForm] = useState({
     name: "", email: "", phone: "", date: "", time: "", guests: "1", notes: "",
   });
+
+  useEffect(() => {
+    const d = new Date();
+    d.setDate(d.getDate() + 2);
+    const min = d.toISOString().split("T")[0];
+    queueMicrotask(() => setMinDate(min));
+  }, []);
 
   const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -303,7 +311,7 @@ export default function BookPage() {
                 <label style={labelStyle}>Preferred date</label>
                 <input
                   name="date" type="date" value={form.date} onChange={handle} required
-                  min={new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split("T")[0]}
+                  min={minDate}
                   style={inputStyle}
                 />
               </div>
