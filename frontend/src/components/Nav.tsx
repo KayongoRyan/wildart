@@ -113,7 +113,7 @@ export default function Nav() {
                     <img
                       src="/assets/sawa-logo2.svg"
                       alt="SAWA"
-                      style={{ height: 28, width: "auto", filter: "invert(1)" }}
+                      style={{ height: 28, width: "auto", filter: "brightness(0)" }}
                     />
                   </Link>
                 </motion.div>
@@ -414,7 +414,7 @@ export default function Nav() {
           >
             <div className="flex justify-between items-center p-6" style={{ borderBottom: "1px solid rgba(14,16,15,0.08)" }}>
               <Link href="/" onClick={() => setOpen(false)}>
-                <img src="/assets/sawa-logo2.svg" alt="SAWA" style={{ height: 24, width: "auto", filter: "invert(1)" }} />
+                <img src="/assets/sawa-logo2.svg" alt="SAWA" style={{ height: 24, width: "auto", filter: "brightness(0)" }} />
               </Link>
               <button onClick={() => setOpen(false)} aria-label="Close">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="1.5">
