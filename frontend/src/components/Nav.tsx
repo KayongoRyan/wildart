@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage, Lang } from "@/context/LanguageContext";
@@ -24,12 +24,20 @@ export default function Nav() {
   const [open, setOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const [currencyOpen, setCurrencyOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
   const { lang, setLang, t } = useLanguage();
   const { currency, setCurrency } = useCurrency();
   const langRef = useRef<HTMLDivElement>(null);
   const currencyRef = useRef<HTMLDivElement>(null);
   const cartCount = useCartStore((s) => s.items.reduce((n, i) => n + i.qty, 0));
+  const { scrollY } = useScroll();
+
+  const isConservationPage = pathname === "/conservation" || pathname === "/tuzivugire";
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 50);
+  });
 
   useEffect(() => {
     function handler(e: MouseEvent) {
@@ -90,22 +98,27 @@ export default function Nav() {
             })}
           </nav>
 
-          {/* Logo center */}
+          {/* Logo center — visible when scrolled on home, always on other pages */}
           <div className="flex-1 flex justify-center">
-            <Link
-              href="/"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 400,
-                letterSpacing: "0.28em",
-                color: "var(--ink)",
-                textTransform: "uppercase",
-                textDecoration: "none",
-              }}
-              className="hover:opacity-70 transition-opacity text-lg sm:text-xl lg:text-[22px]"
-            >
-              SAWA
-            </Link>
+            <AnimatePresence>
+              {(scrolled || pathname !== "/") && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="flex justify-center"
+                >
+                  <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+                    <img
+                      src="/assets/sawa-logo2.svg"
+                      alt="SAWA"
+                      style={{ height: 28, width: "auto", filter: "invert(1)" }}
+                    />
+                  </Link>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
           {/* Right: Nav + Cart + Language */}
@@ -133,24 +146,26 @@ export default function Nav() {
                 </Link>
               );
             })}
-            <Link
-              href="/donation"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                fontWeight: 400,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "#fff",
-                background: "var(--ochre)",
-                padding: "10px 20px",
-                textDecoration: "none",
-                transition: "background-color 0.2s",
-              }}
-              className="hover:!bg-[var(--ochre-light)]"
-            >
-              {t.nav.donation}
-            </Link>
+            {isConservationPage && (
+              <Link
+                href="/donation"
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontSize: 11,
+                  fontWeight: 400,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "#fff",
+                  background: "var(--ochre)",
+                  padding: "10px 20px",
+                  textDecoration: "none",
+                  transition: "background-color 0.2s",
+                }}
+                className="hover:!bg-[var(--ochre-light)]"
+              >
+                {t.nav.donation}
+              </Link>
+            )}
             <Link
               href="/cart"
               aria-label={`Cart (${cartCount})`}
@@ -398,7 +413,9 @@ export default function Nav() {
             style={{ backgroundColor: "var(--cream)" }}
           >
             <div className="flex justify-between items-center p-6" style={{ borderBottom: "1px solid rgba(14,16,15,0.08)" }}>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: 18, letterSpacing: "0.2em", color: "var(--ink)" }}>SAWA</span>
+              <Link href="/" onClick={() => setOpen(false)}>
+                <img src="/assets/sawa-logo2.svg" alt="SAWA" style={{ height: 24, width: "auto", filter: "invert(1)" }} />
+              </Link>
               <button onClick={() => setOpen(false)} aria-label="Close">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--ink)" strokeWidth="1.5">
                   <path d="M18 6L6 18M6 6l12 12" />
@@ -406,6 +423,26 @@ export default function Nav() {
               </button>
             </div>
             <nav className="flex-1 flex flex-col justify-center px-8 gap-6">
+              {isConservationPage && (
+                <Link
+                  href="/donation"
+                  onClick={() => setOpen(false)}
+                  style={{
+                    fontFamily: "var(--font-sans)",
+                    fontSize: 18,
+                    letterSpacing: "0.16em",
+                    textTransform: "uppercase",
+                    color: "#fff",
+                    background: "var(--ochre)",
+                    padding: "14px 24px",
+                    textDecoration: "none",
+                    display: "inline-block",
+                  }}
+                  className="hover:!opacity-90"
+                >
+                  {t.nav.donation}
+                </Link>
+              )}
               {navLinks.map(({ label, href }) => (
                 <Link
                   key={href}
@@ -424,25 +461,6 @@ export default function Nav() {
                   {label}
                 </Link>
               ))}
-              <Link
-                href="/donation"
-                onClick={() => setOpen(false)}
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 18,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "#fff",
-                  background: "var(--ochre)",
-                  padding: "14px 24px",
-                  textDecoration: "none",
-                  display: "inline-block",
-                  marginTop: 8,
-                }}
-                className="hover:!opacity-90"
-              >
-                {t.nav.donation}
-              </Link>
               <div className="flex flex-col gap-4 pt-4">
                 <div className="flex gap-4">
                   {LANGUAGES.map((l) => (
