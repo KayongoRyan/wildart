@@ -54,7 +54,7 @@ export const translations = {
     },
     visit: {
       label:    "Visit Us",
-      hours:    "Tuesday – Sunday · 11am – 5pm",
+      hours:    "Monday – Tuesday · 9am – 6pm",
       address:  "Musanze, Northern Province, Rwanda",
       email:    "contact@sawa.art",
       mapLink:  "Get directions",
@@ -145,7 +145,7 @@ export const translations = {
         services:  ["Commission a Piece", "Buy Original Works", "Conservation Program", "WhatsApp Studio →"],
       },
       visitInfo: {
-        hours:    "Tuesday – Sunday · 11am – 5pm",
+        hours:    "Monday – Tuesday · 9am – 6pm",
         address:  "Musanze, Northern Province, Rwanda",
         email:    "contact@sawa.art",
       },
@@ -237,7 +237,7 @@ export const translations = {
     },
     visit: {
       label:    "Visitez-nous",
-      hours:    "Mardi – Dimanche · 11h – 17h",
+      hours:    "Lundi – Mardi · 9h – 18h",
       address:  "Musanze, Province du Nord, Rwanda",
       email:    "contact@sawa.art",
       mapLink:  "Itinéraire",
@@ -328,7 +328,7 @@ export const translations = {
         services:  ["Commander une œuvre", "Acheter des originaux", "Programme Conservation", "WhatsApp Studio →"],
       },
       visitInfo: {
-        hours:    "Mardi – Dimanche · 11h – 17h",
+        hours:    "Lundi – Mardi · 9h – 18h",
         address:  "Musanze, Province du Nord, Rwanda",
         email:    "contact@sawa.art",
       },
@@ -420,7 +420,7 @@ export const translations = {
     },
     visit: {
       label:    "Visítanos",
-      hours:    "Martes – Domingo · 11am – 5pm",
+      hours:    "Lunes – Martes · 9am – 6pm",
       address:  "Musanze, Provincia Norte, Ruanda",
       email:    "contact@sawa.art",
       mapLink:  "Cómo llegar",
@@ -511,7 +511,7 @@ export const translations = {
         services:  ["Encargar una obra", "Comprar originales", "Programa Conservation", "WhatsApp Estudio →"],
       },
       visitInfo: {
-        hours:    "Martes – Domingo · 11am – 5pm",
+        hours:    "Lunes – Martes · 9am – 6pm",
         address:  "Musanze, Provincia Norte, Ruanda",
         email:    "contact@sawa.art",
       },

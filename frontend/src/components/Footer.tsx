@@ -25,65 +25,53 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="relative overflow-hidden" style={{ backgroundColor: "var(--ink)" }}>
-      {/* Subtle watermark */}
+    <footer
+      className="relative overflow-hidden py-32"
+      style={{
+        backgroundColor: "var(--green)",
+        borderTop: "1px solid rgba(255,255,255,0.15)",
+      }}
+    >
+      {/* Subtle watermark logo */}
       <div
         className="absolute inset-0 flex items-center justify-center pointer-events-none select-none"
         aria-hidden="true"
       >
-        <span
+        <img
+          src="/assets/sawa-logo2.svg"
+          alt=""
           style={{
-            fontFamily: "var(--font-display)",
-            fontSize: "clamp(120px, 18vw, 280px)",
-            fontWeight: 300,
-            color: "rgba(245,240,232,0.02)",
-            lineHeight: 1,
-            letterSpacing: "0.12em",
+            height: "clamp(120px, 18vw, 280px)",
+            width: "auto",
+            opacity: 0.02,
+            objectFit: "contain",
           }}
-        >
-          SAWA
-        </span>
+        />
       </div>
 
-      <div className="relative z-10 max-w-[1200px] mx-auto px-4 sm:px-6 md:px-8 lg:px-16">
+      {/* Container */}
+      <div className="relative z-10 max-w-[1480px] mx-auto px-8">
         {/* Main grid */}
         <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 sm:gap-10 md:gap-12 lg:gap-16 pt-12 sm:pt-16 md:pt-20 lg:pt-24 pb-10 sm:pb-12 md:pb-16"
           style={{
+            paddingBottom: "clamp(48px, 6vw, 64px)",
             borderBottom: "1px solid rgba(255,255,255,0.06)",
           }}
         >
           {/* Brand + Visit */}
           <div style={{ maxWidth: 280 }}>
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: 28,
-                fontWeight: 300,
-                letterSpacing: "0.2em",
-                color: "var(--cream)",
-                textTransform: "uppercase",
-                marginBottom: 20,
-              }}
-            >
-              SAWA
-            </p>
+            <div style={{ marginBottom: 28 }}>
+              <img
+                src="/assets/sawa-logo2.svg"
+                alt="SAWA Logo"
+                style={{ height: 40, width: "auto" }}
+              />
+            </div>
+
             <p
               style={{
                 fontFamily: "var(--font-sans)",
-                fontSize: 11,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.35)",
-                marginBottom: 12,
-              }}
-            >
-              1°30′S 29°38′E
-            </p>
-            <p
-              style={{
-                fontFamily: "var(--font-display)",
-                fontStyle: "italic",
                 fontSize: 14,
                 color: "rgba(255,255,255,0.4)",
                 lineHeight: 1.7,
@@ -108,7 +96,7 @@ export default function Footer() {
             </p>
             <p
               style={{
-                fontFamily: "var(--font-display)",
+                fontFamily: "var(--font-sans)",
                 fontStyle: "italic",
                 fontSize: 14,
                 color: "rgba(255,255,255,0.4)",
@@ -265,7 +253,16 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 pt-6 pb-8">
+        <div
+          style={{
+            paddingTop: 24,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: 16,
+          }}
+        >
           <p
             style={{
               fontFamily: "var(--font-sans)",
@@ -294,16 +291,20 @@ export default function Footer() {
                 {l}
               </a>
             ))}
-            <span
+            <a
+              href="https://norfcre8ions.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontSize: 11,
                 color: "rgba(255,255,255,0.25)",
-                fontStyle: "italic",
+                textDecoration: "none",
               }}
+              className="hover:!text-[var(--ochre)] transition-colors"
             >
-              {t.footer.madeIn}
-            </span>
+              norfcre8ions
+            </a>
           </div>
         </div>
       </div>
